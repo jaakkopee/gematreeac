@@ -52,22 +52,18 @@ def permutateList(value):
 def permutatedParents(value):
 	parList=parentList(value)
 	perParList=[]
+
 	for i in parList:
 		perParList+=[permutateList(i)]
+
 	return perParList
 
-
-
-class gtWordNode:
-	def __init__(self, word):
-		self.word=word
-		self.ppList=permutatedParents(getGematria(word))
-		return
-		
-	def __str__(self):
-		outStr="gtWordNode with word "+self.word+"\nppList:\n"+str(self.ppList)
-		return outStr
-
+def ppListToInt(ppList):
+	for i in ppList:
+		for j in range(len(i)):
+			i[j]=int(i[j])
+			
+	return ppList
 
 		
 		
