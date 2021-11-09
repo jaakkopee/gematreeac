@@ -28,7 +28,7 @@ def parentList(value):
 	while value>9:
 		value=findParent(value)
 		pList+=[str(value)]
-	pList.reverse()
+	#pList.reverse()
 	return pList
 
 
@@ -58,11 +58,8 @@ def permutatedParents(value):
 
 	return perParList
 
-def ppListToInt(ppList):
-	for i in ppList:
-		for j in range(len(i)):
-			i[j]=int(i[j])
-			
+def listToInt(ppList):
+	ppList = [int(i) for i in ppList]		
 	return ppList
 
 		
