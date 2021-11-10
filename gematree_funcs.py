@@ -1,6 +1,6 @@
 from itertools import permutations
 
-alphabet = {"a":2,"b":3,"d":4,"e":5,"f":6,"g":7,"h":8,"i":10,"j":20,"k":30,"l":40,"m":50,"n":60,"o":70,"p":80,"q":90,"r":100,"s":200,"t":300,"u":400,"v":500,"w":600,"x":700,"y":800,"z":900,"å":1000,"ä":2000,"ö":3000}
+alphabet = {"0":0, "a":1, "b":2, "c":3, "d":4, "e":5,"f":6,"g":7,"h":8,"i":9,"j":10,"k":20,"l":30,"m":40,"n":50,"o":60,"p":70,"q":80,"r":90,"s":100,"t":200,"u":300,"v":400,"w":500,"x":600,"y":700,"z":800,"å":900,"ä":1000,"ö":2000}
 
 
 def getGematria(word):
@@ -28,7 +28,7 @@ def parentList(value):
 	while value>9:
 		value=findParent(value)
 		pList+=[str(value)]
-	#pList.reverse()
+	pList.reverse()
 	return pList
 
 

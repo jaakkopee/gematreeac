@@ -1,25 +1,47 @@
 from gematree_funcs import *
 
-class gemaNode:
-    def __init__(self, word=None, gemValue=0):
-        self.word=word
-        self.gemValue=gemValue
-        self.parent = None
+#THIS CODE IS BROKEN!
+#I'm thinking..
 
-        if word:
-            self.gemValue=getGematria(self.word)
-        else:
-            self.gemValue=gemValue
-            
-        self.parentNumbers=listToInt(parentList(self.gemValue))
-        if self.gemValue > 9:
-            self.parent = gemaNode(word=None, gemValue=findParent(self.gemValue))
-             
+class GemaPath:
+
+    def __init__(self, word):
+        self.path = listToInt(parentList(getGematria(word)))
         return
 
+
+class GemaWord:
+
+    def __init__(self, word):
+        self.gemaPath = GemaPath(word)
+        self.word = word
+        return
+
+    def printSelf(self):
+        print (self.gemaPath.path)
+        print (self.word)
+
+
+rootset = [GemaWord("0"), GemaWord("a"), GemaWord("b"), GemaWord("c"), GemaWord("d"), GemaWord("e"), GemaWord("f"), GemaWord("g"), GemaWord("h"), GemaWord("i")]
+
+for i in rootset:
+    i.printSelf()
+
+
+def insertWord(word):
+    return
+
+
+
+
+
+
+#might need this...
+"""
 def printTree(rootNode):
     print (rootNode.word)
     print (rootNode.gemValue)
     if rootNode.gemValue > 0: #0 is true root
         printTree(rootNode.parent)
 
+"""
