@@ -1,47 +1,18 @@
 from gematree_funcs import *
 
-#THIS CODE IS BROKEN!
-#I'm thinking..
+#PROJECT STATUS: broken, I'm thinking..
 
-class GemaPath:
+def getPath(word):
+    return listToInt(parentList(getGematria(word)))
 
-    def __init__(self, word):
-        self.path = listToInt(parentList(getGematria(word)))
-        return
+wordsnpaths = []
 
+def addWord(word):
+    global wordsnpaths
+    path = getPath(word)
+    wordsnpaths += [[word, path]]
 
-class GemaWord:
-
-    def __init__(self, word):
-        self.gemaPath = GemaPath(word)
-        self.word = word
-        return
-
-    def printSelf(self):
-        print (self.gemaPath.path)
-        print (self.word)
-
-
-rootset = [GemaWord("0"), GemaWord("a"), GemaWord("b"), GemaWord("c"), GemaWord("d"), GemaWord("e"), GemaWord("f"), GemaWord("g"), GemaWord("h"), GemaWord("i")]
-
-for i in rootset:
-    i.printSelf()
-
-
-def insertWord(word):
+def printTree():
+    print(wordsnpaths)
     return
 
-
-
-
-
-
-#might need this...
-"""
-def printTree(rootNode):
-    print (rootNode.word)
-    print (rootNode.gemValue)
-    if rootNode.gemValue > 0: #0 is true root
-        printTree(rootNode.parent)
-
-"""
