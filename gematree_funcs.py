@@ -28,7 +28,7 @@ def parentList(value):
 	while value>9:
 		value=findParent(value)
 		pList+=[str(value)]
-	pList.reverse()
+	#pList.reverse()
 	return pList
 
 
