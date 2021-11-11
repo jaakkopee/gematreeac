@@ -28,9 +28,12 @@ def addWord(word):
     gemValue = getGematria(word)
     words += [(word, gemValue)]
     inPaths = False
-    for i in paths: #recursion here somehow to stop smaller values from appearing multiple times
-        if i.value == gemValue:
-            inPaths = True
+    for i in paths: 
+        par = i
+        while par:
+            if par.value == gemValue:
+                inPaths = True
+            par = par.parent
     if not inPaths:
         paths += [NumberNode(gemValue)]
 
