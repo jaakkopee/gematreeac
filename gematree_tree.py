@@ -1,6 +1,7 @@
 from gematree_funcs import *
 
-#PROJECT STATUS: broken, I'm thinking..
+#PROJECT STATUS: better, still not exactly what i want
+#TODO: sort paths by 1-digit numbered nodes; do something about combining paths, no duplicates
 
 words = []
 paths = []
