@@ -31,6 +31,7 @@ def addWord(word):
         paths += [NumberNode(gemValue)]
 
 def printAll():
+    global words, paths
     for i in paths:
         i.printSelf()
         for j in words:
