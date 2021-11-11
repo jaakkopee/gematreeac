@@ -2,29 +2,33 @@ from gematree_funcs import *
 
 #PROJECT STATUS: broken, I'm thinking..
 
+words = []
+paths = []
+
+
 class NumberNode:
     def __init__(self, number):
-        global paths
         self.parent = None
         self.value = number
         if len(str(number))>1:
             self.parent = NumberNode(findParent(number))
 
     def printSelf(self):
+        global words
         print (" "*len(str(self.value))+str(self.value))
+        for i in words:
+            if i[1] == self.value:
+                print (" "*len(str(self.value))+i[0])
         if self.parent:
             self.parent.printSelf()
-
-
-words = []
-paths = []
+        return
 
 def addWord(word):
     global words, paths
     gemValue = getGematria(word)
     words += [(word, gemValue)]
     inPaths = False
-    for i in paths:
+    for i in paths: #recursion here somehow to stop smaller values from appearing multiple times
         if i.value == gemValue:
             inPaths = True
     if not inPaths:
@@ -33,8 +37,5 @@ def addWord(word):
 def printAll():
     global words, paths
     for i in paths:
-        i.printSelf()
-        for j in words:
-            if j[1] == i.value:
-                print (j[0])
+        i.printSelf()                
     
