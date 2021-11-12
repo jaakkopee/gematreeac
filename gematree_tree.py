@@ -30,9 +30,10 @@ class NumberNode:
 def addWord(word):
     global words, paths
     gemValue = getGematria(word)
-    words += [(word, gemValue)]
+    if (word, gemValue) not in words:
+        words += [(word, gemValue)]
+
     inPaths = False
-    
     for i in paths: 
         par = i
         while par:
