@@ -57,3 +57,9 @@ def printAll():
         i.printSelf()                
     return
 
+def clearDB():
+    global words,paths
+    words = []
+    paths = []
+    return
+
