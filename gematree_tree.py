@@ -19,6 +19,7 @@ class NumberNode:
         self.value = number
         if len(str(number))>1:
             self.parent = NumberNode(findParent(number))
+        return
 
     def printSelf(self):
         global words
@@ -47,8 +48,11 @@ def addWord(word):
     if not inPaths: 
         paths += [NumberNode(gemValue)]
 
+    return
+
 def printAll():
     global words, paths
     for i in paths:
         i.printSelf()                
-    
+    return
+
