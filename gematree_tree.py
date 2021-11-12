@@ -16,7 +16,7 @@ paths = [] #numerological relations
 
 #Numerological relations are stored as paths from leave to root of a number, for example [156, 12, 3])
 
-#a tree structure for numerological relations of numbers.
+#a tree structure for numerological relations.
 class NumberNode:
     def __init__(self, number):
         self.parent = None
@@ -69,7 +69,6 @@ def clearDB():
     paths = []
     return
 
-def getDatabase():
+def getDB():
     global words, paths
     return [words, paths]
-    return
