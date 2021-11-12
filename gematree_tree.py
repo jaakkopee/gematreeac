@@ -1,7 +1,10 @@
 from gematree_funcs import *
 
 #PROJECT STATUS: better, still not exactly what i want
-#TODO: sort paths by 1-digit numbered nodes; do something about combining paths, no duplicates
+
+#TODO: sort paths by 1-digit numbered nodes;
+#do something about combining paths, no duplicates.
+#check and save permutations of numbers too
 
 words = []
 paths = []
