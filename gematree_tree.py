@@ -10,10 +10,14 @@ from gematree_funcs import *
 #this affects class NumberNode,
 #it needs to be able to hold multiple numbers
 
-words = []
-paths = []
+#Database
+words = [] #word-value pairs
+paths = [] #numerological relations
+
+#Numerological relations are stored as paths from leave to root of a number, for example [156, 12, 3])
 
 
+#a tree structure for numerological relations of numbers. Connects to the database.
 class NumberNode:
     def __init__(self, number):
         self.parent = None
@@ -32,6 +36,7 @@ class NumberNode:
             self.parent.printSelf()
         return
 
+#Add word to database
 def addWord(word):
     global words, paths
     gemValue = getGematria(word)
@@ -51,12 +56,14 @@ def addWord(word):
 
     return
 
+#Print database
 def printAll():
     global words, paths
     for i in paths:
         i.printSelf()                
     return
 
+#Clear database
 def clearDB():
     global words,paths
     words = []
