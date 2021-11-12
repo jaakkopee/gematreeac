@@ -6,7 +6,7 @@ from gematree_funcs import *
 
 #TODO: sort paths by node values;
 #do something about combining paths.
-#check and save permutations of numbers and numbers with common parents too.
+#check and save permutations of numbers and other numbers with common parents.
 #this affects class NumberNode,
 #it needs to be able to hold multiple numbers
 
