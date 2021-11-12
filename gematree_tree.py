@@ -1,5 +1,7 @@
 from gematree_funcs import *
 
+#Gematreeac by Jaakko Prättälä 2021. Use as thou wilt.
+
 #PROJECT STATUS: better, still not exactly what i want
 
 #TODO: sort paths by 1-digit numbered nodes;
