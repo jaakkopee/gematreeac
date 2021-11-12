@@ -37,9 +37,9 @@ def addWord(word):
                 inPaths = True
             par = par.parent
 
-    if not inPaths: #here TODO: add values to old nodes if they exist
-        paths += [NumberNode(gemValue)] #always creates new path
-        
+    if not inPaths: 
+        paths += [NumberNode(gemValue)]
+
 def printAll():
     global words, paths
     for i in paths:
