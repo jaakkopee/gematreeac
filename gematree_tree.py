@@ -4,7 +4,7 @@ from gematree_funcs import *
 
 #TODO: sort paths by 1-digit numbered nodes;
 #do something about combining paths, no duplicates.
-#check and save permutations of numbers too (this affects class NumberNode)
+#check and save permutations of numbers too. this affects class NumberNode,
 #it needs to be able to hold multiple numbers
 
 words = []
