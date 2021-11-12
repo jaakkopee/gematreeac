@@ -29,6 +29,7 @@ def addWord(word):
     gemValue = getGematria(word)
     words += [(word, gemValue)]
     inPaths = False
+    
     for i in paths: 
         par = i
         while par:
@@ -38,7 +39,7 @@ def addWord(word):
 
     if not inPaths: #here TODO: add values to old nodes if they exist
         paths += [NumberNode(gemValue)] #always creates new path
-
+        
 def printAll():
     global words, paths
     for i in paths:
