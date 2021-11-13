@@ -73,7 +73,7 @@ def addWord(word):
             par = par.parent
 
     if not inPaths: 
-        paths += [NumberNode(gemValue)]
+        paths += [NumberNode(gemValue)] #change this!
 
     return
 
