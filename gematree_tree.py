@@ -58,6 +58,7 @@ class NumberNode:
         return
 
 #Add word to database
+#work on this!
 def addWord(word):
     global words, paths
     gemValue = getGematria(word)
