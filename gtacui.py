@@ -19,7 +19,7 @@ def insertWord(word):
     
     clearDB() #empty RAM
 
-    #load db and new word to RAM
+    #load db and new word to RAM from SQL DB
     wordpool = getWordsFromSQL()
     wordpool += [(word,)] #new word
     
