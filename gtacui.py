@@ -22,6 +22,7 @@ def insertWord(word):
     wordpool = getWordsFromSQL()
     wordpool += [(word,)]
     
+    #build tree
     for i in wordpool:
         addWord(i[0])
     
