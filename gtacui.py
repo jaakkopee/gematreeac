@@ -1,3 +1,6 @@
+
+#SQL DB connection for gematreeac
+
 from gematree_tree import *
 
 import sqlite3
