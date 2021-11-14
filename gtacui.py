@@ -31,6 +31,7 @@ def insertWord(word):
     cur.execute("insert into wordpool values (:wordstr) ", {"wordstr": word})
     con.commit()
 
+    #print tree
     printAll()
 
     return
