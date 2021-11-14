@@ -19,14 +19,15 @@ def insertWord(word):
     
     clearDB() #empty RAM
 
-    #load db to RAM
+    #load db and new word to RAM
     wordpool = getWordsFromSQL()
-    wordpool += [(word,)]
+    wordpool += [(word,)] #new word
     
     #build tree
     for i in wordpool:
         addWord(i[0])
     
+    #insert new word to SQL DB
     cur.execute("insert into wordpool values (:wordstr) ", {"wordstr": word})
     con.commit()
 
