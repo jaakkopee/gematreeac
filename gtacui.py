@@ -39,3 +39,20 @@ def insertWord(word):
 
     return
 
+def printDB():
+    global con, cur
+    
+    clearDB() #empty RAM
+
+    #load db to RAM
+    wordpool = getWordsFromSQL()
+    
+    #build tree
+    for i in wordpool:
+        addWord(i[0])
+    
+    #print tree
+    printAll()
+
+    return
+
