@@ -71,7 +71,7 @@ def addWord(word):
         par = i
         while par:
             if par.value == gemValue:
-                inPaths = True
+                inPaths = True         
             par = par.parent
 
     if not inPaths: 
