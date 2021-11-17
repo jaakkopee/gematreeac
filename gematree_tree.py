@@ -1,3 +1,4 @@
+from itertools import permutations
 
 
 #Gematreeac by Jaakko Prättälä 2021. Use as thou wilt.
@@ -20,7 +21,7 @@ def getGematria(word):
 		value+=alphabet[i]
 		
 	return value
-	
+
 
 
 def findParent(value):
@@ -31,6 +32,35 @@ def findParent(value):
 		
 	return outVal
 
+
+
+def parentList(value):
+    parList =[]
+    parInt = value
+    while parInt > 9:
+        parInt = findParent(parInt)
+        parList+= [parInt]
+    return parList
+
+
+def permutateInt(value):
+    strList = []
+    outList = []
+
+    for i in str(value):
+        strList += [i]
+
+    permutations_object = permutations(strList)
+    permList = list(permutations_object)
+    tmpStr = ""
+    for i in permList:
+        tmpStr =""
+        for j in i:
+            tmpStr += j
+        if tmpStr[0] != "0" and int(tmpStr) != value and int(tmpStr) not in outList:
+            outList += [int(tmpStr)]
+
+    return outList
 
 
 #Database
@@ -44,8 +74,15 @@ class NumberNode:
     def __init__(self, number):
         self.parent = None
         self.value = number
-        if len(str(number))>1:
+        
+        self.neighbors = []
+
+        if len(str(number))>1:                       
+            for i in permutateInt(self.value):
+                self.neighbors += [(i,)]
+
             self.parent = NumberNode(findParent(number))
+
         return
 
     def printSelf(self):
@@ -53,7 +90,7 @@ class NumberNode:
         print (" "*len(str(self.value))+str(self.value))
         for i in words:
             if i[1] == self.value:
-                print (" "*len(str(self.value))+i[0])
+                print (" "*len(str(self.value))+i[0]+" "+str(self.neighbors))            
         if self.parent:
             self.parent.printSelf()
         return
@@ -71,11 +108,12 @@ def addWord(word):
         par = i
         while par:
             if par.value == gemValue:
-                inPaths = True         
+                inPaths = True  
             par = par.parent
 
     if not inPaths: 
         paths += [NumberNode(gemValue)] #change this!
+
 
     return
 
