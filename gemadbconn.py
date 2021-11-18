@@ -12,7 +12,7 @@ def getWordsFromSQL():
     data = cur.fetchall()
     return data
 
-#testing github
+
 def insertWord(word):
     global con, cur
     
