@@ -19,10 +19,14 @@ def insertWord(word):
     WORDMAP.clearRAM() #empty RAM
 
     #insert new word to SQL DB
-    #TODO: check for word duplicates
-    cur.execute("insert into wordpool values (:wordstr) ", {"wordstr": word})
-    con.commit()
-
+    #check for duplicate words:
+    cur.execute("select word from wordpool where word = :wordstr", {"wordstr":word})
+    tmpWords = cur.fetchall()
+    
+    if tmpWords == []:
+        cur.execute("insert into wordpool values (:wordstr)", {"wordstr": word})
+        con.commit()
+    
     #build tree
     wordpool = getWordsFromSQL()
     for i in wordpool:
