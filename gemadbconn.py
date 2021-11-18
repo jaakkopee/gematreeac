@@ -1,6 +1,6 @@
 from gt2 import *
 import sqlite3
-con = sqlite3.connect("gematriac.db")
+con = sqlite3.connect("./gemaDB/gematriac.db")
 cur = con.cursor()
 
 cur.execute("create table if not exists wordpool (word text)")
