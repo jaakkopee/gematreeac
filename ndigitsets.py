@@ -66,19 +66,6 @@ class NWCPSet:
             self.gemPairs += [gemPair(word)]
         return
 
-    def convertSet(self, number, newWord):
-        global NWCPSets
-        newSelf = NWCPSet(number)
-        if self.routeToRoot==newSelf.routeToRoot:
-            for i in self.gemPairs:
-                newSelf.addWord(i.word)
-            self = newSelf #haha does this work?
-        elif self.rootNumber==newSelf.rootNumber:
-            newSelf.addWord(newWord)
-            NWCPSets+=[newSelf]
-
-        return
-
     def printMe(self):
         for i in self.gemPairs:
             print (str(i.number) + ": " + i.word, end=" ")
@@ -93,32 +80,29 @@ def clearRAM():
     NWCPSets =[]
     return
 
-def addNWCPSet(nwpcSet):
-    global NWCPSets
-    foundSet=False
-    for i in NWCPSets:
-        if i.routeToRoot == nwpcSet.routeToRoot:
-            foundSet=True
-            #for j in nwpcSet.gemPairs:
-            #    i.addWord(j.word)
-    if not foundSet:
-        NWCPSets += [nwpcSet]
-    return
-
 def addWord(word):
+    global NWCPSets
     newSet = NWCPSet(getGematria(word))
-    newSet.addWord(word)
-    foundSet = False
+
     for i in NWCPSets:
-        if i.rootNumber == getRootNumber(getGematria(word)):
-            foundSet=True
-            i.convertSet(newSet.gemPairs[0].number, word)
-            i.addWord(word)
-    if not foundSet:
-        addNWCPSet(newSet)
+        
+        if i.routeToRoot!=newSet.routeToRoot and i.rootNumber==newSet.rootNumber:
+            newSet.addWord(word)
+            NWCPSets+=[newSet]
+            print("found new route"+str(i.routeToRoot))
+
+        if i.routeToRoot==newSet.routeToRoot:
+            i.addWord(word)            
+            print("Found old route"+str(i.routeToRoot))
+
+    if NWCPSets==[]:
+        NWCPSets+=[newSet]
+        newSet.addWord(word)
+
     return
 
 def printAll():
+    global NWCPSets
     for i in NWCPSets:
         i.printMe()
     return
