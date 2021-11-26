@@ -66,14 +66,17 @@ class NWCPSet:
             self.gemPairs += [gemPair(word)]
         return
 
-    #convert set to sub or superset of the original or replace the original with an identical set
-    #BUG: empty routeToRoot when number is in set 1-9
-    def convertSet(self, number):
+    def convertSet(self, number, newWord):
+        global NWCPSets
         newSelf = NWCPSet(number)
-        if newSelf.rootNumber == self.rootNumber:
+        if self.routeToRoot==newSelf.routeToRoot:
             for i in self.gemPairs:
                 newSelf.addWord(i.word)
             self = newSelf #haha does this work?
+        elif self.rootNumber==newSelf.rootNumber:
+            newSelf.addWord(newWord)
+            NWCPSets+=[newSelf]
+
         return
 
     def printMe(self):
@@ -85,15 +88,19 @@ class NWCPSet:
 
 NWCPSets = []
 
+def clearRAM():
+    global NWCPSets
+    NWCPSets =[]
+    return
+
 def addNWCPSet(nwpcSet):
     global NWCPSets
     foundSet=False
     for i in NWCPSets:
-        if i.rootNumber==nwpcSet.rootNumber:
+        if i.routeToRoot == nwpcSet.routeToRoot:
             foundSet=True
-            for j in nwpcSet.gemPairs:
-                i.addWord(j.word)
-            i.convertSet(nwpcSet.gemPairs[0].number)
+            #for j in nwpcSet.gemPairs:
+            #    i.addWord(j.word)
     if not foundSet:
         NWCPSets += [nwpcSet]
     return
@@ -105,7 +112,7 @@ def addWord(word):
     for i in NWCPSets:
         if i.rootNumber == getRootNumber(getGematria(word)):
             foundSet=True
-            i.convertSet(newSet.gemPairs[0].number)
+            i.convertSet(newSet.gemPairs[0].number, word)
             i.addWord(word)
     if not foundSet:
         addNWCPSet(newSet)
