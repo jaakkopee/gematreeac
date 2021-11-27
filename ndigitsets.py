@@ -25,7 +25,7 @@ def findParent(number):
 	return outVal
 
 def getParentList(number):
-    parList =[]
+    parList =[number]
     parInt = number
     while parInt > 9:
         parInt = findParent(parInt)
@@ -33,8 +33,9 @@ def getParentList(number):
     return parList
 
 def getRootNumber(number):
-        pl = getParentList(number)
-        return pl[-1]
+    while number > 9:
+        number=findParent(number)
+    return number
 
 #NWCP = numbers with common parents
 def getNWCPFromNDS(number):
@@ -55,9 +56,9 @@ class gemPair:
 class NWCPSet:
     def __init__(self, number):
         
-        self.routeToRoot = getParentList(number)
-        #if self.routeToRoot==[]:
-        #    self.routeToRoot=[getRootNumber(number)]
+        self.routeToRoot = getParentList(number)[1:]
+        if self.routeToRoot==[]:
+            self.routeToRoot=[getRootNumber(number)]
         self.rootNumber = getRootNumber(number)
         self.gemPairs = []
         return        
@@ -81,34 +82,39 @@ def clearRAM():
     NWCPSets =[]
     return
 
-def addWord(word):#Under construction
+def addWord(word):
     global NWCPSets
     newSet = NWCPSet(getGematria(word))
 
     if NWCPSets==[]:
-        print("ndigitsets: init sets")
+        print("<p id='DBG'>ndigitsets: init sets</p>")
         NWCPSets+=[newSet]
         newSet.addWord(word)
         return
 
     for i in NWCPSets:
 
-        if (i.routeToRoot != newSet.routeToRoot) and (i.rootNumber == newSet.rootNumber):
-            print("found different route to root " + str(i.rootNumber)+": "+str(newSet.routeToRoot))
+        if i.rootNumber == newSet.rootNumber and i.routeToRoot != newSet.routeToRoot:
+            print("<p id='DBG'>found different route to root " + str(i.rootNumber)+": "+str(newSet.routeToRoot)+"</p>")
             NWCPSets+=[newSet]
             newSet.addWord(word)
             break
 
-        if (i.routeToRoot==newSet.routeToRoot):
-            print("found new word for route "+str(i.routeToRoot))
+        if i.routeToRoot==newSet.routeToRoot:
+            print("<p id='DBG'>found new word for route "+str(i.routeToRoot)+"</p>")
             i.addWord(word)
             break
 
-        NWCPSets+=[newSet]
-        newSet.addWord(word)
-        print("found new root "+str(newSet.rootNumber))
-        break
-    
+        allRoots=[]
+        for j in NWCPSets:
+            allRoots+=[j.rootNumber]
+
+        if newSet.rootNumber not in allRoots:
+            NWCPSets+=[newSet]
+            newSet.addWord(word)
+            print("<p id='DBG'>found new root "+str(newSet.rootNumber)+"</p>")
+            break
+
     return
 
 def printAll():
