@@ -84,21 +84,23 @@ def addWord(word):#NOT WORKING atm
     global NWCPSets
     newSet = NWCPSet(getGematria(word))
 
+    if NWCPSets==[]:
+        NWCPSets+=[newSet]
+        newSet.addWord(word)
+        return
+
     for i in NWCPSets:
 
         if i.routeToRoot!=newSet.routeToRoot and i.rootNumber==newSet.rootNumber:
             newSet.addWord(word)
             NWCPSets+=[newSet]
-            print("found new route"+str(i.routeToRoot))
-        else:
-            if i.routeToRoot==newSet.routeToRoot:
-                i.addWord(word)            
-                print("Found old route"+str(i.routeToRoot))
-
-    if NWCPSets==[]:
-        NWCPSets+=[newSet]
-        newSet.addWord(word)
-
+            return
+        if i.routeToRoot==newSet.routeToRoot:
+            i.addWord(word)            
+            return
+        
+    NWCPSets+=[newSet]
+    newSet.addWord(word)
     return
 
 def printAll():
