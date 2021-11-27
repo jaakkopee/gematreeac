@@ -80,20 +80,20 @@ def clearRAM():
     NWCPSets =[]
     return
 
-def addWord(word):
+def addWord(word):#NOT WORKING atm
     global NWCPSets
     newSet = NWCPSet(getGematria(word))
 
     for i in NWCPSets:
-        
+
         if i.routeToRoot!=newSet.routeToRoot and i.rootNumber==newSet.rootNumber:
             newSet.addWord(word)
             NWCPSets+=[newSet]
             print("found new route"+str(i.routeToRoot))
-
-        if i.routeToRoot==newSet.routeToRoot:
-            i.addWord(word)            
-            print("Found old route"+str(i.routeToRoot))
+        else:
+            if i.routeToRoot==newSet.routeToRoot:
+                i.addWord(word)            
+                print("Found old route"+str(i.routeToRoot))
 
     if NWCPSets==[]:
         NWCPSets+=[newSet]
