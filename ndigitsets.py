@@ -87,7 +87,7 @@ def addWord(word):
     newSet = NWCPSet(getGematria(word))
 
     if NWCPSets==[]:
-        print("<p id='DBG'>ndigitsets: init sets</p>")
+        print("<div id='DBG'>ndigitsets: init sets</div>")
         NWCPSets+=[newSet]
         newSet.addWord(word)
         return
@@ -95,13 +95,13 @@ def addWord(word):
     for i in NWCPSets:
 
         if i.rootNumber == newSet.rootNumber and i.routeToRoot != newSet.routeToRoot:
-            print("<p id='DBG'>found different route to root " + str(i.rootNumber)+": "+str(newSet.routeToRoot)+"</p>")
+            print("<div id='DBG'>found different route to root " + str(i.rootNumber)+": "+str(newSet.routeToRoot)+"</div>")
             NWCPSets+=[newSet]
             newSet.addWord(word)
             break
 
         if i.routeToRoot==newSet.routeToRoot:
-            print("<p id='DBG'>found new word for route "+str(i.routeToRoot)+"</p>")
+            print("<div id='DBG'>found new word for route "+str(i.routeToRoot)+"</div>")
             i.addWord(word)
             break
 
@@ -112,7 +112,7 @@ def addWord(word):
         if newSet.rootNumber not in allRoots:
             NWCPSets+=[newSet]
             newSet.addWord(word)
-            print("<p id='DBG'>found new root "+str(newSet.rootNumber)+"</p>")
+            print("<div id='DBG'>found new root "+str(newSet.rootNumber)+"</div>")
             break
 
     return
