@@ -44,6 +44,8 @@ def getNWCPFromNDS(number):
     for i in nds:
         if findParent(number) == findParent(i):
             outSet += [i]
+        elif getRootNumber(number) == getRootNumber(i):
+            outSet+=[i]
     return outSet
 
 class gemPair:
@@ -94,13 +96,17 @@ def addWord(word):
 
     for i in NWCPSets:
 
-        if i.rootNumber == newSet.rootNumber and i.routeToRoot != newSet.routeToRoot:
-            print("<div id='DBG'>found different route to root " + str(i.rootNumber)+": "+str(newSet.routeToRoot)+"</div>")
-            NWCPSets+=[newSet]
-            newSet.addWord(word)
-            break
+        #if i.rootNumber == newSet.rootNumber and i.routeToRoot != newSet.routeToRoot:
+        #    print("<div id='DBG'>found different route to root " + str(i.rootNumber)+": "+str(newSet.routeToRoot)+"</div>")
+        #    NWCPSets+=[newSet]
+        #    newSet.addWord(word)
+        #    break
 
-        if i.routeToRoot==newSet.routeToRoot:
+        if (all(x in i.routeToRoot for x in newSet.routeToRoot)) or (all(x in newSet.routeToRoot for x in i.routeToRoot)):
+            if len(i.routeToRoot)<len(newSet.routeToRoot):
+                print("<div id='DBG'>Expand Route " + str(i.routeToRoot) + " to " + str(newSet.routeToRoot) +"</div>")
+                i.routeToRoot = newSet.routeToRoot
+                
             print("<div id='DBG'>found new word for route "+str(i.routeToRoot)+"</div>")
             i.addWord(word)
             break
