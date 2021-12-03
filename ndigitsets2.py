@@ -46,6 +46,10 @@ def getNWCPFromNDS(number):
 
     return outSet
 
+#THIS NEXT!
+def generatePossibleRoutes(route):
+    return route
+
 class Root:
     def __init__(self, word):
         gemVal = getGematria(word)
@@ -77,8 +81,8 @@ class Root:
                 self.routes+=[route]                    
                 return True
 
-            possibleRoutes=[]
-            
+            possibleRoutes = generatePossibleRoutes()
+
 
         return False
 
