@@ -60,15 +60,6 @@ class Root:
            
         if self.root == getRootNumber(gemVal):
 
-            if route == [] or len(route) == 1:
-                if route in self.routes:
-                    self.words+=[word]
-                else:
-                    self.words+=[word]
-                    self.routes+=[route]
-                return True
- 
-
             if route in self.routes:
                 self.words+=[word]
                 return True
@@ -114,6 +105,9 @@ def addWord(word):
     rootFound=False
     for i in roots:
         rootFound = i.addWord(word)
+        if rootFound:
+            return
+
     if not rootFound:
         roots+=[Root(word)]
         return
