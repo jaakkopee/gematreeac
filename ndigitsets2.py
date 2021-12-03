@@ -64,6 +64,8 @@ class Root:
                 self.words+=[word]
                 return True
 
+
+            #Next is not enough. Welcome the concept of possible routes in next implementation
             foundRouteSubSet=False
             for i in self.routes:
                 #       route is a subset               i is a subset
