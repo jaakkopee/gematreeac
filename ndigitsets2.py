@@ -65,7 +65,8 @@ class Root:
                 return True
 
 
-            #Next is not enough. Welcome the concept of possible routes in next implementation
+            #Next is not enough. Welcome the concept of possible routes in next block
+            #This works fine except with routes [14, 5] and [23, 5]
             foundRouteSubSet=False
             for i in self.routes:
                 #       route is a subset               i is a subset
@@ -76,7 +77,8 @@ class Root:
                 self.routes+=[route]                    
                 return True
 
-
+            possibleRoutes=[]
+            
 
         return False
 
