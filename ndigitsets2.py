@@ -81,7 +81,7 @@ class Root:
                 self.routes+=[route]                    
                 return True
 
-            #This might work
+            #This might work -- it does
             for i in self.routes:
                 if i[0] in getNWCPFromNDS(route[0]):
                     self.words+=[word]
