@@ -81,8 +81,12 @@ class Root:
                 self.routes+=[route]                    
                 return True
 
-            possibleRoutes = generatePossibleRoutes()
-
+            #This might work
+            for i in self.routes:
+                if i[0] in getNWCPFromNDS(route[0]):
+                    self.words+=[word]
+                    self.routes+=[route]
+                    return True
 
         return False
 
