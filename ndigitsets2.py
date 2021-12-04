@@ -70,7 +70,7 @@ class Root:
 
 
             #Next is not enough. Welcome the concept of possible routes in next block
-            #This works fine except with routes [14, 5] and [23, 5]
+            #This works fine except with routes [14, 5] and [23, 5] for example.
             foundRouteSubSet=False
             for i in self.routes:
                 #       route is a subset               i is a subset
