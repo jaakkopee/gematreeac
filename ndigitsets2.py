@@ -81,12 +81,13 @@ class Root:
                 self.routes+=[route]                    
                 return True
 
-            #This might work -- it does
+            #This might work
             for i in self.routes:
-                if i[0] in getNWCPFromNDS(route[0]):
-                    self.words+=[word]
-                    self.routes+=[route]
-                    return True
+                for j in route:
+                    if i[0] in getNWCPFromNDS(j):
+                        self.words+=[word]
+                        self.routes+=[route]
+                        return True
 
         return False
 
