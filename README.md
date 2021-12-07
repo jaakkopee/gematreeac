@@ -5,9 +5,9 @@ code by Jaakko Prättälä 2021
 under construction
 use as thou wilt
 
-import gtacui and use function insertWord()
-or import gemadbconn and insertWord()
+running code in jpts.aprx.io
 
-the data representation needs serious working on...
+the latest algorithm is in ndigitsets3.py
+import ndigitsets3 in python3 and call addWord() and printAll()
 
-
+the database connection is probably broken due to me lazy.
