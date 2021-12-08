@@ -3,11 +3,11 @@ from math import pow
 alphabet = {"0":0, "a":1, "b":2, "c":3, "d":4, "e":5,"f":6,"g":7,"h":8,"i":9,"j":10,"k":20,"l":30,"m":40,"n":50,"o":60,"p":70,"q":80,"r":90,"s":100,"t":200,"u":300,"v":400,"w":500,"x":600,"y":700,"z":800,"å":900,"ä":1000,"ö":2000}
 
 def getGematria(word):
-	number=0
-	for i in word:
-		number+=alphabet[i]
+    number=0
+    for i in word:
+        number+=alphabet[i]
 		
-	return number
+    return number
 
 #NDS = n-digit set
 def getNDS(nDigits):
@@ -52,6 +52,12 @@ def generatePossibleRoutes(route):
 
 class Root:
     def __init__(self, word):
+        chkWord=word
+        alphakeys = list(alphabet.keys())
+        for i in chkWord:
+            if i not in alphakeys:
+                word=word.replace(i, "")
+
         gemVal = getGematria(word)
         self.root = getRootNumber(gemVal)
         self.words = [word]
@@ -59,6 +65,12 @@ class Root:
         return
 
     def addWord(self, word):
+        chkWord=word
+        alphakeys = list(alphabet.keys())
+        for i in chkWord:
+            if i not in alphakeys:
+                word=word.replace(i, "")
+
         gemVal = getGematria(word)
         route = getParentList(gemVal)[1:]
            
