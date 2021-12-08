@@ -56,7 +56,7 @@ class Root:
         alphakeys = list(alphabet.keys())
         for i in chkWord:
             if i not in alphakeys:
-                word=word.replace(i, "")
+                word=word.replace(i, "0")
 
         gemVal = getGematria(word)
         self.root = getRootNumber(gemVal)
@@ -69,7 +69,7 @@ class Root:
         alphakeys = list(alphabet.keys())
         for i in chkWord:
             if i not in alphakeys:
-                word=word.replace(i, "")
+                word=word.replace(i, "0")
 
         gemVal = getGematria(word)
         route = getParentList(gemVal)[1:]
