@@ -1,4 +1,4 @@
-from ndigitsets import *
+from ndigitsets3 import *
 import sqlite3
 con = sqlite3.connect("./gemaDB/gematriac.db")
 cur = con.cursor()
@@ -29,12 +29,13 @@ def insertWord(word):
         con.commit()
     
     #build tree
-    wordpool = getWordsFromSQL()
-    for i in wordpool:
-        addWord(i[0])
+    #wordpool = getWordsFromSQL()
+    #for i in wordpool:
+    #    addWord(i[0])
     
     #print tree
-    printAll()
+    #printAll()
+    
     return
 
 def printDB():
