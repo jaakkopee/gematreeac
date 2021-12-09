@@ -51,7 +51,7 @@ if word == "ADDTODEEPMEM":
     print("Words to DeepMem:")
     for i in words:
         if addWordToDeepMem(i[0]):
-            print ("Added "+i[0])
+            print ("Added '"+i[0]+"'")
         else:
             print ("Did not add '"+i[0]+"' for it was already in DeepMem")
 
