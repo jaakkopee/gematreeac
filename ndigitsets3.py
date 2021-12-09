@@ -100,8 +100,46 @@ class Root:
 
         return
 
+    def sortWords(self):
+
+        for i in range(1, len(self.words)):
+            
+            key = self.words[i]
+
+            j= i-1
+            while j >= 0 and getGematria(key) < getGematria(self.words[j]):
+                self.words[j+1] = self.words[j]
+                j-=1
+            self.words[j+1] = key
+        
+        return
 
 roots = []
+
+def sortRoots():
+    global roots
+
+    for i in range(1, len(roots)):
+            
+        key = roots[i]
+
+        j= i-1
+        while j >= 0 and key.root < roots[j].root:
+            roots[j+1] = roots[j]
+            j-=1
+        roots[j+1] = key
+
+    return
+
+def sortWordsAndRoots():
+    global roots
+    
+    for i in roots:
+        i.sortWords()
+    sortRoots()
+    
+    return
+
 
 def addWord(word):
     global roots
@@ -114,10 +152,12 @@ def addWord(word):
     for i in roots:
         rootFound = i.addWord(word)
         if rootFound:
+            sortWordsAndRoots()
             return
 
     if not rootFound:
         roots+=[Root(word)]
+        sortWordsAndRoots()
         return
 
     return
