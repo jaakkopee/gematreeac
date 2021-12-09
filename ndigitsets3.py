@@ -140,10 +140,6 @@ def sortWordsAndRoots():
 
 def addWord(word):
     global roots
-    
-    if word.isnumeric():
-        searchNum(int(word))
-        return
 
     if len(roots)==0:
         roots+=[Root(word)]
@@ -174,9 +170,5 @@ def clearRAM():
     global roots
     del roots
     roots = []
-
-def searchNum(number):
-    print(number)
-    return
 
 
