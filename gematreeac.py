@@ -33,6 +33,7 @@ print(stylestr)
 print("</style></head>")
 print("<body>")
 from gemadbconn import *
+from deepmem import *
 
 form = cgi.FieldStorage()
 try:
@@ -42,6 +43,33 @@ except:
 
 #word=word.replace(" ", "")
 
+if word == "ADDTODEEPMEM":
+    words = getWordsFromSQL()
+    for i in words:
+        addWordToDeepMem(i[0])
+    con.close()
+    conDM.close()
+    sys.exit()
+
+if word.isnumeric():
+    number = int(word)
+    print("<div id='perkele'>")    
+    print("Current Session:")
+    for i in searchNumberFromSQL(number):
+        print (i[0]+str(i[1]))
+    
+    print()
+
+    print ("DeepMem:")
+    for i in searchDeepMemByNumber(number):
+        print (i[0]+str(i[1]))
+    
+    print("</div>")
+
+    con.close()
+    conDM.close()
+    sys.exit()
+
 if word == "ALPHABET":
     print("<div id='perkele'>")
     for i in alphabet.items():
@@ -49,6 +77,7 @@ if word == "ALPHABET":
     
     print("</div>")
     con.close()
+    conDM.close()
     sys.exit()
 
 if word == "CLEAR":
@@ -56,6 +85,7 @@ if word == "CLEAR":
     cur.execute("delete from wordpool")
     con.commit()
     con.close()
+    conDM.close()
     print("<h1><center>Database Cleared</center></h1>")
     sys.exit()
 
@@ -64,6 +94,7 @@ if word == "SHOW":
     printDB()
     print("</div>")
     con.close()
+    conDM.close()
     sys.exit()
     
 print("<div id='perkele'>")

@@ -12,6 +12,13 @@ def getWordsFromSQL():
     data = cur.fetchall()
     return data
 
+def searchNumberFromSQL(number):
+    retList = []
+    for i in getWordsFromSQL():
+        gv = getGematria(i[0])
+        if gv==number:
+            retList+=[(i[0],gv)]
+    return retList
 
 def insertWord(word):
     global con, cur
