@@ -47,13 +47,13 @@ if word == "ADDTODEEPMEM":
     words = getWordsFromSQL()
     
     print("<div id='perkele'>")
-
+    print("Added words to DeepMem:")
     for i in words:
         addWordToDeepMem(i[0])
-        print ("Added word "+i[0]+" to DeepMem")
+        print (i[0])
     
     print("</div>")
-    
+
     con.close()
     conDM.close()
     sys.exit()
