@@ -46,9 +46,6 @@ def getNWCPFromNDS(number):
 
     return outSet
 
-#THIS NEXT!
-def generatePossibleRoutes(route):
-    return route
 
 class Root:
     def __init__(self, word):
