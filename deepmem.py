@@ -1,3 +1,4 @@
+from math import trunc
 import sqlite3
 from ndigitsets3 import getGematria
 
@@ -18,8 +19,9 @@ def addWordToDeepMem(word):
     if tmpWords == []:
         curDM.execute("insert into wordpool values (:wordstr)", {"wordstr": word})
         conDM.commit()
+        return True
 
-    return
+    return False
 
 def getWordsFromDeepMem():
     global conDM, curDM
