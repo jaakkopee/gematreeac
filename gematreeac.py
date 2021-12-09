@@ -45,8 +45,15 @@ except:
 
 if word == "ADDTODEEPMEM":
     words = getWordsFromSQL()
+    
+    print("<div id='perkele'>")
+
     for i in words:
         addWordToDeepMem(i[0])
+        print ("Added word "+i[0]+" to DeepMem")
+    
+    print("</div>")
+    
     con.close()
     conDM.close()
     sys.exit()
@@ -56,13 +63,13 @@ if word.isnumeric():
     print("<div id='perkele'>")    
     print("Current Session:")
     for i in searchNumberFromSQL(number):
-        print (i[0]+str(i[1]))
+        print (i[0]+" "+str(i[1]))
     
     print()
 
     print ("DeepMem:")
     for i in searchDeepMemByNumber(number):
-        print (i[0]+str(i[1]))
+        print (i[0]+" "+str(i[1]))
     
     print("</div>")
 
