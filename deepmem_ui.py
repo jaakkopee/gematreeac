@@ -58,9 +58,11 @@ if inputVal.isnumeric():
     
     print()
 
-    print ("DeepMem:")
+    print ("DeepMem:\n(click word to add to session memory)")
     for i in searchDeepMemByNumber(number):
-        print (i[0]+" "+str(i[1]))
+        hyperWord="<a href='gematreeac.py?word="+i[0]+"'>"+i[0]+"</a>"
+        print (hyperWord, end=" ")
+        print (i[1])
     
     print("</div>")
     print("</body></html>")
