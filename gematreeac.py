@@ -69,6 +69,7 @@ if word == "SHOWDEEPMEM":
         print("<p>"+i[0]+ " "+ str(getGematria(i[0]))+"</p>")
     
     print("</div>")
+    print("</body></html>")
 
     con.close()
     conDM.close()
@@ -89,7 +90,7 @@ if word == "ADDTODEEPMEM":
             print ("Did not add '"+i[0]+"' for it was already in DeepMem")
 
     print("</div>")
-
+    print("</body></html>")
     con.close()
     conDM.close()
     sys.exit()
@@ -108,6 +109,7 @@ if word.isnumeric():
         print (i[0]+" "+str(i[1]))
     
     print("</div>")
+    print("</body></html>")
 
     con.close()
     conDM.close()
@@ -119,6 +121,7 @@ if word == "ALPHABET":
         print(i)
     
     print("</div>")
+    print("</body></html>")
     con.close()
     conDM.close()
     sys.exit()
@@ -130,12 +133,14 @@ if word == "CLEAR":
     con.close()
     conDM.close()
     print("<h1><center>Database Cleared</center></h1>")
+    print("</body></html>")
     sys.exit()
 
 if word == "SHOW":
     print("<div id='perkele'>")
     printDB()
     print("</div>")
+    print("</body></html>")
     con.close()
     conDM.close()
     sys.exit()
@@ -160,6 +165,7 @@ for i in wordlist:
 printDB()
 
 con.close()
+conDM.close()
 print("</div>")
 
 print("</body></html>")
