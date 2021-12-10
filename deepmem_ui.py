@@ -40,6 +40,8 @@ print(stylestr)
 print("</style></head>")
 print("<body>")
 
+print ("<a href='/index.html'>Home</a>")
+
 from deepmem import *
 from gemadbconn import *
 

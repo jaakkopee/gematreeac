@@ -39,6 +39,8 @@ print(stylestr)
 
 print("</style></head>")
 print("<body>")
+
+print ("<a href='/index.html'>Home</a>")
 from gemadbconn import *
 from deepmem import *
 
@@ -142,6 +144,7 @@ if word == "CLEAR":
 
 if word == "SHOW":
     print("<div id='perkele'>")
+    print("<h3>Click on gematria values to search DeepMem. Click on words to add to DeepMem.</h3>")
     printDB()
     print("</div>")
     print("</body></html>")
