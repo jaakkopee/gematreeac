@@ -80,7 +80,7 @@ if word == "SHOWDEEPMEM":
 if word == "ADDTODEEPMEM":
     words = getWordsFromSQL()
     
-    print("<div id='perkele2'>")
+    print("<div id='perkele'>")
     
     print("Words to DeepMem:")
     for i in words:
