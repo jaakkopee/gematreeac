@@ -19,6 +19,13 @@ stylestr = """
     font-size:20px;
     white-space:pre;
 }
+#perkele2 {
+    background-color:#ffaacc;
+    color:#0044ff;
+    font-family:times;
+    font-size:20px;
+}
+
 #DBG {
     background-color:#00008c;
     color:#ffffff;
@@ -42,6 +49,21 @@ except:
     word =''
 
 #word=word.replace(" ", "")
+
+if word == "SHOWDEEPMEM":
+    words = getWordsFromDeepMem()
+    print("<div id='perkele2'>")
+
+    for i in words:
+        print(i[0]+ " "+ str(getGematria(i[0])))
+    
+    print("</div>")
+
+    con.close()
+    conDM.close()
+    sys.exit()
+
+
 
 if word == "ADDTODEEPMEM":
     words = getWordsFromSQL()
