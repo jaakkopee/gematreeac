@@ -10,4 +10,4 @@ running code in jpts.aprx.io
 the latest algorithm is in ndigitsets3.py
 import ndigitsets3 in python3 and call addWord() and printAll()
 
-the database connection is probably broken due to me lazy.
+
