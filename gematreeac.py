@@ -169,6 +169,7 @@ wordlist=[word][0].split()
 for i in wordlist:
     insertWord(i)
 
+print("<h3>Click on gematria values to search DeepMem. Click on words to add to DeepMem.</h3>")
 printDB()
 
 con.close()
