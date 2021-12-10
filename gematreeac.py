@@ -54,8 +54,19 @@ if word == "SHOWDEEPMEM":
     words = getWordsFromDeepMem()
     print("<div id='perkele2'>")
 
+    for i in range(1, len(words)):
+            
+        key = words[i]
+
+        j= i-1
+        while j >= 0 and getGematria(key[0]) < getGematria(words[j][0]):
+            words[j+1] = words[j]
+            j-=1
+        words[j+1] = key
+
+
     for i in words:
-        print(i[0]+ " "+ str(getGematria(i[0])))
+        print("<p>"+i[0]+ " "+ str(getGematria(i[0]))+"</p>")
     
     print("</div>")
 
