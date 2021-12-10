@@ -132,7 +132,9 @@ if word == "CLEAR":
     con.commit()
     con.close()
     conDM.close()
-    print("<h1><center>Database Cleared</center></h1>")
+    print("<div id='perkele'>")
+    print("<h1><center>Erased Session Memory</center></h1>")
+    print("</div>")
     print("</body></html>")
     sys.exit()
 
