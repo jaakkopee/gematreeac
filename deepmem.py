@@ -26,7 +26,7 @@ def addWordToDeepMem(word):
 def getWordsFromDeepMem():
     global conDM, curDM
         
-    curDM.execute("select * from wordpool")
+    curDM.execute("select * from wordpool sort by word")
     data = curDM.fetchall()
     return data
 
