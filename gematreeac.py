@@ -51,21 +51,21 @@ except:
 #word=word.replace(" ", "")
 
 if word == "SHOWDEEPMEM":
-    words = getWordsFromDeepMem()
+    wordsDM = getWordsFromDeepMem()
     print("<div id='perkele2'>")
 
-    for i in range(1, len(words)):
+    for i in range(1, len(wordsDM)):
             
-        key = words[i]
+        key = wordsDM[i]
 
         j= i-1
-        while j >= 0 and getGematria(key[0]) < getGematria(words[j][0]):
-            words[j+1] = words[j]
+        while j >= 0 and getGematria(key[0]) < getGematria(wordsDM[j][0]):
+            wordsDM[j+1] = wordsDM[j]
             j-=1
-        words[j+1] = key
+        wordsDM[j+1] = key
 
 
-    for i in words:
+    for i in wordsDM:
         print("<p>"+i[0]+ " "+ str(getGematria(i[0]))+"</p>")
     
     print("</div>")
@@ -78,12 +78,12 @@ if word == "SHOWDEEPMEM":
 
 
 if word == "ADDTODEEPMEM":
-    words = getWordsFromSQL()
+    wordsDM2 = getWordsFromSQL()
     
     print("<div id='perkele'>")
     
     print("Words to DeepMem:")
-    for i in words:
+    for i in wordsDM2:
         if addWordToDeepMem(i[0]):
             print ("Added '"+i[0]+"'")
         else:

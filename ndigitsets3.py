@@ -91,7 +91,9 @@ class Root:
                 gemVal = getGematria(j)
                 pl = getParentList(gemVal)[1:]
                 if  pl == i:
-                    print (str(gemVal)+" "+j, end="  ")
+                    hyperGemValue="<a href='deepmem_ui.py?value="+str(gemVal)+"'>"+str(gemVal)+"</a>"
+                    hyperWord="<a href='deepmem_ui.py?value="+j+"'>"+j+"</a>"
+                    print (hyperGemValue+" "+hyperWord, end="  ")
             print()
         print()
 
