@@ -98,6 +98,7 @@ if word == "ADDTODEEPMEM":
     sys.exit()
 
 if word.isnumeric():
+
     number = int(word)
     print("<div id='perkele'>")    
     print("Current Session:")

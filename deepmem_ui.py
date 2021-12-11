@@ -59,7 +59,6 @@ if inputVal.isnumeric():
     for i in searchNumberFromSQL(number):
         hyperWord="<a href='deepmem_ui.py?value="+i[0]+"'>"+i[0]+"</a>"
         print (hyperWord+" "+str(i[1]))
-    
     print()
 
     print ("DeepMem:\n(click word to add to session memory)")
@@ -83,7 +82,8 @@ if inputVal.isalpha():
         print ("Added '"+inputVal+"'")
     else:
         print ("Did not add '"+inputVal+"' for it was already in DeepMem")
-
+    print("<a href='deepmem_ui.py?value="+getGematria(inputVal)+"'>"+"back"+"</a>")
+    
     print("</div>")
     print("</body></html>")
     con.close()
