@@ -40,8 +40,6 @@ print(stylestr)
 print("</style></head>")
 print("<body>")
 
-print ("<a href='/index.html'>Home</a>", end=" ")
-print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
 
 from deepmem import *
 from gemadbconn import *
@@ -54,9 +52,14 @@ except:
 
 if inputVal.isnumeric():
     number = int(inputVal)
+    
+    print ("<a href='/index.html'>Home</a>", end=" ")
+    print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
+
     print("<div id='perkele'>")    
     print("Current Session:")
     print("(click word to add into DeepMem)")
+
     for i in searchNumberFromSQL(number):
         hyperWord="<a href='deepmem_ui.py?value="+i[0]+"'>"+i[0]+"</a>"
         print (hyperWord+" "+str(i[1]))
@@ -76,14 +79,18 @@ if inputVal.isnumeric():
     sys.exit()
 
 if inputVal.isalpha():
-    print("<div id='perkele'>")
+
+    print ("<a href='/index.html'>Home</a>", end=" ")
+    print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
+    print ("<a href='deepmem_ui.py?value="+str(getGematria(inputVal))+"'>"+"Back to search results"+"</a>")
+    
+    print ("<div id='perkele'>")
     
     print("Words to DeepMem:")
     if addWordToDeepMem(inputVal):
         print ("Added '"+inputVal+"'")
     else:
         print ("Did not add '"+inputVal+"' for it was already in DeepMem")
-    print("<a href='deepmem_ui.py?value="+str(getGematria(inputVal))+"'>"+"back"+"</a>")
 
     print("</div>")
     print("</body></html>")

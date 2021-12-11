@@ -40,9 +40,6 @@ print(stylestr)
 print("</style></head>")
 print("<body>")
 
-print ("<a href='/index.html'>Home</a>", end=" ")
-print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
-
 from gemadbconn import *
 from deepmem import *
 
@@ -55,6 +52,9 @@ except:
 #word=word.replace(" ", "")
 
 if word == "SHOWDEEPMEM":
+    print ("<a href='/index.html'>Home</a>", end=" ")
+    print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
+
     wordsDM = getWordsFromDeepMem()
     print("<div id='perkele2'>")
 
@@ -82,6 +82,9 @@ if word == "SHOWDEEPMEM":
 
 
 if word == "ADDTODEEPMEM":
+    print ("<a href='/index.html'>Home</a>", end=" ")
+    print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
+    
     wordsDM2 = getWordsFromSQL()
     
     print("<div id='perkele'>")
@@ -100,6 +103,9 @@ if word == "ADDTODEEPMEM":
     sys.exit()
 
 if word.isnumeric():
+    print ("<a href='/index.html'>Home</a>", end=" ")
+    print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
+    print ("<a href='deepmem_ui.py?value="+word+"'>"+"Back to search results"+"</a>")
 
     number = int(word)
     print("<div id='perkele'>")    
@@ -124,6 +130,9 @@ if word.isnumeric():
     sys.exit()
 
 if word == "ALPHABET":
+    print ("<a href='/index.html'>Home</a>", end=" ")
+    print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
+
     print("<div id='perkele'>")
     for i in alphabet.items():
         print(i)
@@ -135,6 +144,9 @@ if word == "ALPHABET":
     sys.exit()
 
 if word == "CLEAR":
+    print ("<a href='/index.html'>Home</a>", end=" ")
+    print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
+
     clearRAM()
     cur.execute("delete from wordpool")
     con.commit()
@@ -147,6 +159,7 @@ if word == "CLEAR":
     sys.exit()
 
 if word == "SHOW":
+    print ("<a href='/index.html'>Home</a>", end=" ")    
     print("<div id='perkele'>")
     print("<h3>Click on gematria values to search DeepMem. Click on words to add to DeepMem.</h3>")
     printDB()
@@ -156,6 +169,9 @@ if word == "SHOW":
     conDM.close()
     sys.exit()
     
+print ("<a href='/index.html'>Home</a>", end=" ")
+print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
+
 print("<div id='perkele'>")
 
 #if word and word.islower() and word.isalpha():
