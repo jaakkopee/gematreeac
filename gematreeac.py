@@ -84,7 +84,7 @@ if word == "SHOWDEEPMEM":
 if word == "ADDTODEEPMEM":
     print ("<a href='/index.html'>Home</a>", end=" ")
     print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
-    
+
     wordsDM2 = getWordsFromSQL()
     
     print("<div id='perkele'>")
