@@ -101,11 +101,10 @@ if word.isnumeric():
     number = int(word)
     print("<div id='perkele'>")    
     print("Current Session:")
-    print("(click words to add to DeepMem)")
+    print("(click word to add to DeepMem)")
     for i in searchNumberFromSQL(number):
         hyperWord="<a href='deepmem_ui.py?value="+i[0]+"'>"+i[0]+"</a>"
-        print (hyperWord+" "+str(i[1]))
-    
+        print (hyperWord+" "+str(i[1]))        
     print()
 
     print ("DeepMem:\n(click word to add to session memory)")
