@@ -57,8 +57,8 @@ except:
 if inputVal.isnumeric():
     number = int(inputVal)
     
-    print ("a id='hyperlinque' href='/index.html'>Home</a>", end=" ")
-    print ("a id='hyperlinque' href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
+    print ("<a id='hyperlinque' href='/index.html'>Home</a>", end=" ")
+    print ("<a id='hyperlinque' href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
 
     print("<div id='perkele'>")    
     print("Current Session:")
@@ -84,9 +84,9 @@ if inputVal.isnumeric():
 
 if inputVal.isalpha():
 
-    print ("a id='hyperlinque' href='/index.html'>Home</a>", end=" ")
-    print ("a id='hyperlinque' href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
-    print ("a id='hyperlinque' href='deepmem_ui.py?value="+str(getGematria(inputVal))+"'>"+"Back to search results"+"</a>")
+    print ("<a id='hyperlinque' href='/index.html'>Home</a>", end=" ")
+    print ("<a id='hyperlinque' href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
+    print ("<a id='hyperlinque' href='deepmem_ui.py?value="+str(getGematria(inputVal))+"'>"+"Back to search results"+"</a>")
     
     print ("<div id='perkele'>")
     
