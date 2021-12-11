@@ -12,6 +12,10 @@ print("<meta charset='utf-8'>")
 print("<style>")
 
 stylestr = """
+#hyperlinque{
+    background-color:#000055;
+    font-size:20px;
+}
 #perkele {
     background-color:#ffaacc;
     color:#0044ff;
@@ -52,8 +56,8 @@ except:
 #word=word.replace(" ", "")
 
 if word == "SHOWDEEPMEM":
-    print ("<a href='/index.html'>Home</a>", end=" ")
-    print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
+    print ("a id='hyperlinque' href='/index.html'>Home</a>", end=" ")
+    print ("a id='hyperlinque' href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
 
     wordsDM = getWordsFromDeepMem()
     print("<div id='perkele2'>")
@@ -82,8 +86,8 @@ if word == "SHOWDEEPMEM":
 
 
 if word == "ADDTODEEPMEM":
-    print ("<a href='/index.html'>Home</a>", end=" ")
-    print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
+    print ("a id='hyperlinque' href='/index.html'>Home</a>", end=" ")
+    print ("a id='hyperlinque' href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
 
     wordsDM2 = getWordsFromSQL()
     
@@ -103,8 +107,8 @@ if word == "ADDTODEEPMEM":
     sys.exit()
 
 if word.isnumeric():
-    print ("<a href='/index.html'>Home</a>", end=" ")
-    print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
+    print ("a id='hyperlinque' href='/index.html'>Home</a>", end=" ")
+    print ("a id='hyperlinque' href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
     
     number = int(word)
     print("<div id='perkele'>")    
@@ -129,8 +133,8 @@ if word.isnumeric():
     sys.exit()
 
 if word == "ALPHABET":
-    print ("<a href='/index.html'>Home</a>", end=" ")
-    print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
+    print ("a id='hyperlinque' href='/index.html'>Home</a>", end=" ")
+    print ("a id='hyperlinque' href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
 
     print("<div id='perkele'>")
     for i in alphabet.items():
@@ -143,8 +147,8 @@ if word == "ALPHABET":
     sys.exit()
 
 if word == "CLEAR":
-    print ("<a href='/index.html'>Home</a>", end=" ")
-    print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
+    print ("a id='hyperlinque' href='/index.html'>Home</a>", end=" ")
+    print ("a id='hyperlinque' href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
 
     clearRAM()
     cur.execute("delete from wordpool")
@@ -158,7 +162,7 @@ if word == "CLEAR":
     sys.exit()
 
 if word == "SHOW":
-    print ("<a href='/index.html'>Home</a>", end=" ")    
+    print ("a id='hyperlinque' href='/index.html'>Home</a>", end=" ")    
     print("<div id='perkele'>")
     print("<h3>Click on gematria values to search DeepMem. Click on words to add to DeepMem.</h3>")
     printDB()
@@ -168,7 +172,7 @@ if word == "SHOW":
     conDM.close()
     sys.exit()
     
-print ("<a href='/index.html'>Home</a>", end=" ")
+print ("a id='hyperlinque' href='/index.html'>Home</a>", end=" ")
 
 print("<div id='perkele'>")
 
