@@ -82,8 +82,8 @@ if inputVal.isalpha():
         print ("Added '"+inputVal+"'")
     else:
         print ("Did not add '"+inputVal+"' for it was already in DeepMem")
-    print("<a href='deepmem_ui.py?value="+getGematria(inputVal)+"'>"+"back"+"</a>")
-    
+    print("<a href='deepmem_ui.py?value="+str(getGematria(inputVal))+"'>"+"back"+"</a>")
+
     print("</div>")
     print("</body></html>")
     con.close()
