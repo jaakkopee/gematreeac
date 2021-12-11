@@ -102,7 +102,8 @@ if word.isnumeric():
     print("<div id='perkele'>")    
     print("Current Session:")
     for i in searchNumberFromSQL(number):
-        print (i[0]+" "+str(i[1]))
+        hyperWord="<a href='deepmem_ui.py?value="+i[0]+"'>"+i[0]+"</a>"
+        print (hyperWord+" "+str(i[1]))
     
     print()
 
