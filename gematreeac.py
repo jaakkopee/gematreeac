@@ -169,7 +169,6 @@ if word == "SHOW":
     sys.exit()
     
 print ("<a href='/index.html'>Home</a>", end=" ")
-print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
 
 print("<div id='perkele'>")
 
