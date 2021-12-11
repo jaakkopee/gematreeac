@@ -105,8 +105,7 @@ if word == "ADDTODEEPMEM":
 if word.isnumeric():
     print ("<a href='/index.html'>Home</a>", end=" ")
     print ("<a href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
-    print ("<a href='deepmem_ui.py?value="+word+"'>"+"Back to search results"+"</a>")
-
+    
     number = int(word)
     print("<div id='perkele'>")    
     print("Current Session:")
