@@ -55,7 +55,9 @@ if inputVal.isnumeric():
     number = int(inputVal)
     print("<div id='perkele'>")    
     print("Current Session:")
+    print("(click word to add into DeepMem")
     for i in searchNumberFromSQL(number):
+        hyperWord="<a href='deepmem_ui.py?value="+i[0]+"'>"+i[0]+"</a>"
         print (i[0]+" "+str(i[1]))
     
     print()
