@@ -13,7 +13,7 @@ print("<style>")
 
 stylestr = """
 #hyperlinque{
-    background-color:#000055;
+    background-color:#aa0055;
     font-size:20px;
 }
 #perkele {
