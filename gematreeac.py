@@ -165,7 +165,7 @@ if word == "CLEAR":
 if word == "SHOW":
     print ("<a id='hyperlinque' href='/index.html'>Home</a>", end=" ")    
     print("<div id='perkele'>")
-    print("<h3>Click on gematria values to search DeepMem. Click on words to add to DeepMem.</h3>")
+    print("<h3>Click on gematria values to search DeepMem.\n Click on words to see more information</h3>")
     printDB()
     print("</div>")
     print("</body></html>")
@@ -192,7 +192,7 @@ wordlist=[word][0].split()
 for i in wordlist:
     insertWord(i)
 
-print("<h3>Click on gematria values to search DeepMem. Click on words to add to DeepMem.</h3>")
+print("<h3>Click on gematria values to search DeepMem. Click on words to see nore information.</h3>")
 printDB()
 
 con.close()
