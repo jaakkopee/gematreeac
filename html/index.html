@@ -1,0 +1,122 @@
+<html>
+  <head>
+    <title>gematreeac word classification algorithm (gematria/numerology) by Jake Pii Taivossuora 2021</title>
+    <meta charset="utf-8">
+    
+    <style type="text/css">
+      
+      #p01 {
+	  color:#112288;
+	  font-family:courier;
+	  font-size:18px;
+	  background-color:#ff6644;
+	  text-align:center;
+      }
+
+      #selitys {
+	  font-size:20px;
+	  text-align:center;
+      }
+
+      #p666 {
+	  color:#008866;
+	  background-color:#000021;
+	  font-size:32px;
+	  text-align:center;
+      }
+
+      #body01 {
+	  background-color:#ddddaa
+      }
+
+      #cmd {
+	  font-size:21px;
+	  text-align:center;
+	  background-color:#ff00aa;
+	  color:#000000;
+      }
+      #ohje1 {
+	  color:#aa88ff;
+	  background-color:#000000;
+	  font-size:26px;
+      }
+
+      #ohje2 {
+	  color:#000000;
+	  background-color:#ffffff;
+	  font-size:20px;
+      }
+
+      #OBS {
+	  color:red;
+	  background-color:lightblue;
+	  font-size:20px;
+	  text-align:center;
+      }
+      
+    </style>
+    
+  </head>
+  
+  <body id="body01">
+    <center><img src="IMG_6232.JPG" width="800" height="200"></center>
+    <div id="p666">gematreeac input</div>
+
+
+
+    <p id="OBS">
+      Notice that the session and DeepMem databases are visible to all and only
+      session memory can be erased!
+    </p>
+      
+    
+    
+    <div id="cmd">
+      Click on commands or enter them in the textfield below:
+      <p><a href="/cgi-bin/gematreeac.py?word=CLEAR">CLEAR</a> empties session memory</p>
+      <p><a href="/cgi-bin/gematreeac.py?word=SHOW">SHOW</a></p>
+	 shows classified words in current session
+      <p><a href="/cgi-bin/gematreeac.py?word=ALPHABET">ALPHABET</a></p>
+	prints alphabet in use
+      <p><a href="/cgi-bin/gematreeac.py?word=ADDTODEEPMEM">ADDTODEEPMEM</a></p>
+	    adds all words in current session to DeepMem
+	    (permanent memory, not erasable)
+      <p><a href="/cgi-bin/gematreeac.py?word=SHOWDEEPMEM">SHOWDEEPMEM</a></p>
+	       lists all words and gematria values in DeepMem
+
+      <p id="ohje2">
+	Enter a number to search words from current session and DeepMem by gematria value
+      </p>
+
+      <p id="ohje1">
+	To add data to the session memory, submit any text (word, sentence etc.) written or copy-pasted in the text field below
+      </p>
+    </div>
+    
+    <div id="p01">
+    <form action = "/cgi-bin/gematreeac.py" method = "get">
+      <input type = "text" name = "word">  <br />
+      <input type = "submit" value = "Submit" />
+    </form>
+    </div>
+
+    
+    <p id="selitys">
+      Gematreeac code is in
+      <a href="https://github.com/jaakkopee/gematreeac">
+	https://github.com/jaakkopee/gematreeac</a>
+      Use as thou wilt.
+    </p>
+    
+    <p id="selitys">
+      <a href="./Gematreeac_intro.pdf">
+	A short introduction.
+      </a>
+    </p>
+
+    <p id="selitys">
+      This software is in test and development stage. <a href="./bugs.html">Issues and bugs</a>
+    </p>
+
+  </body>
+</html>
