@@ -15,7 +15,7 @@ stylestr = """
 #hyperlinque{
     background-color:#aa0055;
     color:#ffffff;
-    font-size:86px;
+    font-size:72px;
 }
 #perkele {
     background-color:#ffaacc;
@@ -52,7 +52,10 @@ except:
 
 print("</style></head>")
 print("<body>")
-print("<p>Information on word "+word+" coming soon...")
+print ("<a id='hyperlinque' href='/index.html'>Home</a>", end=" ")
+print ("<a id='hyperlinque' href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
+
+print("<p>Information on word '"+word+"' coming soon...")
 print("</body></html>")
 
 con.close()
