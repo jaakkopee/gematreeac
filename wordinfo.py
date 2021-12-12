@@ -7,7 +7,6 @@ print("Content-Type: text/html\n\n")    # HTML is following
 print()                                 # blank line, end of headers
 
 print("<html><head>")
-
 print("<meta charset='utf-8'>")
 print("<style>")
 
@@ -15,7 +14,7 @@ stylestr = """
 #hyperlinque{
     background-color:#aa0055;
     color:#ffffff;
-    font-size:72px;
+    font-size:56px;
 }
 #perkele {
     background-color:#ffaacc;
