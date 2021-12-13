@@ -20,7 +20,8 @@ def permutateString(stringToPremutate):
         tmpStr =""
         for j in i:
             tmpStr += j
-        outList += [tmpStr]
+        if tmpStr not in outList:
+            outList += [tmpStr]
 
     return outList
 
@@ -125,22 +126,23 @@ print("<p>Information on word '"+word+"':</p>")
 print ("<h3>Gematria value: "+str(getGematria(word))+"</h3>")
 
 print ("<h3>Anagrams, click on word to add to Session Memory.</h3>")
-
-laskuri = 0
-print("<p>")
-for i in permutateString(word):
-    laskuri+=1
-    print ("<a href='gematreeac.py?word="+i+"'>"+i+"</a>", end = " ")
-    if laskuri > 6:
-        laskuri = 0
-        print("</p><p>")
+if len (word) < 8:
+    laskuri = 0
+    print("<p>")
+    for i in permutateString(word):
+        laskuri+=1
+        print ("<a href='gematreeac.py?word="+i+"'>"+i+"</a>", end = " ")
+        if laskuri > 6:
+            laskuri = 0
+            print("</p><p>")
+else: print("Too long a word for anagram printout. Only words shorter than 8 letters are processed.")
 
 print()
-laskuri=0
-print("<h3>Same-rooted numbers in N-Digit-Sets 1,...,5: (click on numbers to search session memory and DeepMem")
+print("<h3>Same-rooted numbers in N-Digit-Sets 1,...,4: (click on numbers to search session memory and DeepMem")
 print("<p>")
-for i in range(1, 6):
+for i in range(1, 5):
     print()
+    laskuri=0
     print ("<h3>N-Digit-Set: "+str(i)+"</h3>")
     print()
     for j in getNWCPFromNDS(getGematria(word), i):
