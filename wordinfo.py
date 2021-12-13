@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 
-import cgi, cgitb, sys
+import cgi, cgitb
 cgitb.enable()
 from math import pow
 from itertools import permutations
-from getwordsfromdbs import *
+from getwordsfromdbs import searchDeepMemByNumber, getWordsFromSQLByNumber
 
 alphabet = {"0":0, "a":1, "b":2, "c":3, "d":4, "e":5,"f":6,"g":7,"h":8,"i":9,"j":10,"k":20,"l":30,"m":40,"n":50,"o":60,"p":70,"q":80,"r":90,"s":100,"t":200,"u":300,"v":400,"w":500,"x":600,"y":700,"z":800,"å":900,"ä":1000,"ö":2000}
 
@@ -139,20 +139,31 @@ if len (word) < 8:
 else: print("Too long a word for anagram printout. Only words shorter than 8 letters are processed.")
 
 print()
-print("<h3>Same-rooted numbers in N-Digit-Sets 1,...,4: (click on numbers to search session memory and DeepMem")
+print("<h3>Same-rooted numbers in N-Digit-Sets 1,...,4:</h3>")
+
+print( "<p>CLick on SM-words to add them to DeepMem.\
+     Click on DM-words to add them to Session Memory.\
+    Click on numbers to search session memory and DeepMem</p>")
+
 print("<p>")
 for i in range(1, 5):
     print()
     laskuri=0
     print ("<h3>N-Digit-Set: "+str(i)+"</h3>")
-    print()
     for j in getNWCPFromNDS(getGematria(word), i):
         print ("<a href='gematreeac.py?word="+str(j)+"'>"+str(j)+"</a>", end= " ")
+        
+        print("{", end=" ")
+        print ("SM:", end=" ")
         for k in getWordsFromSQLByNumber(j):
-            print(k, end=" ")
+            print("<a href='deepmem_ui.py?value="+k+"'>"+k+"</a>", end=" ")
+
+        print ("DM:", end=" ")
         for k in searchDeepMemByNumber(j):
-            print(k, end=" ")
-            
+            print("<a href='gematreeac.py?word="+k[0]+"'>"+k[0]+"</a>", end=" ")
+
+        print("}", end=" ")
+
         laskuri += 1
         if laskuri > 6:
             laskuri=0
