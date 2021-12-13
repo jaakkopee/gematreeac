@@ -15,7 +15,7 @@ stylestr = """
 #hyperlinque{
     background-color:#aa0055;
     color:#ffffff;
-    font-size:56px;
+    font-size:40px;
 }
 #perkele {
     background-color:#ffaacc;
