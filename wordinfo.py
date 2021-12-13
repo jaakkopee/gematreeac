@@ -60,11 +60,11 @@ def getRootNumber(number):
     return number
 
 #NWCP = numbers with common parents
-def getNWCPFromNDS(number):
-    nds = getNDS(len(str(number)))
+def getNWCPFromNDS(number, ndigitset):
+    nds = getNDS(ndigitset)
     outSet = []
     for i in nds:
-        if findParent(number) == findParent(i):
+        if getRootNumber(number) == getRootNumber(i):
             outSet += [i]
 
     return outSet
@@ -107,9 +107,6 @@ stylestr = """
 """
 
 print(stylestr)
-from gemadbconn import *
-from deepmem import *
-from deepmem_ui import *
 
 form = cgi.FieldStorage()
 try:
@@ -122,25 +119,40 @@ print("<body>")
 print ("<a id='hyperlinque' href='/index.html'>Home</a>", end=" ")
 print ("<a id='hyperlinque' href='gematreeac.py?word=SHOW'>"+"Session Memory View"+"</a>")
 
-print("<div id='perkele'>")
-print("<p>Information on word '"+word+"':")
-print ("Anagrams, click on word to add to DeepMem.")
+print("<div id='perkele2'>")
+print("<p>Information on word '"+word+"':</p>")
 
+print ("<h3>Gematria value: "+str(getGematria(word))+"</h3>")
+
+print ("<h3>Anagrams, click on word to add to Session Memory.</h3>")
+
+laskuri = 0
+print("<p>")
 for i in permutateString(word):
-    laskuri = 0
-    print ("<a href='deepmem_io.py?value="+word+"'>"+word+"</a> "+"<a href='deepmem_io.py?value="+getGematria(word)+"'>"+getGematria(word)+"</a>", end = " ")
     laskuri+=1
-    if laskuri == 10:
+    print ("<a href='gematreeac.py?word="+i+"'>"+i+"</a>", end = " ")
+    if laskuri > 6:
         laskuri = 0
-        print()
+        print("</p><p>")
 
-
+print()
+laskuri=0
+print("<h3>Same-rooted numbers in N-Digit-Sets 1,...,5: (click on numbers to search session memory and DeepMem")
+print("<p>")
+for i in range(1, 6):
+    print()
+    print ("<h3>N-Digit-Set: "+str(i)+"</h3>")
+    print()
+    for j in getNWCPFromNDS(getGematria(word), i):
+        print ("<a href='gematreeac.py?word="+str(j)+"'>"+str(j)+"</a>", end= " ")
+        laskuri += 1
+        if laskuri > 6:
+            laskuri=0
+            print("</p><p>")
+    print()
 
 
 
 print("</div>")
 
 print("</body></html>")
-
-con.close()
-conDM.close()

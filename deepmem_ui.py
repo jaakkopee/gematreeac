@@ -103,7 +103,7 @@ if inputVal.isalpha():
     conDM.close()
     sys.exit()
 
-print("ERROR")
+print("ERROR in deepmem_ui.py")
 print("</body></html>")
 con.close()
 conDM.close()
