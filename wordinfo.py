@@ -124,7 +124,9 @@ print ("<a id='hyperlinque' href='gematreeac.py?word=SHOW'>"+"Session Memory Vie
 print("<div id='perkele2'>")
 print("<p>Information on word '"+word+"':</p>")
 
-print ("<h3>Gematria value: "+str(getGematria(word))+"</h3>")
+print ("<h3>Gematria value: "+str(getGematria(word))+\
+    " / Route To Root: "+ str(getParentList(getGematria(word))[1:])+\
+        " / Root: "+str(getRootNumber(getGematria(word)))+"</h3>")
 
 print ("<h3>Anagrams, click on word to add to Session Memory.</h3>")
 if len (word) < 8:
@@ -139,7 +141,7 @@ if len (word) < 8:
 else: print("Too long a word for anagram printout. Only words shorter than 8 letters are processed.")
 
 print()
-print("<h3>Same-rooted numbers in N-Digit-Sets 1,...,4:</h3>")
+print("<h3>Same-rooted numbers in n-Digit-Sets 1 to 4:</h3>")
 
 print( "<p>CLick on SM-words to add them to DeepMem.\
      Click on DM-words to add them to Session Memory.\
@@ -149,7 +151,7 @@ print("<p>")
 for i in range(1, 5):
     print()
     laskuri=0
-    print ("<h3>N-Digit-Set: "+str(i)+"</h3>")
+    print ("<h3>n-Digit-Set, n="+str(i)+"</h3>")
     for j in getNWCPFromNDS(getGematria(word), i):
         print ("<a href='gematreeac.py?word="+str(j)+"'>"+str(j)+"</a>", end= " ")
         
@@ -165,7 +167,7 @@ for i in range(1, 5):
         print("}", end=" ")
 
         laskuri += 1
-        if laskuri > 6:
+        if laskuri > 4:
             laskuri=0
             print("</p><p>")
     print()
