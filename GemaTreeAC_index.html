@@ -672,12 +672,6 @@
             upDateSentenceFormulaNoChange()
             return
 
-        def clearSentenceFormulaNoMouse():
-            localStorage.setItem("sentenceFormula", "0 ")
-            initFS()
-            upDateSentenceFormulaNoChange()
-            return
-
         def updateFsIdx():
             fsIdxStr=localStorage.getItem("finalSentenceIdx")
             fsIdxStr+=" 0 "
