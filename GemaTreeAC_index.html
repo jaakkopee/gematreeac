@@ -755,13 +755,7 @@
         
         updateGemValMsgNotMouse()
         
-        if localStorage.getItem("cipher"):
-            #DBG check:
-            if localStorage.getItem("cipher") not in list(allCiphers.keys()):
-                localStorage.setItem("cipher", "ScaExt")
-
-            document.getElementById('cipherButton').innerHTML="Cipher In Use: "+localStorage.getItem("cipher")
-        else:
+        if not localStorage.getItem("cipher"):
             localStorage.setItem("cipher", "ScaExt")
             document.getElementById('cipherButton').innerHTML="Cipher In Use: "+localStorage.getItem("cipher")
 
