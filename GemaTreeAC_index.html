@@ -142,40 +142,40 @@
         <div class="dropdown">
             <button class="dropbtn" id="cipherButton">Cipher in use</button>
             <div class="dropdown-content">
-                <a href="#" id="ccscaext">English/Scandinavian Extended</a>
-                <a href="#" id="ccengextrev">English Extended Reverse</a>
-                <a href="#" id="ccord">Ordinal</a>
-                <a href="#" id="ccordrev">Reverse Ordinal</a>
-                <a href="#" id="ccfr">Full Reduction</a>
-                <a href="#" id="ccfrrev">Reverse Full Reduction</a>
-                <a href="#" id="ccsr">Single Reduction</a>
-                <a href="#" id="ccsrrev">Reverse Single Reduction</a>
-                <!--a href="#" id="ccsat">Satanic 36</a>
-                <a href="#" id="ccsatrev">Reverse Satanic 36</a>
-                <a href="#" id="ccinv">Inverse</a>
-                <a href="#" id="ccinvrev">Reverse Inverse</a>
-                <a href="#" id="cctri">Tridenary</a>
-                <a href="#" id="cctrirev">Reverse Tridenary</a>
-                <a href="#" id="cctriad">Tridenary AscDesc</a>
-                <a href="#" id="cctriadrev">Reverse Tridenary AscDesc</a>
-                <a href="#" id="cc6">Six</a>
-                <a href="#" id="cc6rev">Reverse Six</a>
-                <a href="#" id="cc11">Eleven</a>
-                <a href="#" id="cc11rev">Reverse Eleven</a>
-                <a href="#" id="cc18">Eighteen</a>
-                <a href="#" id="cc18rev">Reverse Eighteen</a>
-                <a href="#" id="cc22">Twenty Two</a>
-                <a href="#" id="cc22rev">Reverse Twenty Two</a>
-                <a href="#" id="cc26">Twenty Six</a>
-                <a href="#" id="cc26rev">Reverse Twenty Six</a>
-                <a href="#" id="cc27">Twenty Seven</a>
-                <a href="#" id="cc27rev">Reverse Twenty Seven</a>
-                <a href="#" id="cc28">Twenty Eight</a>
-                <a href="#" id="cc28rev">Reverse Twenty Eight</a>
-                <a href="#" id="cc33">Thirty Three</a>
-                <a href="#" id="cc33rev">Reverse Thirty Three</a>
-                <a href="#" id="cc37">Thirty Seven</a>
-                <a href="#" id="cc37rev">Reverse Thirty Seven</a-->
+                <a href="#smview" id="ccscaext">English/Scandinavian Extended</a>
+                <a href="#smview" id="ccengextrev">English Extended Reverse</a>
+                <a href="#smview" id="ccord">Ordinal</a>
+                <a href="#smview" id="ccordrev">Reverse Ordinal</a>
+                <a href="#smview" id="ccfr">Full Reduction</a>
+                <a href="#smview" id="ccfrrev">Reverse Full Reduction</a>
+                <a href="#smview" id="ccsr">Single Reduction</a>
+                <a href="#smview" id="ccsrrev">Reverse Single Reduction</a>
+                <!--a href="#smview" id="ccsat">Satanic 36</a>
+                <a href="#smview" id="ccsatrev">Reverse Satanic 36</a>
+                <a href="#smview" id="ccinv">Inverse</a>
+                <a href="#smview" id="ccinvrev">Reverse Inverse</a>
+                <a href="#smview" id="cctri">Tridenary</a>
+                <a href="#smview" id="cctrirev">Reverse Tridenary</a>
+                <a href="#smview" id="cctriad">Tridenary AscDesc</a>
+                <a href="#smview" id="cctriadrev">Reverse Tridenary AscDesc</a>
+                <a href="#smview" id="cc6">Six</a>
+                <a href="#smview" id="cc6rev">Reverse Six</a>
+                <a href="#smview" id="cc11">Eleven</a>
+                <a href="#smview" id="cc11rev">Reverse Eleven</a>
+                <a href="#smview" id="cc18">Eighteen</a>
+                <a href="#smview" id="cc18rev">Reverse Eighteen</a>
+                <a href="#smview" id="cc22">Twenty Two</a>
+                <a href="#smview" id="cc22rev">Reverse Twenty Two</a>
+                <a href="#smview" id="cc26">Twenty Six</a>
+                <a href="#smview" id="cc26rev">Reverse Twenty Six</a>
+                <a href="#smview" id="cc27">Twenty Seven</a>
+                <a href="#smview" id="cc27rev">Reverse Twenty Seven</a>
+                <a href="#smview" id="cc28">Twenty Eight</a>
+                <a href="#smview" id="cc28rev">Reverse Twenty Eight</a>
+                <a href="#smview" id="cc33">Thirty Three</a>
+                <a href="#smview" id="cc33rev">Reverse Thirty Three</a>
+                <a href="#smview" id="cc37">Thirty Seven</a>
+                <a href="#smview" id="cc37rev">Reverse Thirty Seven</a-->
             </div>
           </div><br />
         <py-script>
@@ -751,14 +751,14 @@
         #localStorage.removeItem("words")
         #localStorage.removeItem("sentenceFormula")
         #localStorage.removeItem("finalSentenceIdx")
-        localStorage.removeItem("cipher")
+        #localStorage.removeItem("cipher")
         #end DBG
         
         if not localStorage.getItem("cipher"):
             localStorage.setItem("cipher", "ScaExt")
 
         document.getElementById('cipherButton').innerHTML="Cipher In Use: "+localStorage.getItem("cipher")
-        
+
         if not localStorage.getItem("words"):
             localStorage.setItem("words", "0 ")
 
