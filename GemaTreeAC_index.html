@@ -758,8 +758,6 @@
             localStorage.setItem("cipher", "ScaExt")
 
         document.getElementById('cipherButton').innerHTML="Cipher In Use: "+localStorage.getItem("cipher")
-
-        updateGemValMsgNotMouse()
         
         if not localStorage.getItem("words"):
             localStorage.setItem("words", "0 ")
@@ -775,7 +773,7 @@
         makeSWListeners()
         makeWordGrpListeners()
         upDateSentenceFormulaNoChange()
-
+        updateGemValMsgNotMouse()
         </py-script>
 
         <!--py-repl></py-repl-->
