@@ -1,74 +1,25 @@
 from math import pow
-
-alphabet = {"0":0, "a":1, "b":2, "c":3, "d":4, "e":5,"f":6,"g":7,"h":8,"i":9,"j":10,"k":20,"l":30,"m":40,"n":50,"o":60,"p":70,"q":80,"r":90,"s":100,"t":200,"u":300,"v":400,"w":500,"x":600,"y":700,"z":800,"å":900,"ä":1000,"ö":2000}
-
-def getGematria(word):
-    number=0
-    for i in word:
-        number+=alphabet[i]
-		
-    return number
-
-#NDS = n-digit set
-def getNDS(nDigits):
-    highestNumberInNDS = int("9"*nDigits)
-    lowestNumberInNDS = int(pow(10, nDigits-1))
-    return range(lowestNumberInNDS, highestNumberInNDS+1)
-
-def findParent(number):
-	vstr=str(number)
-	outVal=0
-	for i in vstr:
-		outVal+=int(i)
-		
-	return outVal
-
-def getParentList(number):
-    parList =[number]
-    parInt = number
-    while parInt > 9:
-        parInt = findParent(parInt)
-        parList+= [parInt]
-    return parList
-
-def getRootNumber(number):
-    while number > 9:
-        number=findParent(number)
-    return number
-
-#NWCP = numbers with common parents
-def getNWCPFromNDS(number):
-    nds = getNDS(len(str(number)))
-    outSet = []
-    for i in nds:
-        if findParent(number) == findParent(i):
-            outSet += [i]
-
-    return outSet
-
+from gemNumFuncs import *
+from alphabet import getCipher
 
 class Root:
-    def __init__(self, word):
+    def __init__(self, word, currentCipher):
         chkWord=word
-        alphakeys = list(alphabet.keys())
+        alphakeys = list(getCipher(currentCipher).keys())
         for i in chkWord:
             if i not in alphakeys:
                 word=word.replace(i, "0")
 
-        gemVal = getGematria(word)
+        gemVal = getGematria(word, currentCipher)
         self.root = getRootNumber(gemVal)
         self.words = [word]
         self.routes = [getParentList(gemVal)[1:]]
+        self.printed=[]
         return
 
-    def addWord(self, word):
-        chkWord=word
-        alphakeys = list(alphabet.keys())
-        for i in chkWord:
-            if i not in alphakeys:
-                word=word.replace(i, "0")
+    def addWord(self, word, currentCipher):
 
-        gemVal = getGematria(word)
+        gemVal = getGematria(word, currentCipher)
         route = getParentList(gemVal)[1:]
            
         if self.root == getRootNumber(gemVal):
@@ -83,35 +34,118 @@ class Root:
             
         return False
 
-    def printMe(self):
-        print ("Root "+str(self.root),  end=":\n")
+    def makeHyperWord(self, word, currentCipher):
+        words2D=make2DWordArray(self.words, currentCipher)
+        outputWord="<button class='input' id='words"+str(getGematria(word, currentCipher))+"'>"
+
+        for chkWord in words2D:
+            if getGematria(chkWord[0], currentCipher) == getGematria(word, currentCipher):
+                if chkWord not in self.printed:
+                    outputWord+=str(chkWord)
+                    self.printed+=[chkWord]
+                else:
+                    outputWord+="</button>"
+                    return "printed"
+
+        outputWord+="</button>"
+        return outputWord
+
+
+    def printMe(self, currentCipher):
+        retval = "\nRoot "+str(self.root) + "\n"
+
         for i in self.routes:
-            print (str(i), end=" / ")
+            retval = retval + str(i)
+
             for j in self.words:
-                gemVal = getGematria(j)
+                gemVal = getGematria(j, currentCipher)
                 pl = getParentList(gemVal)[1:]
                 if  pl == i:
-                    hyperGemValue="<a href='deepmem_ui.py?value="+str(gemVal)+"'>"+str(gemVal)+"</a>"
-                    hyperWord="<a href='wordinfo.py?word="+j+"'>"+j+"</a>"
-                    print (hyperGemValue+" "+hyperWord, end="  ")
-            print()
-        print()
+                    hyperGemValue=makeHyperNumber(str(gemVal))
+                    hyperWord=self.makeHyperWord(j, currentCipher)
+                    if not hyperWord=="printed":
+                        retval = retval + " "+hyperGemValue+" "+hyperWord+" "
+            
+            
+            retval +="\n"
+        return retval
 
-        return
-
-    def sortWords(self):
+    def sortWords(self, currentCipher):
 
         for i in range(1, len(self.words)):
             
             key = self.words[i]
 
             j= i-1
-            while j >= 0 and getGematria(key) < getGematria(self.words[j]):
+            while j >= 0 and getGematria(key, currentCipher) < getGematria(self.words[j], currentCipher):
                 self.words[j+1] = self.words[j]
                 j-=1
             self.words[j+1] = key
         
         return
+
+
+def makeHyperNumber(numStr):
+    newNumStr="<button class='input' id='number"+numStr+"' value='"+numStr+"'>"+numStr+"</button>"
+    return newNumStr
+
+def makeWCHyperWord(word):
+    return "<button class='input' id='WC"+word+"' value='"+word+"'>"+word+"</button>"
+
+#                      1        2           3               4           5           6       7
+def makeHyperFormula(formula, wordListStr, currentCipher):
+    wordArray2D=make2DWordArrayFromString(wordListStr, currentCipher)
+    formulaList=formula.split()
+    formulaOutArray=[]
+
+    for i in formulaList:
+        for j in wordArray2D:
+            if getGematria(j[0], currentCipher) == int(i):
+                formulaOutArray+=[j]
+
+    outputString=""
+    for i in formulaOutArray:
+        outputString+=str(getParentList(getGematria(i[0], currentCipher)))+" "
+        for j in i:
+            outputString+="<button id='SF"+j+"'>"+j+"</button> "
+        outputString+="\n"
+
+    return outputString
+
+def make2DWordArrayFromString(wordString, currentCipher):
+    wordArrayFlat=wordString.split()
+    wordArray=[]
+    for i in wordArrayFlat:
+        tmpArray=[]
+
+        for j in wordArrayFlat:
+            
+            if getGematria(i, currentCipher) == getGematria(j, currentCipher):
+                tmpArray+=[j]
+                tmpArray = list(dict.fromkeys(tmpArray))
+
+        if tmpArray not in wordArray:
+            wordArray+=[tmpArray]
+
+    return wordArray
+
+def make2DWordArray(InWordArray, currentCipher):
+    wordArrayFlat=InWordArray
+    wordArray=[]
+    for i in wordArrayFlat:
+        tmpArray=[]
+
+        for j in wordArrayFlat:
+            
+            if getGematria(i, currentCipher) == getGematria(j, currentCipher):
+                tmpArray+=[j]
+                tmpArray = list(dict.fromkeys(tmpArray))
+
+        if tmpArray not in wordArray:
+            wordArray+=[tmpArray]
+
+    return wordArray
+
 
 roots = []
 
@@ -130,43 +164,45 @@ def sortRoots():
 
     return
 
-def sortWordsAndRoots():
+def sortWordsAndRoots(currentCipher):
     global roots
     
     for i in roots:
-        i.sortWords()
+        i.sortWords(currentCipher)
     sortRoots()
     
     return
 
 
-def addWord(word):
+def addWord(word, currentCipher):
     global roots
 
     if len(roots)==0:
-        roots+=[Root(word)]
+        roots+=[Root(word, currentCipher)]
         return
 
     rootFound=False
     for i in roots:
-        rootFound = i.addWord(word)
+        rootFound = i.addWord(word, currentCipher)
         if rootFound:
-            sortWordsAndRoots()
+            sortWordsAndRoots(currentCipher)
             return
 
     if not rootFound:
-        roots+=[Root(word)]
-        sortWordsAndRoots()
+        roots+=[Root(word, currentCipher)]
+        sortWordsAndRoots(currentCipher)
         return
 
     return
 
 
-def printAll():
+def printAll(currentCipher):
+    retval=""
     global roots
     for i in roots:
-        i.printMe()
-    return
+        retval = retval + i.printMe(currentCipher)
+    retval = retval + '\n'
+    return retval
 
 def clearRAM():
     global roots

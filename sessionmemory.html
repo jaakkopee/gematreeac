@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>Session Memory Display</title>
+
+        <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+        <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+        <meta charset='utf-8'>
+        <style type="text/css">
+            .thisBody{
+                background-color: #003344;
+            }
+            .finalSentence{
+                color: #c0e957;
+                background-color: #4043a4;
+                font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                font-size: 26px;
+            }
+            .sentenceFormula{
+                white-space: pre;
+                color: #f200ff;
+                background-color: #071f30;
+                font-family: 'Courier New', Courier, monospace;
+            }
+            .smview_main_window{
+                white-space: pre;
+                color:aquamarine;
+                background-color: #224466;
+                font-family: 'Courier New', Courier, monospace;
+            }
+            .WC_style{
+                white-space: pre;
+                color: rgb(0, 255, 38);
+                background-color: black;
+                font-family: 'Courier New', Courier, monospace;
+            }
+            .wizHead{
+                font-size: 40px;
+            }
+            .hdr1{
+                font-size: 28px;
+                color:rgb(0, 255, 38);
+                background-color:rgb(21, 53, 26);
+            }
+        </style>
+    </head>
+    
+    <body class="smview_body">
+        <h1 class="hdr1">Sentence</h1>
+        <div id="finalSentenceLair" class="finalSentence"></div>
+        <h1 class="hdr1">Sentence Formula</h1>
+        <div id="sentenceFormulaLair" class="sentenceFormula"></div>
+        <h1 class="hdr1">Session Memory</h1>
+        <div id="smview_output" class="smview_main_window"></div>
+        <h1 class="hdr1" id="WChdr">Wizard Meditation</h1>
+        <div id="WizardsComments" class="WC_style"></div>
+    </body>
+</html>

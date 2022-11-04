@@ -1,23 +1,23 @@
 from math import trunc
 import sqlite3
-from ndigitsets3 import getGematria
+from gemNumFuncs import getGematria
 
-conDM = sqlite3.connect("./gemaDB/deepmem.db")
+conDM = sqlite3.connect("./gematriac.db")
 curDM = conDM.cursor()
 
-curDM.execute("create table if not exists wordpool (word text)")
+curDM.execute("create table if not exists deepmem (word text)")
 conDM.commit()
-
+#change
 def addWordToDeepMem(word):
     global curDM,conDM
 
     #insert new word to SQL DB
     #check for duplicate words:
-    curDM.execute("select word from wordpool where word = :wordstr", {"wordstr":word})
+    curDM.execute("select word from deepmem where word = :wordstr", {"wordstr":word})
     tmpWords = curDM.fetchall()
     
     if tmpWords == []:
-        curDM.execute("insert into wordpool values (:wordstr)", {"wordstr": word})
+        curDM.execute("insert into deepmem values (:wordstr)", {"wordstr": word})
         conDM.commit()
         return True
 
@@ -26,7 +26,7 @@ def addWordToDeepMem(word):
 def getWordsFromDeepMem():
     global conDM, curDM
         
-    curDM.execute("select * from wordpool")
+    curDM.execute("select * from deepmem")
     data = curDM.fetchall()
     return data
 
@@ -40,3 +40,14 @@ def searchDeepMemByNumber(number):
 
     return
 
+def deleteWordFromDeepMem(word):
+    global conDM
+    cur= conDM.cursor()
+    cur.execute("delete from deepmem where word="+word)
+    conDM.commit()
+
+def deleteDeepMem():
+    global conDM
+    cur = conDM.cursor()
+    cur.execute("delete from deepmem")
+    conDM.commit()
