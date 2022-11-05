@@ -1,14 +1,11 @@
 # GemaTreeAC 2=0
 GemaTreeAC 2=0 is a gematria and numerology -based word classification algorithm and database. It is meant for searching meanings of words by mapping letters into numbers and comparing the values of words. Also numerological reduction is used to form a nine-rooted treestructure that has routes of numbers from leave to root. The code is also a web application that is hosted at http://gematreeac.ga
 
-Gematria is the mapping of numbers (usually positive integers) with the letters of an alphabet.
-Gematria is used for searching associative meanings in words in the study of the Bible and the Torah, for example.
-I use it to construct words of power for my ritual work.
+Gematria is the mapping of numbers (usually positive integers) with the letters of an alphabet. Gematria is used for searching associative meanings in words in the study of the Bible and the Torah, for example. I use it to construct words of power for my ritual work.
 
-For classification of the numbers of selected words, GemaTreeAC utilizes a technique called numerological reduction.
-For example, the numbers 666 and 333 are seen as numerologically related. All numbers can be reduced numerologically into parent numbers. When numerological reduction is iterated until the resulting number is a single-digit number what we have is what I call the root number, that is, a number with a single digit (numbers 1 to 9). If the parent number is the same with two different numbers, they are seen as numerologically related.
+For classification of the numbers of selected words, GemaTreeAC utilizes a technique called numerological reduction. For example, the numbers 666 and 333 are seen as numerologically related. All numbers can be reduced numerologically into parent numbers. When numerological reduction is iterated until the resulting number is a single-digit number what we have is what I call the root number, that is, a number with a single digit (numbers 1 to 9). If the parent number is the same with two different numbers, they are seen as numerologically related.
 
-For example, the numerological reduction for numbers 666 and 333 is calculated as follows: 666 reduces to 6+6+6=18 and 18 reduces to 1+8=9. 333 reduces straight to 3+3+3=9. The numbers have the same root and are therefore related. The numbers have different routes to their root.
+The numerological reduction for numbers 666 and 333 is calculated as follows: 666 reduces to 6+6+6=18 and 18 reduces to 1+8=9. 333 reduces straight to 3+3+3=9. The numbers have the same root and are therefore related. The numbers have different routes to their root.
 
 When numerological reduction is iterated multiple times, the numbers travel in a tree-like structure that has nine roots (numbers 1 to 9). Between the leaf numbers (666 and 333 in our example) and the root numbers (now only one, a common root: 9) it can be seen the numbers travel the tree from leaf to root on varying routes that converge as the number of digits in numbers decrease. The routes to root in my example are [666, 18, 9] and [333, 9].
 
