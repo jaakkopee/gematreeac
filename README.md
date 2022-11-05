@@ -1,5 +1,5 @@
 # gematreeac
-GemaTreeAC 2=0 is a gematria and numerology -based word classification algorithm and database. It is meant for searching meanings of words by mapping letters into numbers and comparing the values of words. Also numerological reduction is used to form a nine-rooted treestructure that has routes of numbers from leave to root.
+GemaTreeAC 2=0 is a gematria and numerology -based word classification algorithm and database. It is meant for searching meanings of words by mapping letters into numbers and comparing the values of words. Also numerological reduction is used to form a nine-rooted treestructure that has routes of numbers from leave to root. The code is also a web application that is hosted at http://gematreeac.ga
 
 Gematria is the mapping of numbers (usually positive integers) with the letters of an alphabet.
 Gematria is used for searching associative meanings in words in the study of the Bible and the Torah, for example.
@@ -24,3 +24,8 @@ All numbers and all words can be mapped to the tree of life, the main symbol of 
 All numbers have occult meanings in the tree of life. Number nine is called ”The Foundation”. It represents sexuality, the astral and the subconscious. It’s planetary association is the moon. Number one (”The Crown”) represents consciousness. Numbers in set n=1 have very specific cognitive functions attributed to them. Higher-n numbers have more complex and also vague meanings as their meanings are composites of the meanings of numbers in set n=1. The higher the n, the more room is left for interpretation.
 
 At the moment GemaTreeAC has only 8 ciphers that are used commonly in gematria study. I’d like to add more, hopefully original ciphers that work with gematria (produce lots of interesting associative meanings). I also want to develop and refine the data representation in GemaTreeAC. The nine-rooted tree is there already. The numbers are studied only by equivalence at the moment. I’d want to give the user tools for exploration of farther numerological relations. Via study of nwcp:s (numbers with common parents) other numerological relations can be explored.
+
+--
+Jaakko Prättälä
+iipekaj@gmail.com
+
