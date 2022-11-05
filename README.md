@@ -21,7 +21,7 @@ At the moment GemaTreeAC has only 8 ciphers that are used commonly in gematria s
 
 GemaTreeAC comes with database functionality and a read-only database called DeepMem of ca. 500000 words in Finnish, Swedish and English. DeepMem-database is gathered from kotus-sanalista_v1, WordNet 3.1, Gothenburg uni. Saldo 2.3 and Väestötietojärjestelmän Etunimitilasto
 
-GemaTreeAC is a web application hosted at http://gematreeac.ga . If you want to clone the repository and run you version of GemaTreeAC, you need to run a http-server on your computer. You also have to install Python3. Python has a module, http.server, that will do for testing the code. Just enter <pre>python3 -m http.server</pre> in the command line in your GemaTreeAC directory and point your browser to 127.0.0.1/GemaTreeAC_index.html.
+GemaTreeAC is a web application hosted at http://gematreeac.ga . If you want to clone the repository and run you version of GemaTreeAC, you need to run a http server on your computer. You also have to install Python3. Python has a module, http.server, that will do for testing the code. Just enter <pre>python3 -m http.server</pre> in the command line in your GemaTreeAC directory and point your browser to 127.0.0.1/GemaTreeAC_index.html.
 
 GemaTreeAC is copylefted in 2022 by Jaakko Prättälä. All proprietary rights belong to the Great Spirit. Do What Thou Wilt with the code. Share the knowledge in the way you see as fit.
 
