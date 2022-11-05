@@ -5,8 +5,6 @@ Gematria is the mapping of numbers (usually positive integers) with the letters 
 Gematria is used for searching associative meanings in words in the study of the Bible and the Torah, for example.
 I use it to construct words of power for my ritual work.
 
-I think gematria could be used for encryption, for the ciphers or sets of letter-value pairs are arbitrary and can be unique.
-
 For classification of the numbers of selected words, GemaTreeAC utilizes a technique called numerological reduction.
 For example, the numbers 666 and 333 are seen as numerologically related, I’ll tell you, why.
 All numbers can be reduced numerologically into parent numbers. When numerological reduction is iterated until the resulting number is a single-digit number
