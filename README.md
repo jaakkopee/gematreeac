@@ -22,6 +22,8 @@ All numbers have occult meanings in the tree of life. Number nine is called ”T
 
 At the moment GemaTreeAC has only 8 ciphers that are used commonly in gematria study. I’d like to add more, hopefully original ciphers that work with gematria (produce lots of interesting associative meanings). I also want to develop and refine the data representation in GemaTreeAC. The nine-rooted tree is there already. The numbers are studied only by equivalence at the moment. I’d want to give the user tools for exploration of farther numerological relations. Via study of nwcp:s (numbers with common parents) other numerological relations can be explored.
 
+GemaTreeAC is copylefted in 2022 by Jaakko Prättälä. All proprietary rights belong to the Great Spirit. Do What Thou Wilt with the code. Share the knowledge in the way you see as fit.
+
 --
 Jaakko Prättälä
 iipekaj@gmail.com
