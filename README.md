@@ -23,7 +23,7 @@ GemaTreeAC comes with database functionality and a read-only database called Dee
 
 GemaTreeAC is a web application hosted at http://gematreeac.ga .
 
-If you want, you can download the latest release from https://github.com/jaakkopee/gematreeac/releases and run your local version of GemaTreeAC.
+For normal use, I recommend the online version. If you want to experiment with the code, you can download the latest release from https://github.com/jaakkopee/gematreeac/releases and run your local version of GemaTreeAC.
 
 To run GemaTreeAC locally, you need to have a http server on your computer. Python has a module, http.server, that will do for testing the code. Just install Python 3 from https://python.org and enter <pre>python3 -m http.server</pre> at the command line in your GemaTreeAC directory and point your browser to localhost:8000/GemaTreeAC_index.html 
 
