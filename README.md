@@ -6,10 +6,7 @@ Gematria is used for searching associative meanings in words in the study of the
 I use it to construct words of power for my ritual work.
 
 For classification of the numbers of selected words, GemaTreeAC utilizes a technique called numerological reduction.
-For example, the numbers 666 and 333 are seen as numerologically related, I’ll tell you, why.
-All numbers can be reduced numerologically into parent numbers. When numerological reduction is iterated until the resulting number is a single-digit number
-what we have is what I call the root number, that is, a number with a single digit (numbers 1 to 9).
-If the parent number is the same with two different numbers, they are seen as numerologically related.
+For example, the numbers 666 and 333 are seen as numerologically related. All numbers can be reduced numerologically into parent numbers. When numerological reduction is iterated until the resulting number is a single-digit number what we have is what I call the root number, that is, a number with a single digit (numbers 1 to 9). If the parent number is the same with two different numbers, they are seen as numerologically related.
 
 For example, the numerological reduction for numbers 666 and 333 is calculated as follows: 666 reduces to 6+6+6=18 and 18 reduces to 1+8=9. 333 reduces straight to 3+3+3=9. The numbers have the same root and are therefore related. The numbers have different routes to their root.
 
