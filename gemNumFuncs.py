@@ -3,8 +3,9 @@ from math import pow
 
 def getGematria(word, currentCipher):
     number=0
+    cipherInUse=getCipher(currentCipher)
     for i in word:
-        number+=getCipher(currentCipher)[i]
+        number+=cipherInUse[i]
 		
     return number
 
