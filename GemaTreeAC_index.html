@@ -179,6 +179,9 @@
             </div>
           </div><br />
         <py-script>
+        #ddButton=document.getElementById("dropbtn")
+        #ddButton.addEventListener("click", create_proxy(changeCipher))
+    
         ccButton=document.getElementById("ccscaext")
         ccButton.cipherID="ScaExt"
         ccButton.addEventListener("click", create_proxy(changeCipher))
