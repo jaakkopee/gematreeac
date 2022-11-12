@@ -63,11 +63,12 @@
 
             /* Dropdown Button */
             .dropbtn {
-                background-color: #04AA6D;
-                color: white;
+                background-color: #084800;
+                color: rgb(255, 79, 223);
                 padding: 16px;
                 font-size: 16px;
                 border: none;
+                transition: background-color 0.5s ease;
             }
 
             /* The container <div> - needed to position the dropdown content */
@@ -80,7 +81,7 @@
             .dropdown-content {
                 display: none;
                 position: absolute;
-                background-color: #f1f1f1;
+                background-color: #012700;
                 min-width: 160px;
                 box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
                 z-index: 1;
@@ -88,17 +89,25 @@
 
             /* Links inside the dropdown */
             .dropdown-content a {
-                color: black;
+                color: #73ff00;
                 padding: 12px 16px;
                 text-decoration: none;
                 display: block;
+                transition: color 0.5s ease;
             }
 
             /* Change color of dropdown links on hover */
-            .dropdown-content a:hover {background-color: #ddd;}
+            .dropdown-content a:hover {
+                background-color: rgb(101, 217, 221);
+                transition: background-color 1.2s ease;
+                color:#005644
+            }
 
-            /* Change the background color of the dropdown button when the dropdown content is shown */
-            .dropdown:hover .dropbtn {background-color: #3e8e41;}
+            /* Change the background color of the dropdown button when hovering */
+            .dropdown:hover .dropbtn {
+                background-color: #21ff03;
+                color:#a80146;        
+            }
 
         </style>
         
@@ -139,40 +148,40 @@
         <div class="dropdown">
             <button class="dropbtn" id="cipherButton">Cipher in use</button>
             <div class="dropdown-content" id="ddc">
-                <a href="#smview" id="ccscaext">English/Scandinavian Extended</a>
-                <a href="#smview" id="ccengextrev">English Extended Reverse</a>
-                <a href="#smview" id="ccord">Ordinal</a>
-                <a href="#smview" id="ccordrev">Reverse Ordinal</a>
-                <a href="#smview" id="ccfr">Full Reduction</a>
-                <a href="#smview" id="ccfrrev">Reverse Full Reduction</a>
-                <a href="#smview" id="ccsr">Single Reduction</a>
-                <a href="#smview" id="ccsrrev">Reverse Single Reduction</a>
-                <!--a href="#smview" id="ccsat">Satanic 36</a>
-                <a href="#smview" id="ccsatrev">Reverse Satanic 36</a>
-                <a href="#smview" id="ccinv">Inverse</a>
-                <a href="#smview" id="ccinvrev">Reverse Inverse</a>
-                <a href="#smview" id="cctri">Tridenary</a>
-                <a href="#smview" id="cctrirev">Reverse Tridenary</a>
-                <a href="#smview" id="cctriad">Tridenary AscDesc</a>
-                <a href="#smview" id="cctriadrev">Reverse Tridenary AscDesc</a>
-                <a href="#smview" id="cc6">Six</a>
-                <a href="#smview" id="cc6rev">Reverse Six</a>
-                <a href="#smview" id="cc11">Eleven</a>
-                <a href="#smview" id="cc11rev">Reverse Eleven</a>
-                <a href="#smview" id="cc18">Eighteen</a>
-                <a href="#smview" id="cc18rev">Reverse Eighteen</a>
-                <a href="#smview" id="cc22">Twenty Two</a>
-                <a href="#smview" id="cc22rev">Reverse Twenty Two</a>
-                <a href="#smview" id="cc26">Twenty Six</a>
-                <a href="#smview" id="cc26rev">Reverse Twenty Six</a>
-                <a href="#smview" id="cc27">Twenty Seven</a>
-                <a href="#smview" id="cc27rev">Reverse Twenty Seven</a>
-                <a href="#smview" id="cc28">Twenty Eight</a>
-                <a href="#smview" id="cc28rev">Reverse Twenty Eight</a>
-                <a href="#smview" id="cc33">Thirty Three</a>
-                <a href="#smview" id="cc33rev">Reverse Thirty Three</a>
-                <a href="#smview" id="cc37">Thirty Seven</a>
-                <a href="#smview" id="cc37rev">Reverse Thirty Seven</a-->
+                <a href="#cipherButton" id="ccscaext">English/Scandinavian Extended</a>
+                <a href="#cipherButton" id="ccengextrev">English Extended Reverse</a>
+                <a href="#cipherButton" id="ccord">Ordinal</a>
+                <a href="#cipherButton" id="ccordrev">Reverse Ordinal</a>
+                <a href="#cipherButton" id="ccfr">Full Reduction</a>
+                <a href="#cipherButton" id="ccfrrev">Reverse Full Reduction</a>
+                <a href="#cipherButton" id="ccsr">Single Reduction</a>
+                <a href="#cipherButton" id="ccsrrev">Reverse Single Reduction</a>
+                <!--a href="#cipherButton" id="ccsat">Satanic 36</a>
+                <a href="#cipherButton" id="ccsatrev">Reverse Satanic 36</a>
+                <a href="#cipherButton" id="ccinv">Inverse</a>
+                <a href="#cipherButton" id="ccinvrev">Reverse Inverse</a>
+                <a href="#cipherButton" id="cctri">Tridenary</a>
+                <a href="#cipherButton" id="cctrirev">Reverse Tridenary</a>
+                <a href="#cipherButton" id="cctriad">Tridenary AscDesc</a>
+                <a href="#cipherButton" id="cctriadrev">Reverse Tridenary AscDesc</a>
+                <a href="#cipherButton" id="cc6">Six</a>
+                <a href="#cipherButton" id="cc6rev">Reverse Six</a>
+                <a href="#cipherButton" id="cc11">Eleven</a>
+                <a href="#cipherButton" id="cc11rev">Reverse Eleven</a>
+                <a href="#cipherButton" id="cc18">Eighteen</a>
+                <a href="#cipherButton" id="cc18rev">Reverse Eighteen</a>
+                <a href="#cipherButton" id="cc22">Twenty Two</a>
+                <a href="#cipherButton" id="cc22rev">Reverse Twenty Two</a>
+                <a href="#cipherButton" id="cc26">Twenty Six</a>
+                <a href="#cipherButton" id="cc26rev">Reverse Twenty Six</a>
+                <a href="#cipherButton" id="cc27">Twenty Seven</a>
+                <a href="#cipherButton" id="cc27rev">Reverse Twenty Seven</a>
+                <a href="#cipherButton" id="cc28">Twenty Eight</a>
+                <a href="#cipherButton" id="cc28rev">Reverse Twenty Eight</a>
+                <a href="#cipherButton" id="cc33">Thirty Three</a>
+                <a href="#cipherButton" id="cc33rev">Reverse Thirty Three</a>
+                <a href="#cipherButton" id="cc37">Thirty Seven</a>
+                <a href="#cipherButton" id="cc37rev">Reverse Thirty Seven</a-->
             </div>
           </div><br />
         <py-script>
