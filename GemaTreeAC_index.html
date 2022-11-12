@@ -98,7 +98,7 @@
             .dropdown-content a:hover {background-color: #ddd;}
 
             /* Show the dropdown menu on hover */
-            .dropdown:hover .dropdown-content {display: block;}
+            /*.dropdown:hover .dropdown-content {display: block;}*/
 
             /* Change the background color of the dropdown button when the dropdown content is shown */
             .dropdown:hover .dropbtn {background-color: #3e8e41;}
@@ -141,7 +141,7 @@
 
         <div class="dropdown">
             <button class="dropbtn" id="cipherButton">Cipher in use</button>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="ddc">
                 <a href="#smview" id="ccscaext">English/Scandinavian Extended</a>
                 <a href="#smview" id="ccengextrev">English Extended Reverse</a>
                 <a href="#smview" id="ccord">Ordinal</a>
@@ -179,8 +179,19 @@
             </div>
           </div><br />
         <py-script>
-        #ddButton=document.getElementById("dropbtn")
-        #ddButton.addEventListener("click", create_proxy(changeCipher))
+        menuActive=False
+        def toggleMenu(mE):
+            global menuActive
+            if not menuActive:
+                document.getElementById("ddc").style.display="block"
+                menuActive=True
+            else:
+                document.getElementById("ddc").style.display="none"
+                menuActive=False
+            return
+
+        ddButton=document.getElementById("cipherButton")
+        ddButton.addEventListener("click", create_proxy(toggleMenu))
     
         ccButton=document.getElementById("ccscaext")
         ccButton.cipherID="ScaExt"
