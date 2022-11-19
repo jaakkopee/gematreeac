@@ -1,5 +1,5 @@
 # GemaTreeAC 2=0
-GemaTreeAC 2=0 is a gematria and numerology -based word classification algorithm and database. It is meant for searching meanings of words by mapping letters into numbers and comparing the values of words. Also numerological reduction is used to form a nine-rooted treestructure that has routes of numbers from leave to root. The code is a web application that is hosted at http://gematreeac.ga
+GemaTreeAC 2=0 is a gematria and numerology -based word classification algorithm and database. It is meant for searching meanings of words by mapping letters into numbers and comparing the values of words. Also numerological reduction is used to form a nine-rooted treestructure that has routes of numbers from leave to root. The code is a web application that is hosted at https://jpts.aprx.io
 
 Gematria is the mapping of numbers (usually positive integers) with the letters of an alphabet. Gematria is used for searching associative meanings in words in the study of the Bible and the Torah, for example. I use it to construct words of power for my ritual work.
 
