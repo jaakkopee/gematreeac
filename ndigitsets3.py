@@ -67,12 +67,12 @@ class Root:
         retval=""
         retval+=\
             "<div class='Root' id='Root_"+str(self.root)+"'>\
-                <p class='rootClass' id='rootP_"+str(self.root)+"'>\
-                    Root "+str(self.root)+"</p>"
+                <div class='rootClass' id='rootP_"+str(self.root)+"'>\
+                    Root "+str(self.root)+"</div>"
         #Root-div ends at the end of Root...
 
         for routeIter in self.routes:
-            retval = retval + "<br /><a href='#' class='routeClass' id='route_"+str(routeIter)+"'>"+str(routeIter)+"</a>"
+            retval = retval + "<br><div class='routeClass' id='route_"+str(routeIter)+"'>"+"Route "+str(routeIter)+"</div>"
             wordsToBePrintedOnThisRoute=[]
             for word in self.words:
                 if getParentList(getGematria(word, currentCipher))[1:]==routeIter:
@@ -93,7 +93,7 @@ class Root:
                 if not hyperWord=="printed":
                     retval += hyperWord
 
-        retval+="</div>"
+        retval+="</div><br>"
         return retval
 
     def sortWords(self, currentCipher):
@@ -149,7 +149,7 @@ def makeHyperFormula(formula, wordListStr, currentCipher):
 
     outputString=""
     for i in formulaOutArray:
-        #outputString+=str(getParentList(getGematria(i[0], currentCipher)))+" "
+        outputString+="<button class='sfNumber'>"+str(getParentList(getGematria(i[0], currentCipher)))+"</button>"
 
         for j in i:
             outputString+="<button class='sfString' id='SF"+j+"'>"+j+"</button> "
