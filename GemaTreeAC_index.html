@@ -393,6 +393,7 @@
         import asyncio
         async def openDBFile(evt):
             file=None
+            fileHandle=None
             try:
                 fileHandle = await window.showOpenFilePicker()
             except Exception as e:
