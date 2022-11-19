@@ -135,7 +135,10 @@ def makeHyperNumber(numStr):
     return newNumStr
 
 def makeWCHyperWord(word):
-    return "<button class='WCWord' id='WC"+word+"' value='"+word+"'>"+word+"</button>"
+    return "<button id='WC"+word+"' value='"+word+"'>"+word+"</button>"
+
+def makeLocDBHyperWord(word):
+    return "<button class='LocDB_style_button' id='LDB"+word+"' value='"+word+"'>"+word+"</button>"
 
 def makeHyperFormula(formula, wordListStr, currentCipher):
     wordArray2D=make2DWordArrayFromString(wordListStr, currentCipher)

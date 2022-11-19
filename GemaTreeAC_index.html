@@ -117,6 +117,18 @@
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
 
+            .howtoDBButton{
+                border-width: 3px;
+                border: green;
+                background-color: black;
+                color: yellowgreen;
+            }
+            .howToDB_iframe{
+                display: none;
+                position: absolute;
+                left:200px;
+            }
+
         </style>
         
     </head>   
@@ -142,6 +154,7 @@
         from gemNumFuncs import getGematria, getParentList
         from getwordsfromdbs import searchDeepMemByNumberArray
 
+        
         def changeCipher(mE):
             localStorage.setItem("cipher", mE.currentTarget.cipherID)
             document.getElementById('cipherButton').innerHTML="Cipher In Use: "+localStorage.getItem("cipher")
@@ -351,10 +364,55 @@
         <button type="button" id ="addWordToSM">Add Word(s) To Session Memory</button>
         <button type="button" id="clearSM">Clear SM</button>
         <button type="button" id="clearSF">Clear Sentence Formula</button><br />
+        <button type="button" id="uploadDB">Upload Local DB</button>
+        <button class="howtoDBButton" id="howtoDB">About DB Format</button>
+
+     <br><iframe class="howToDB_iframe" id="howToLoadLocalDB" src="db_howto.html" width="360" height="240"></iframe>
+
+        <!--py-repl></py-repl-->
 
         <div id="messageout"></div>
 
-        <py-script>
+        <py-script> 
+        htdbDOC = document.getElementById('howToLoadLocalDB').contentWindow.document
+                
+        htdb_isOpen=False
+        def openHowToDB(evt):
+            global htdb_isOpen
+            if not htdb_isOpen:
+                document.getElementById("howToLoadLocalDB").style.display="block"
+                htdb_isOpen=True
+            else:
+                document.getElementById("howToLoadLocalDB").style.display="none"
+                htdb_isOpen=False
+            return
+    
+    
+        document.getElementById("howtoDB").addEventListener("click", create_proxy(openHowToDB))
+        
+        import asyncio
+        async def openDBFile(evt):
+            file=None
+            try:
+                fileHandle = await window.showOpenFilePicker()
+            except Exception as e:
+                console.log(str(e))
+
+            try:
+                file = await fileHandle[0].getFile()
+            except Exception as e:
+                console.log(str(e))
+            
+            
+            data = await file.text()
+            localStorage.setItem("wizardsHelper", data)
+            htdbDOC.getElementById("dataDiv").innerHTML=localStorage.getItem("wizardsHelper")
+            return
+
+        htdbDOC.getElementById("dataDiv").innerHTML=localStorage.getItem("wizardsHelper")
+        
+        document.getElementById("uploadDB").addEventListener('click', create_proxy(openDBFile), False)
+
         def delWordsFromInputBox(mE):
             document.getElementById("wordsHere").value=""
             updateGemValMsgNotMouse()
@@ -407,14 +465,27 @@
                     wvpairsFromDeepMemFormatted+=hyperWord+" "+str(j[1])+"\n"
 
                 wvpairsFromDeepMemFormattedPL+=wvpairsFromDeepMemFormatted
-            smviewDOC.getElementById("WizardsComments").innerHTML="Wizard Meditation on Route "+str(pl)+"\n(Wizard\'s DeepMem-database from\nkotus-sanalista_v1,\nWordNet 3.1,\nGothenburg uni. Saldo 2.3\nand Väestötietojärjestelmän Etunimitilasto)\n\n"+wvpairsFromDeepMemFormattedPL
+            
+            wizardsHelperData=localStorage.getItem("wizardsHelper").split()
+            ldb_outputStr=""
+            ldb_printed=[]
+            for i in wizardsHelperData:
+                if getGematria(i, localStorage.getItem("cipher"))==pressedNumber:
+                    ldb_outputStr+=nds.makeLocDBHyperWord(i)+str(getGematria(i, localStorage.getItem("cipher")))
+                    ldb_printed+=[i]
+
+            smviewDOC.getElementById("WizardsComments").innerHTML="Wizard Meditation on Route "+str(pl)+"\n(Wizard\'s DeepMem-database from\nkotus-sanalista_v1,\nWordNet 3.1,\nGothenburg uni. Saldo 2.3\nand Väestötietojärjestelmän Etunimitilasto)\n\n"+wvpairsFromDeepMemFormattedPL+ldb_outputStr
             smviewDOC.location = "./sessionmemory.html#WChdr"
 
             for i in pl:
             
                 wvpairsFromDeepMem = searchDeepMemByNumberArray(i, localStorage.getItem("cipher"))
                 for j in wvpairsFromDeepMem:
-                    makeWCListener(j[0])        
+                    makeWCListener(j[0])
+
+                
+            for i in ldb_printed:
+                makeLocDBListener(i)
 
             return
 
@@ -588,6 +659,13 @@
         def makeWCListener(word):
             console.log("makeWCListener: "+word)
             wordButton=smviewDOC.getElementById("WC"+word)
+            wordButton.sana=word
+            wordButton.addEventListener("click", wcProxyFunc)
+            return
+    
+        def makeLocDBListener(word):
+            console.log("makeLocDBListener: "+word)
+            wordButton=smviewDOC.getElementById("LDB"+word)
             wordButton.sana=word
             wordButton.addEventListener("click", wcProxyFunc)
             return
