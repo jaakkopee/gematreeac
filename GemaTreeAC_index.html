@@ -467,13 +467,10 @@
 
                 wvpairsFromDeepMemFormattedPL+=wvpairsFromDeepMemFormatted
 
-            ldb_outputStr=None
-            ldb_printed=None            
+            ldb_outputStr=""
+            ldb_printed=[]            
             if localStorage.getItem("wizardsHelper"):
                 wizardsHelperData=localStorage.getItem("wizardsHelper").split()
-                global ldb_outputStr
-                global ldb_printed
-                ldb_printed=[]
                 for i in wizardsHelperData:
                     if getGematria(i, localStorage.getItem("cipher"))==pressedNumber:
                         ldb_outputStr+=nds.makeLocDBHyperWord(i)+str(getGematria(i, localStorage.getItem("cipher")))
