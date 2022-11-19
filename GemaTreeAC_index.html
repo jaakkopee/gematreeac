@@ -466,14 +466,18 @@
                     wvpairsFromDeepMemFormatted+=hyperWord+" "+str(j[1])+"\n"
 
                 wvpairsFromDeepMemFormattedPL+=wvpairsFromDeepMemFormatted
-            
-            wizardsHelperData=localStorage.getItem("wizardsHelper").split()
-            ldb_outputStr=""
-            ldb_printed=[]
-            for i in wizardsHelperData:
-                if getGematria(i, localStorage.getItem("cipher"))==pressedNumber:
-                    ldb_outputStr+=nds.makeLocDBHyperWord(i)+str(getGematria(i, localStorage.getItem("cipher")))
-                    ldb_printed+=[i]
+
+            ldb_outputStr=None
+            ldb_printed=None            
+            if localStorage.getItem("wizardsHelper"):
+                wizardsHelperData=localStorage.getItem("wizardsHelper").split()
+                global ldb_outputStr
+                global ldb_printed
+                ldb_printed=[]
+                for i in wizardsHelperData:
+                    if getGematria(i, localStorage.getItem("cipher"))==pressedNumber:
+                        ldb_outputStr+=nds.makeLocDBHyperWord(i)+str(getGematria(i, localStorage.getItem("cipher")))
+                        ldb_printed+=[i]
 
             smviewDOC.getElementById("WizardsComments").innerHTML="Wizard Meditation on Route "+str(pl)+"\n(Wizard\'s DeepMem-database from\nkotus-sanalista_v1,\nWordNet 3.1,\nGothenburg uni. Saldo 2.3\nand Väestötietojärjestelmän Etunimitilasto)\n\n"+wvpairsFromDeepMemFormattedPL+ldb_outputStr
             smviewDOC.location = "./sessionmemory.html#WChdr"
@@ -484,9 +488,9 @@
                 for j in wvpairsFromDeepMem:
                     makeWCListener(j[0])
 
-                
-            for i in ldb_printed:
-                makeLocDBListener(i)
+            if ldb_printed:
+                for i in ldb_printed:
+                    makeLocDBListener(i)
 
             return
 
