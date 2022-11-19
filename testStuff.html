@@ -1,0 +1,207 @@
+<html>
+  <head>
+    <title>Testing PyScript etc</title>
+
+    <style type="text/css">
+
+      .hyperNumberButton{
+	        background-color: #145a00;
+          color:#bcdbad;
+          padding: 2px;
+          font-size: 16px;
+          border: none;
+          transition: background-color 0.5s ease;
+      }
+      
+      .hyperWordButton{
+	        background-color: #4a9235;
+          color:#142e06;
+          padding: 2px;
+          font-size: 16px;
+          border: none;
+          transition: background-color 0.5s ease;
+      }
+
+      .hyperWordDiv{
+          position: relative;
+          display: inline-block;
+      }
+
+      .hyperWordMenuContent{
+          display: none;
+          position: absolute;
+          background-color: #003388;
+          min-width: 50px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+      }
+
+      .hyperWordMenuContent a {
+          color: #ff0000;
+          padding: 2px 8px;
+          text-decoration: none;
+          transition: color 0.5s ease;
+      }
+
+      .hyperWordMenuContent a:hover {
+          background-color: #55ffff;
+          transition: background-color 1.2s ease;
+          color:#ff0066;
+      }
+
+      .hyperWordDiv:hover .hyperNumberButton {
+          background-color: #580042;
+          color:#16ae2d;        
+      }
+
+      .hyperWordDiv:hover .hyperWordButton {
+          background-color: #090330;
+          color:#00aaff;        
+      }
+
+      .rootClass{
+        background-color: #270445;
+        color:#afafff;
+        max-width: 60px;
+        font-size: larger;
+      }
+      
+    </style>
+
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <meta charset="utf-8">
+    
+  </head>
+  <body>  
+    <div class="Root" id="Root_9"><p class="rootClass">Root 9</p>
+      <div class="hyperWordDiv" id="hwd_666">
+        <button class="hyperNumberButton" id="hwb_666">666</button>
+        <div class="hyperWordMenuContent" id="hwmc_666">
+          <a href="#" id="hwWCSearch_666">Wizard:666</a>
+          <a href="#" id="hwSF_666">SentForm:666</a>
+        </div>
+      </div>
+
+      <div class="hyperWordDiv" id="hwd_testisana">
+        <button class="hyperWordButton" id="hwb_testisana">testisana</button>
+        <div class="hyperWordMenuContent" id="hwmc_testisana">
+          <a href="#" id="hwDel_testisana">delete</a>
+        </div>
+      </div>
+
+      <div class="hyperWordDiv" id="hwd_sataniste">
+        <button class="hyperWordButton" id="hwb_sataniste">sataniste</button>
+        <div class="hyperWordMenuContent" id="hwmc_sataniste">
+          <a href="#" id="hwDel_sataniste">delete</a>
+        </div>
+      </div>
+
+      <div class="hyperWordDiv" id="hwd_657">
+        <button class="hyperNumberButton" id="hwb_657">657</button>
+        <div class="hyperWordMenuContent" id="hwmc_657">
+          <a href="#" id="hwWCSearch_657">Wizard:657</a>
+          <a href="#" id="hwSF_657">SentForm:657</a>
+        </div>
+      </div>
+
+      <div class="hyperWordDiv" id="hwd_uung">
+        <button class="hyperWordButton" id="hwb_uung">uung</button>
+        <div class="hyperWordMenuContent" id="hwmc_uung">
+          <a href="#" id="hwDel_uung">delete</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="output01"></div>
+
+    <py-script>
+      from js import window, document, MouseEvent, localStorage, console
+      from pyodide import create_proxy
+      
+      def hwMenuReveal(mE):
+        datum=mE.currentTarget.datum
+        element=document.getElementById("hwmc_"+datum)
+        
+        if not element.style.display:
+          element.style.display="none"
+
+        if element.style.display=="none":
+            element.style.display="block"
+        else:
+            element.style.display="none"
+
+            return
+
+      def hwSearchWM(mE):
+        document.getElementById("output01").innerHTML=mE.currentTarget.datum+" search"
+        return
+
+      def hwAddToSF(mE):
+        document.getElementById("output01").innerHTML=mE.currentTarget.datum+" add to sf"
+        return
+
+      def deleteFromSM(mE):
+        document.getElementById("output01").innerHTML=mE.currentTarget.datum+" delete"
+        return
+
+      
+      #number button 666
+      hwNumberButton = document.getElementById("hwb_666")
+      hwNumberButton.datum="666"
+      hwNumberButton.addEventListener("click", create_proxy(hwMenuReveal))
+
+      hwnbMenuElement1 = document.getElementById("hwWCSearch_666")
+      hwnbMenuElement1.datum="666"
+      hwnbMenuElement1.addEventListener("click", create_proxy(hwSearchWM))
+
+      hwnbMenuElement2 = document.getElementById("hwSF_666")
+      hwnbMenuElement2.datum="666"
+      hwnbMenuElement2.addEventListener("click", create_proxy(hwAddToSF))
+
+
+      #word button
+      hwWordButton1 = document.getElementById("hwb_testisana")
+      hwWordButton1.addEventListener("click", create_proxy(hwMenuReveal))
+      hwWordButton1.datum="testisana"
+
+      hwwbMenuElement1 = document.getElementById("hwDel_testisana")
+      hwwbMenuElement1.datum = "testisana"
+      hwwbMenuElement1.addEventListener("click", create_proxy(deleteFromSM))
+
+      #word button
+      hwWordButton2 = document.getElementById("hwb_sataniste")
+      hwWordButton2.addEventListener("click", create_proxy(hwMenuReveal))
+      hwWordButton2.datum="sataniste"
+
+      hwwbMenuElement2 = document.getElementById("hwDel_sataniste")
+      hwwbMenuElement2.datum = "sataniste"
+      hwwbMenuElement2.addEventListener("click", create_proxy(deleteFromSM))
+      
+      #number button 657
+      hwNumberButton657 = document.getElementById("hwb_657")
+      hwNumberButton657.datum="657"
+      hwNumberButton657.addEventListener("click", create_proxy(hwMenuReveal))
+
+      hwnbMenuElement657_1 = document.getElementById("hwWCSearch_657")
+      hwnbMenuElement657_1.datum="657"
+      hwnbMenuElement657_1.addEventListener("click", create_proxy(hwSearchWM))
+
+      hwnbMenuElement657_2 = document.getElementById("hwSF_657")
+      hwnbMenuElement657_2.datum="657"
+      hwnbMenuElement657_2.addEventListener("click", create_proxy(hwAddToSF))
+
+      #word button uung
+      hwWordButton657_1 = document.getElementById("hwb_uung")
+      hwWordButton657_1.addEventListener("click", create_proxy(hwMenuReveal))
+      hwWordButton657_1.datum="uung"
+
+      hwwbMenuElement657_1 = document.getElementById("hwDel_uung")
+      hwwbMenuElement657_1.datum = "uung"
+      hwwbMenuElement657_1.addEventListener("click", create_proxy(deleteFromSM))
+     
+    </py-script>
+  </body>
+
+</html>
+

@@ -21,7 +21,6 @@
                 background-color: #0000aa;
                 text-align: center;
             }
-
             .sv_style{
                 font-size: 30px;
                 color: black;
@@ -383,7 +382,7 @@
 
         def printWizardsComments(mE):
             
-            pressedNumber=int(mE.currentTarget.datum)
+            pressedNumber=mE.currentTarget.numero
             pl = getParentList(pressedNumber)
             wvpairsFromDeepMemFormattedPL=""
 
@@ -427,6 +426,7 @@
             
             outputWords()     
             makeSWListeners()
+            makeWordGrpListeners()
             upDateSentenceFormulaNoChange()
             console.log("updated udsfnc in mwfdw2sw")
             smviewDOC.location = "./sessionmemory.html#number"+str(getGematria(pressedWord, localStorage.getItem("cipher")))
@@ -434,119 +434,17 @@
 
         wcProxyFunc=create_proxy(moveWordFromDMtoSW)
 
-        hwMenuControl={}
-        def hwMenuReveal(mE):
-            global hwMenuControl
-            console.log(str(hwMenuControl))            
-            datum=mE.currentTarget.datum
-            console.log("hwMenuReveal:"+str(datum))
-            element=smviewDOC.getElementById("hwmc_"+datum)
-            
-            if not hwMenuControl["hwmenu_"+datum]:
-                element.style.display="block"
-                hwMenuControl["hwmenu_"+datum]=True
-            else:
-                element.style.display="none"
-                hwMenuControl["hwmenu_"+datum]=False
-            return
-
-        def hwNumberMenuReveal(mE):
-            global hwMenuControl 
-            console.log(str(hwMenuControl))           
-            datum=mE.currentTarget.datum
-            console.log("hwNumberMenuReveal:"+str(datum))
-            element=smviewDOC.getElementById("hwmc_"+datum)
-            
-            if not hwMenuControl["hwmenu_"+datum]:
-                element.style.display="block"
-                hwMenuControl["hwmenu_"+datum]=True
-            else:
-                element.style.display="none"
-                hwMenuControl["hwmenu_"+datum]=False
-            return
-
-    
-        def hwSearchWM(mE):
-            console.log("hwSearchWM:"+str(mE.currentTarget.datum))
-            printWizardsComments(mE)
-            return
-
-        def hwAddToSF(mE):            
-            console.log("hwAddToSF:"+str(mE.currentTarget.datum))
-            upDateSentenceFormula(mE)
-            return
-
-        def deleteFromSM(mE):
-            console.log("deleteFromSM:"+str(mE.currentTarget.datum))
-            return
-
-        hwMenuProxy=create_proxy(hwMenuReveal)
-        hwNumberMenuProxy=create_proxy(hwNumberMenuReveal)
-
         def makeSWListeners():
             console.log("makeSWListeners()")
             wvpairs=getWordValuePairsOuter()
-            global hwMenuControl, hwMenuProxy, hwNumberMenuProxy
-            hwMenuControl={}
-
-
             for i in wvpairs:
-                currentNumber=i[1]
-                if currentNumber!=0:
+            
+                numberButton = smviewDOC.getElementById("number"+str(i[1]))
+                numberButton.numero = i[1]
+                numberButton.addEventListener("click", proxyFunc)
 
-                    hwNumberButton = smviewDOC.getElementById("hwb_"+str(currentNumber))
-                    hwMenuControl["hwmenu_"+str(currentNumber)]=False
-                    if hwNumberButton != None:
-                        console.log("creating eL at numberButtonMenuReveal hwb_"+str(currentNumber))
-                    else:
-                        console.log("FAIL: hwb_"+str(currentNumber))
-                    hwNumberButton.datum=str(currentNumber)
-                    hwNumberButton.addEventListener("click", hwNumberMenuProxy)
+            return
 
-                    hwnbMenuElement1 = smviewDOC.getElementById("hwWCSearch_"+str(currentNumber))
-                    if hwnbMenuElement1 != None:
-                        console.log("creating eL at numberButtonMenu1 hwWCSearch_"+str(currentNumber))
-                    else:
-                        console.log("FAIL: hwWCSearch_"+str(currentNumber))    
-                    hwnbMenuElement1.datum=str(currentNumber)
-                    hwnbMenuElement1.addEventListener("click", create_proxy(hwSearchWM))
-                    
-                    hwnbMenuElement2 = smviewDOC.getElementById("hwSF_"+str(currentNumber))
-                    if hwnbMenuElement2 != None:
-                        console.log("creating eL at numberButtonMenu2 hwSF_"+str(currentNumber))
-                    else:
-                        console.log("FAIL: hwSF_"+str(currentNumber))
-                    hwnbMenuElement2.datum=currentNumber
-                    hwnbMenuElement2.addEventListener("click", create_proxy(hwAddToSF))
-                    
-        
-                    #word buttons
-                    for word in localStorage.getItem("words").split():
-                        # check if words are on the same route to root
-                        if getParentList(getGematria(word, localStorage.getItem("cipher")))[1:]\
-                        ==getParentList(int(currentNumber))[1:]:
-                            
-                            hwWordButton1 = smviewDOC.getElementById("hwb_"+word)
-                            hwMenuControl["hwmenu_"+str(word)]=False
-                            if hwWordButton1 != None:
-                                console.log("creating eL at wordButtonMenuReveal hwb_"+word)
-                            else:
-                                console.log("FAIL: hwb_"+word)
-                            hwWordButton1.addEventListener("click", hwNumberMenuProxy)
-                            hwWordButton1.datum=word
-                                                    
-                            hwwbMenuElement1 = smviewDOC.getElementById("hwDel_"+word)
-                            if hwwbMenuElement1 != None:
-                                console.log("creating eL at wordButtonDelMenuItem hwDel_"+word)
-                            else:
-                                console.log("FAIL: hwDel_"+word)
-                            hwwbMenuElement1.datum = word
-                            hwwbMenuElement1.addEventListener("click", create_proxy(deleteFromSM))
-                        
-            console.log(str(hwMenuControl))
-            return   
-        
-        """
         def makeWordGrpListeners():
             console.log("makeWordGrpListeners()")
             wordArray = nds.make2DWordArrayFromString(localStorage.getItem("words"), localStorage.getItem("cipher"))
@@ -558,7 +456,6 @@
                 wordButtonWG.addEventListener('click', sentenceFormula_proxy)
 
             return
-        """
 
         def makeFinalSentenceListeners():
             console.log("makeFinalSentenceListeners()")
@@ -585,20 +482,12 @@
             return
 
         def outputWords():
-            #wvpairs=getWordValuePairsOuter()
+            wvpairs=getWordValuePairsOuter()
 
-            #for i in wvpairs:
-            #    nds.addWord(i[0], localStorage.getItem("cipher"))
-
-            nds.clearRAM()
-            nds.addWordArray(localStorage.getItem("words").split(), localStorage.getItem("cipher"))
+            for i in wvpairs:
+                nds.addWord(i[0], localStorage.getItem("cipher"))
 
             gtRepre=nds.printAll(localStorage.getItem("cipher"))
-            console.log("From outputWords: gtRepre\n"+gtRepre)
-            console.log("nds.roots[n].getWords():")
-            
-            for root in nds.roots:
-                console.log("Root "+str(root.root)+" words:\n"+str(root.getWords()))
 
             smviewDOC.getElementById("smview_output").innerHTML=gtRepre
             return
@@ -636,6 +525,7 @@
             
             outputWords()     
             makeSWListeners()
+            makeWordGrpListeners()
             upDateSentenceFormulaNoChange()
             
             return
@@ -663,6 +553,7 @@
             
             outputWords()     
             makeSWListeners()
+            makeWordGrpListeners()
             upDateSentenceFormulaNoChange()
             
             return
@@ -690,6 +581,7 @@
             
             outputWords()     
             makeSWListeners()
+            makeWordGrpListeners()
             upDateSentenceFormulaNoChange()
             
             return
@@ -704,6 +596,7 @@
 
             outputWords()
             makeSWListeners()
+            makeWordGrpListeners()
             upDateSentenceFormulaNoChange()
             
             return
@@ -718,6 +611,7 @@
 
             outputWords()
             makeSWListeners()
+            makeWordGrpListeners()
             upDateSentenceFormulaNoChange()
             
             return
@@ -744,9 +638,9 @@
 
             formula=localStorage.getItem("sentenceFormula")
             newFormula=formula
-
-            afe_gem=mE.currentTarget.datum
-
+            addedFE=mE.currentTarget.addedFormulaElement
+            afe_gem=getGematria(addedFE[0], localStorage.getItem("cipher"))
+            
             #no duplicates in sf:
             if str(afe_gem) in formula.split():
                 return
@@ -859,7 +753,7 @@
 
         finalSentence_proxy = create_proxy(upDateFinalSentence)
 
-        #sentenceFormula_proxy = create_proxy(upDateSentenceFormula)
+        sentenceFormula_proxy = create_proxy(upDateSentenceFormula)
 
         smaw_proxy = create_proxy(smAddWord)
         document.getElementById("addWordToSM").addEventListener("click", smaw_proxy)
@@ -897,6 +791,7 @@
         
         outputWords()
         makeSWListeners()
+        makeWordGrpListeners()
         upDateSentenceFormulaNoChange()
         updateGemValMsgNotMouse()
         </py-script>
