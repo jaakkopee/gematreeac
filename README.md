@@ -27,6 +27,8 @@ For normal use, I recommend the online version. If you want to experiment with t
 
 To run GemaTreeAC locally, you need to have a http server on your computer. Python has a module, http.server, that will do for testing the code. Just install Python 3 from https://python.org and enter <pre>python3 -m http.server</pre> at the command line in your GemaTreeAC directory and point your browser to <pre>localhost:8000/GemaTreeAC_index.html</pre> 
 
+Adding your own database to the Wizard Meditation / DeepMem -search is possible at https://jpts.aprx.io with the google chrome browser. Safari does not like local data, the last time I checked. Other browsers I haven't tested.
+
 GemaTreeAC 2=0 is written in Python from https://python.org and PyScript from https://pyscript.net
 
 GemaTreeAC is copylefted in 2022 by Jaakko Prättälä. All proprietary rights belong to the Great Spirit. Do What Thou Wilt with the code. Share the knowledge in the way you see as fit.
