@@ -1,5 +1,5 @@
 # GemaTreeAC 2=0
-GemaTreeAC 2=0 is a gematria and numerology -based word classification algorithm and database. It is meant for searching meanings of words by mapping letters into numbers and comparing the values of words. Also numerological reduction is used to form a nine-rooted treestructure that has routes of numbers from leave to root. The code is a web application that is hosted at http://gematreeac.ga
+GemaTreeAC 2=0 is a gematria and numerology -based word classification algorithm and database. It is meant for searching meanings of words by mapping letters into numbers and comparing the values of words. Also numerological reduction is used to form a nine-rooted treestructure that has routes of numbers from leave to root. The code is a web application that is hosted at https://jpts.aprx.io
 
 Gematria is the mapping of numbers (usually positive integers) with the letters of an alphabet. Gematria is used for searching associative meanings in words in the study of the Bible and the Torah, for example. I use it to construct words of power for my ritual work.
 
@@ -21,17 +21,22 @@ At the moment GemaTreeAC has only 8 ciphers that are used commonly in gematria s
 
 GemaTreeAC comes with database functionality and a read-only database called DeepMem of ca. 500000 words in Finnish, Swedish and English. DeepMem-database is gathered from kotus-sanalista_v1, WordNet 3.1, Gothenburg uni. Saldo 2.3 and Väestötietojärjestelmän Etunimitilasto
 
-GemaTreeAC is a web application hosted at http://gematreeac.ga .
+GemaTreeAC is a web application hosted at https://jpts.aprx.io .
 
 For normal use, I recommend the online version. If you want to experiment with the code, you can download the latest release from https://github.com/jaakkopee/gematreeac/releases or clone the repository, and run your local version of GemaTreeAC.
 
 To run GemaTreeAC locally, you need to have a http server on your computer. Python has a module, http.server, that will do for testing the code. Just install Python 3 from https://python.org and enter <pre>python3 -m http.server</pre> at the command line in your GemaTreeAC directory and point your browser to <pre>localhost:8000/GemaTreeAC_index.html</pre> 
 
+Adding your own database to the Wizard Meditation / DeepMem -search is possible at https://jpts.aprx.io with the google chrome browser. Safari does not like local data, the last time I checked. Other browsers I haven't tested.
+
 GemaTreeAC 2=0 is written in Python from https://python.org and PyScript from https://pyscript.net
 
 GemaTreeAC is copylefted in 2022 by Jaakko Prättälä. All proprietary rights belong to the Great Spirit. Do What Thou Wilt with the code. Share the knowledge in the way you see as fit.
+
+Feel free to contact me if you have questions, suggestions, feature requests or just want to talk about gematria/numerology/kabbala/occult stuff. I am a true numerology/gematria freak and a practicing mage.
 
 --
 Jaakko Prättälä
 iipekaj@gmail.com
 
+<img src="IMG_7292.jpg"/>
