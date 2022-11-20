@@ -33,6 +33,8 @@ GemaTreeAC 2=0 is written in Python from https://python.org and PyScript from ht
 
 GemaTreeAC is copylefted in 2022 by Jaakko Prättälä. All proprietary rights belong to the Great Spirit. Do What Thou Wilt with the code. Share the knowledge in the way you see as fit.
 
+Feel free to contact me if you have questions, suggestions, feature requests or just want to talk about gematria/numerology/kabbala/occult stuff. I am a true numerology/gematria freak and a practicing mage.
+
 --
 Jaakko Prättälä
 iipekaj@gmail.com
