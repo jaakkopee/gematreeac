@@ -39,4 +39,4 @@ Feel free to contact me if you have questions, suggestions, feature requests or 
 Jaakko Prättälä
 iipekaj@gmail.com
 
-<img src="testing.jpeg" />
+<img src="IMG_7292.jpg"/>
