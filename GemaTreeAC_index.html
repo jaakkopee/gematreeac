@@ -598,10 +598,39 @@
             upDateSentenceFormula(mE)
             return
 
-        def deleteFromSM(mE):
-            console.log("deleteFromSM:"+str(mE.currentTarget.datum))
+        def clearWizard():
+            smviewDOC.getElementById("WizardsComments").innerHTML=""
+            smviewDOC.getElementById("WizardsHelper").innerHTML=""
             return
 
+        def deleteFromSM(mE):
+            console.log("deleteFromSM:"+str(mE.currentTarget.datum))
+            oldWords=localStorage.getItem("words").split()
+            word = mE.currentTarget.datum
+            newWordStr=""
+            
+            if word in oldWords:
+                oldWords.remove(word)
+            else:
+                console.log("Fuckery in remove word.")
+            
+            for i in oldWords:
+                newWordStr+=i+" "
+
+            localStorage.setItem("words", newWordStr)
+
+            oldSF=localStorage.getItem("sentenceFormula").split()
+            delWordGematria=str(getGematria(word, localStorage.getItem("cipher")))
+            
+            localStorage.setItem("sentenceFormula", "0 ")
+            initFS()
+            upDateSentenceFormulaNoChange()
+            clearWizard()
+            outputWords()
+            makeSWListeners()
+            return
+
+            
         hwMenuProxy=create_proxy(hwMenuReveal)
         hwNumberMenuProxy=create_proxy(hwNumberMenuReveal)
 
@@ -663,6 +692,7 @@
                             else:
                                 console.log("FAIL: hwDel_"+word)
                             hwwbMenuElement1.datum = word
+
                             hwwbMenuElement1.addEventListener("click", create_proxy(deleteFromSM))
                         
             console.log(str(hwMenuControl))
