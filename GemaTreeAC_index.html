@@ -130,7 +130,7 @@
             }
 
             .howtoDBButton{
-                border-width: 3px;
+                border-width: 10px;
                 border: green;
                 background-color: black;
                 color: yellowgreen;
@@ -139,6 +139,20 @@
                 display: none;
                 position: absolute;
                 left:200px;
+            }
+
+            .gemValMsg_div{
+                height:60px;
+                font-size:38px;
+                position: relative;
+                left: 40%;
+                width: 20%;
+            }
+
+            .loadInfo{
+                position: relative;
+                left: 40%;
+                width: 20%;
             }
 
         </style>
@@ -167,13 +181,16 @@
         from alphabet import cipher as allCiphers
         from gemNumFuncs import getGematria, getParentList
         from getwordsfromdbs import searchDeepMemByNumberArray
+        import threading as t
+        from random import randint
+        from time import sleep
 
-        
         def changeCipher(mE):
             localStorage.setItem("cipher", mE.currentTarget.cipherID)
             document.getElementById('cipherButton').innerHTML="Cipher In Use: "+localStorage.getItem("cipher")
             console.log(localStorage.getItem("cipher"))
             smviewDOC.getElementById("WizardsComments").innerHTML=""
+            smviewDOC.getElementById("WizardsHelper").innerHTML=""
             clearSentenceFormulaNoMouse()
             smNoAddWordNoMouseNoChange()
             updateGemValMsgNotMouse()     
@@ -221,6 +238,7 @@
             </div>
           </div><br />
         <py-script>
+
         menuActive=False
         def toggleMenu(mE):
             global menuActive
@@ -381,15 +399,28 @@
         <button type="button" id="uploadDB">Upload Local DB</button>
         <button class="howtoDBButton" id="howtoDB">About DB Format</button>
 
-     <br><iframe class="howToDB_iframe" id="howToLoadLocalDB" src="db_howto.html" width="360" height="240"></iframe>
+        <br>
+        <iframe class="howToDB_iframe" id="howToLoadLocalDB" src="db_howto.html" width="360" height="240"></iframe>
 
         <!--py-repl></py-repl-->
 
-        <div id="messageout"></div>
+        <div class="gemValMsg_div" id="messageout"></div>
+        <div id="loadingWC" class="loadInfo"></div>
 
         <py-script> 
+        from js import setInterval
+        
+        def rgbCallBack():
+            red=randint(0,255)
+            green=randint(0,255)
+            blue=randint(0,255)
+            document.getElementById("messageout").style.color = f"rgb({red}, {green}, {blue})"
+            return
+
+        setInterval(create_proxy(rgbCallBack), 333)
+
         htdbDOC = document.getElementById('howToLoadLocalDB').contentWindow.document
-                
+
         htdb_isOpen=False
         def openHowToDB(evt):
             global htdb_isOpen
@@ -400,7 +431,10 @@
                 document.getElementById("howToLoadLocalDB").style.display="none"
                 htdb_isOpen=False
             return
-    
+
+        def upDateWizardLoadInfo(infoStr):
+            document.getElementById("loadingWC").innerHTML=infoStr
+            return
     
         document.getElementById("howtoDB").addEventListener("click", create_proxy(openHowToDB))
         
@@ -463,7 +497,6 @@
         
 
         def printWizardsComments(mE):
-            
             pressedNumber=int(mE.currentTarget.datum)
             pl = getParentList(pressedNumber)
             wvpairsFromDeepMemFormattedPL=""
@@ -485,12 +518,15 @@
             ldb_printed=[]            
             if localStorage.getItem("wizardsHelper"):
                 wizardsHelperData=localStorage.getItem("wizardsHelper").split()
+
                 for i in wizardsHelperData:
                     if getGematria(i, localStorage.getItem("cipher"))==pressedNumber:
-                        ldb_outputStr+=nds.makeLocDBHyperWord(i)+str(getGematria(i, localStorage.getItem("cipher")))
-                        ldb_printed+=[i]
+                        if not i in ldb_printed:
+                            ldb_outputStr+=nds.makeLocDBHyperWord(i)+str(getGematria(i, localStorage.getItem("cipher")))
+                            ldb_printed+=[i]
 
-            smviewDOC.getElementById("WizardsComments").innerHTML="Wizard Meditation on Route "+str(pl)+"\n(Wizard\'s DeepMem-database from\nkotus-sanalista_v1,\nWordNet 3.1,\nGothenburg uni. Saldo 2.3\nand Väestötietojärjestelmän Etunimitilasto)\n\n"+wvpairsFromDeepMemFormattedPL+ldb_outputStr
+            smviewDOC.getElementById("WizardsComments").innerHTML="Wizard Meditation on Route "+str(pl)+"\n(Wizard\'s DeepMem-database from\nkotus-sanalista_v1,\nWordNet 3.1,\nGothenburg uni. Saldo 2.3\nand Väestötietojärjestelmän Etunimitilasto)\n\n"+wvpairsFromDeepMemFormattedPL
+            smviewDOC.getElementById("WizardsHelper").innerHTML="Local DB:\n"+ldb_outputStr
             smviewDOC.location = "./sessionmemory.html#WChdr"
 
             for i in pl:
@@ -803,6 +839,7 @@
             nds.clearRAM()
             nds.addWord("0", localStorage.getItem("cipher"))
             smviewDOC.getElementById("WizardsComments").innerHTML=""
+            smviewDOC.getElementById("WizardsHelper").innerHTML=""
 
             outputWords()
             makeSWListeners()
@@ -817,6 +854,7 @@
             nds.clearRAM()
             nds.addWord("0", localStorage.getItem("cipher"))
             smviewDOC.getElementById("WizardsComments").innerHTML=""
+            smviewDOC.getElementById("WizardsHelper").innerHTML=""
 
             outputWords()
             makeSWListeners()
