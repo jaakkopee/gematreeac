@@ -626,15 +626,40 @@
 
             localStorage.setItem("words", newWordStr)
 
-            oldSF=localStorage.getItem("sentenceFormula").split()
             delWordGematria=str(getGematria(word, localStorage.getItem("cipher")))
+
+            fsIdxStr=localStorage.getItem("finalSentenceIdx")
+            fsIdxStrArray = fsIdxStr.split()
+            newFsIdxStr=""
+
+            sfArray = localStorage.getItem("sentenceFormula").split()
+            newSFStr=""
+
+            newWordArray=newWordStr.split()
+            currentCipher = localStorage.getItem("cipher")
+            twoDWordArray = nds.make2DWordArray(newWordArray, currentCipher)
+            gemValueArray=[]
+            for i in twoDWordArray:
+                gemValueArray+=[getGematria(i[0], currentCipher)]
             
-            localStorage.setItem("sentenceFormula", "0 ")
-            initFS()
-            upDateSentenceFormulaNoChange()
-            clearWizard()
+            gemValueArray = list(dict.fromkeys(gemValueArray))
+
+            for i in range(len(sfArray)):
+                for j in gemValueArray:
+                    if str(j) == sfArray[i]:                
+                        newSFStr+=sfArray[i]+" "
+                        newFsIdxStr+="0 "
+
+            localStorage.setItem("sentenceFormula", newSFStr)
+            localStorage.setItem("finalSentenceIdx", newFsIdxStr)
+
+            sfOutput = smviewDOC.getElementById("sentenceFormulaLair")
+
             outputWords()
             makeSWListeners()
+            sfOutput.innerHTML=nds.makeHyperFormula(newSFStr, newWordStr, currentCipher)
+            makeFinalSentenceListeners()
+            printFinalSentence() 
             return
 
         deleteFromSMProxy = create_proxy(deleteFromSM)   
@@ -705,20 +730,6 @@
             console.log(str(hwMenuControl))
             return   
         
-        """
-        def makeWordGrpListeners():
-            console.log("makeWordGrpListeners()")
-            wordArray = nds.make2DWordArrayFromString(localStorage.getItem("words"), localStorage.getItem("cipher"))
-            for i in wordArray:
-
-                gemVal=getGematria(i[0], localStorage.getItem("cipher"))
-                wordButtonWG=smviewDOC.getElementById("words"+str(gemVal))
-                wordButtonWG.addedFormulaElement=i
-                wordButtonWG.addEventListener('click', sentenceFormula_proxy)
-
-            return
-        """
-
         def makeFinalSentenceListeners():
             console.log("makeFinalSentenceListeners()")
             wordArray = nds.make2DWordArrayFromString(localStorage.getItem("words"), localStorage.getItem("cipher"))
@@ -937,6 +948,21 @@
             smviewDOC.location = "./sessionmemory.html#sentenceFormulaLair"
 
             return
+
+        def delFromSentenceFormula(gemVal):
+        
+            formula=localStorage.getItem("sentenceFormula").split()
+            newFormula=formula
+            newFormula.remove(str(gemVal))
+            newFString=""
+            for i in newFormula:
+                newFString+=i+" "
+            
+            localStorage.setItem("sentenceFormula", newFString)
+            console.log("new Formula String: '"+newFString+"'")
+ 
+            return
+
      
         def upDateSentenceFormulaNoChange():
             oldWordsStr=localStorage.getItem("words")

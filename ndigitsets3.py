@@ -157,7 +157,7 @@ def makeHyperFormula(formula, wordListStr, currentCipher):
         for j in i:
             outputString+="<button class='sfString' id='SF"+j+"'>"+j+"</button> "
 
-        outputString+="<br />"
+        outputString+="<br>"
 
     return outputString
 
