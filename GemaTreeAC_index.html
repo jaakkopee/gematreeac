@@ -248,143 +248,145 @@
         ddButton=document.getElementById("cipherButton")
         ddButton.addEventListener("click", create_proxy(toggleMenu))
     
+        cipherProxy = create_proxy(changeCipher)
+
         ccButton=document.getElementById("ccscaext")
         ccButton.cipherID="ScaExt"
-        ccButton.addEventListener("click", create_proxy(changeCipher))
+        ccButton.addEventListener("click", cipherProxy)
 
         ccButton=document.getElementById("ccengextrev")
         ccButton.cipherID="EngExtRev"
-        ccButton.addEventListener("click", create_proxy(changeCipher))
+        ccButton.addEventListener("click", cipherProxy)
 
         ccButton=document.getElementById("ccord")
         ccButton.cipherID="Ord"
-        ccButton.addEventListener("click", create_proxy(changeCipher))
+        ccButton.addEventListener("click", cipherProxy)
 
         ccButton=document.getElementById("ccordrev")
         ccButton.cipherID="OrdRev"
-        ccButton.addEventListener("click", create_proxy(changeCipher))
+        ccButton.addEventListener("click", cipherProxy)
 
         ccButton=document.getElementById("ccfr")
         ccButton.cipherID="FullR"
-        ccButton.addEventListener("click", create_proxy(changeCipher))
+        ccButton.addEventListener("click", cipherProxy)
 
         ccButton=document.getElementById("ccfrrev")
         ccButton.cipherID="FullRRev"
-        ccButton.addEventListener("click", create_proxy(changeCipher))
+        ccButton.addEventListener("click", cipherProxy)
 
         ccButton=document.getElementById("ccsr")
         ccButton.cipherID="SingRed"
-        ccButton.addEventListener("click", create_proxy(changeCipher))
+        ccButton.addEventListener("click", cipherProxy)
 
         ccButton=document.getElementById("ccsrrev")
         ccButton.cipherID="SingRedRev"
-        ccButton.addEventListener("click", create_proxy(changeCipher))
+        ccButton.addEventListener("click", cipherProxy)
 
         #Implement these too---v
 
         #ccButton=document.getElementById("ccsat")
         #ccButton.cipherID="Sat36"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("ccsatrev")
         #ccButton.cipherID="Sat36Rev"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("ccinv")
         #ccButton.cipherID="Inv"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("ccinvrev")
         #ccButton.cipherID="InvRev"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cctri")
         #ccButton.cipherID="Trid"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cctrirev")
         #ccButton.cipherID="TridRev"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cctriad")
         #ccButton.cipherID="TridAD"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cctriadrev")
         #ccButton.cipherID="TridADRev"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc6")
         #ccButton.cipherID="6"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc6rev")
         #ccButton.cipherID="6Rev"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc11")
         #ccButton.cipherID="11"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc11rev")
         #ccButton.cipherID="11Rev"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc18")
         #ccButton.cipherID="18"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc18rev")
         #ccButton.cipherID="18Rev"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc22")
         #ccButton.cipherID="22"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc22rev")
         #ccButton.cipherID="22Rev"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc26")
         #ccButton.cipherID="26"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc26rev")
         #ccButton.cipherID="26Rev"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc27")
         #ccButton.cipherID="27"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc27rev")
         #ccButton.cipherID="27Rev"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc28")
         #ccButton.cipherID="28"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc28rev")
         #ccButton.cipherID="28Rev"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc33")
         #ccButton.cipherID="33"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc33rev")
         #ccButton.cipherID="33Rev"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc37")
         #ccButton.cipherID="37"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         #ccButton=document.getElementById("cc37rev")
         #ccButton.cipherID="37Rev"
-        #ccButton.addEventListener("click", create_proxy(changeCipher))
+        #ccButton.addEventListener("click", cipherProxy)
 
         </py-script>
         <input id="wordsHere" value="text here"></input>
@@ -593,10 +595,15 @@
             printWizardsComments(mE)
             return
 
+        hwSearchProxy = create_proxy(hwSearchWM)
+
         def hwAddToSF(mE):            
             console.log("hwAddToSF:"+str(mE.currentTarget.datum))
             upDateSentenceFormula(mE)
             return
+
+        hwAddToSFProxy = create_proxy(hwAddToSF)
+        
 
         def clearWizard():
             smviewDOC.getElementById("WizardsComments").innerHTML=""
@@ -630,7 +637,7 @@
             makeSWListeners()
             return
 
-            
+        deleteFromSMProxy = create_proxy(deleteFromSM)   
         hwMenuProxy=create_proxy(hwMenuReveal)
         hwNumberMenuProxy=create_proxy(hwNumberMenuReveal)
 
@@ -660,7 +667,7 @@
                     else:
                         console.log("FAIL: hwWCSearch_"+str(currentNumber))    
                     hwnbMenuElement1.datum=str(currentNumber)
-                    hwnbMenuElement1.addEventListener("click", create_proxy(hwSearchWM))
+                    hwnbMenuElement1.addEventListener("click", hwSearchProxy)
                     
                     hwnbMenuElement2 = smviewDOC.getElementById("hwSF_"+str(currentNumber))
                     if hwnbMenuElement2 != None:
@@ -668,7 +675,7 @@
                     else:
                         console.log("FAIL: hwSF_"+str(currentNumber))
                     hwnbMenuElement2.datum=currentNumber
-                    hwnbMenuElement2.addEventListener("click", create_proxy(hwAddToSF))
+                    hwnbMenuElement2.addEventListener("click", hwAddToSFProxy)
                     
         
                     #word buttons
@@ -693,7 +700,7 @@
                                 console.log("FAIL: hwDel_"+word)
                             hwwbMenuElement1.datum = word
 
-                            hwwbMenuElement1.addEventListener("click", create_proxy(deleteFromSM))
+                            hwwbMenuElement1.addEventListener("click", deleteFromSMProxy)
                         
             console.log(str(hwMenuControl))
             return   
