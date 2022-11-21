@@ -432,6 +432,9 @@
         
         import asyncio
         async def openDBFile(evt):
+            
+            data=""
+
             file=None
             fileHandle=None
 
@@ -439,21 +442,26 @@
                 fileHandle = await window.showOpenFilePicker()
             except Exception as e:
                 console.log(str(e))
+                console.log("Shit Happened, No Local DB now...")
+                return
 
             try:
                 file = await fileHandle[0].getFile()
             except Exception as e:
-                console.log(str(e))
-            
+                console.log(str(e)+"\n Shit Happened... dunno what but no Local DB.")
+                return
+
             try:
                 data = await file.text()
             except Exception as e:
-                console.log(str(e))
+                console.log(str(e)+"\n Shit happened. No Local DB.")
+                return
 
             data = data.split()
 
             console.log("Local DB data array split: ")
             console.log(str(data))
+
             dataLoweredAndSpecialCharsRemoved=[]
             for word in data:
                 word=word.lower()  
@@ -463,10 +471,10 @@
                         word=word.replace(i,"")
 
                 dataLoweredAndSpecialCharsRemoved+=[word]
-            
+
             data = list(dict.fromkeys(dataLoweredAndSpecialCharsRemoved))
 
-            console.log("Local DB data, duplicates removed: ")
+            console.log("Local DB data, duplicate words, numbers and special characters removed and text lower-cased: ")
             console.log(str(data))
 
             dataStr=""
