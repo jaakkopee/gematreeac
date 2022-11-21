@@ -434,6 +434,7 @@
         async def openDBFile(evt):
             file=None
             fileHandle=None
+
             try:
                 fileHandle = await window.showOpenFilePicker()
             except Exception as e:
@@ -444,10 +445,40 @@
             except Exception as e:
                 console.log(str(e))
             
+            try:
+                data = await file.text()
+            except Exception as e:
+                console.log(str(e))
+
+            data = data.split()
+
+            console.log("Local DB data array split: ")
+            console.log(str(data))
+            dataLoweredAndSpecialCharsRemoved=[]
+            for word in data:
+                word=word.lower()  
+
+                for i in word: 
+                    if not i.isalpha():
+                        word=word.replace(i,"")
+
+                dataLoweredAndSpecialCharsRemoved+=[word]
             
-            data = await file.text()
-            localStorage.setItem("wizardsHelper", data)
+            data = list(dict.fromkeys(dataLoweredAndSpecialCharsRemoved))
+
+            console.log("Local DB data, duplicates removed: ")
+            console.log(str(data))
+
+            dataStr=""
+            for i in data:
+                dataStr+=i+" "
+
+            console.log("Local DB, final string representation: ")
+            console.log(dataStr)
+
+            localStorage.setItem("wizardsHelper", dataStr)            
             htdbDOC.getElementById("dataDiv").innerHTML=localStorage.getItem("wizardsHelper")
+
             return
 
 
