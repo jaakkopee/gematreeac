@@ -508,14 +508,16 @@
                 wvpairsFromDeepMemFormattedPL+=wvpairsFromDeepMemFormatted
 
             ldb_outputStr=""
-            ldb_printed=[]            
+            ldb_printed=[] 
+            currentCipher=localStorage.getItem("cipher")
+
             if localStorage.getItem("wizardsHelper"):
                 wizardsHelperData=localStorage.getItem("wizardsHelper").split()
 
                 for i in wizardsHelperData:
-                    if getGematria(i, localStorage.getItem("cipher"))==pressedNumber:
+                    if getGematria(i, currentCipher)==pressedNumber:
                         if not i in ldb_printed:
-                            ldb_outputStr+=nds.makeLocDBHyperWord(i)+str(getGematria(i, localStorage.getItem("cipher")))
+                            ldb_outputStr+=nds.makeLocDBHyperWord(i)+str(getGematria(i, currentCipher))
                             ldb_printed+=[i]
 
             smviewDOC.getElementById("WizardsComments").innerHTML="Wizard Meditation on Route "+str(pl)+"\n(Wizard\'s DeepMem-database from\nkotus-sanalista_v1,\nWordNet 3.1,\nGothenburg uni. Saldo 2.3\nand Väestötietojärjestelmän Etunimitilasto)\n\n"+wvpairsFromDeepMemFormattedPL
@@ -524,7 +526,7 @@
 
             for i in pl:
             
-                wvpairsFromDeepMem = searchDeepMemByNumberArray(i, localStorage.getItem("cipher"))
+                wvpairsFromDeepMem = searchDeepMemByNumberArray(i, currentCipher)
                 for j in wvpairsFromDeepMem:
                     makeWCListener(j[0])
 
