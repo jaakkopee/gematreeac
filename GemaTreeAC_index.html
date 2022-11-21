@@ -642,7 +642,7 @@
             for i in twoDWordArray:
                 gemValueArray+=[getGematria(i[0], currentCipher)]
             
-            gemValueArray = list(dict.fromkeys(gemValueArray))
+            gemValueArray = list(dict.fromkeys(gemValueArray)) #remove duplicates
 
             for i in range(len(sfArray)):
                 for j in gemValueArray:
