@@ -51,7 +51,7 @@ class Root:
                         outputWord+=\
                             "<button class='hyperWordButton' id='hwb_"+i+"'>"+i+"</button>\
                             <div class='hyperWordMenuContent' id='hwmc_"+i+"'>\
-                                <a href='#' id='hwDel_"+i+"'>delete</a>\
+                                <a href='#smview_output' id='hwDel_"+i+"'>delete</a>\
                             </div>\
                             </div>"
 
@@ -118,8 +118,8 @@ def makeHyperNumber(numStr):
           "<div class='hyperWordDiv' id='hwd_"+numStr+"_"+numStr+"'>\
             <button class='hyperNumberButton' id='hwb_nolla'>"+numStr+"</button>\
             <div class='hyperWordMenuContent' id='hwmc_"+numStr+"'>\
-                <a href='#' id='hwWCSearch_"+numStr+"'>Wizard:"+numStr+"</a>\
-                <a href='#' id='hwSF_"+numStr+"'>SentForm:"+numStr+"</a>\
+                <a href='#WCHdr' id='hwWCSearch_"+numStr+"'>Wizard:"+numStr+"</a>\
+                <a href='#SentenceFormulaLair' id='hwSF_"+numStr+"'>SentForm:"+numStr+"</a>\
             </div>\
           </div>"
     else:
@@ -127,8 +127,8 @@ def makeHyperNumber(numStr):
         "<div class='hyperWordDiv' id='hwd_"+numStr+"_"+numStr+"'>\
             <button class='hyperNumberButton' id='hwb_"+numStr+"'>"+numStr+"</button>\
             <div class='hyperWordMenuContent' id='hwmc_"+numStr+"'>\
-                <a href='#' id='hwWCSearch_"+numStr+"'>Wizard:"+numStr+"</a>\
-                <a href='#' id='hwSF_"+numStr+"'>SentForm:"+numStr+"</a>\
+                <a href='#WCHdr' id='hwWCSearch_"+numStr+"'>Wizard:"+numStr+"</a>\
+                <a href='#SentenceFormulaLair' id='hwSF_"+numStr+"'>SentForm:"+numStr+"</a>\
             </div>\
         </div>"
 
