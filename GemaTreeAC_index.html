@@ -409,7 +409,7 @@
 
         <py-script> 
         from js import setInterval
-        
+
         def rgbCallBack():
             red=randint(0,255)
             green=randint(0,255)
@@ -430,10 +430,6 @@
             else:
                 document.getElementById("howToLoadLocalDB").style.display="none"
                 htdb_isOpen=False
-            return
-
-        def upDateWizardLoadInfo(infoStr):
-            document.getElementById("loadingWC").innerHTML=infoStr
             return
     
         document.getElementById("howtoDB").addEventListener("click", create_proxy(openHowToDB))
@@ -457,6 +453,7 @@
             localStorage.setItem("wizardsHelper", data)
             htdbDOC.getElementById("dataDiv").innerHTML=localStorage.getItem("wizardsHelper")
             return
+
 
         htdbDOC.getElementById("dataDiv").innerHTML=localStorage.getItem("wizardsHelper")
         
