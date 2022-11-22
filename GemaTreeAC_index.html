@@ -176,9 +176,7 @@
         from alphabet import cipher as allCiphers
         from gemNumFuncs import getGematria, getParentList
         from getwordsfromdbs import searchDeepMemByNumberArray
-        import threading as t
         from random import randint
-        from time import sleep
 
         def changeCipher(mE):
             localStorage.setItem("cipher", mE.currentTarget.cipherID)
@@ -197,13 +195,15 @@
             <button class="dropbtn" id="cipherButton">Cipher in use</button>
             <div class="dropdown-content" id="ddc">
                 <a href="#cipherButton" id="ccscaext">English/Scandinavian Extended</a>
-                <a href="#cipherButton" id="ccengextrev">English Extended Reverse</a>
+                <a href="#cipherButton" id="ccengextrev">Reverse English Extended</a>
                 <a href="#cipherButton" id="ccord">Ordinal</a>
                 <a href="#cipherButton" id="ccordrev">Reverse Ordinal</a>
                 <a href="#cipherButton" id="ccfr">Full Reduction</a>
                 <a href="#cipherButton" id="ccfrrev">Reverse Full Reduction</a>
                 <a href="#cipherButton" id="ccsr">Single Reduction</a>
                 <a href="#cipherButton" id="ccsrrev">Reverse Single Reduction</a>
+                <a href="#cipherButton" id="ccfibo">Fibonacci</a>
+                <a href="#cipherButton" id="ccfiborev">Reverse Fibonacci</a>
                 <!--a href="#cipherButton" id="ccsat">Satanic 36</a>
                 <a href="#cipherButton" id="ccsatrev">Reverse Satanic 36</a>
                 <a href="#cipherButton" id="ccinv">Inverse</a>
@@ -281,6 +281,15 @@
         ccButton=document.getElementById("ccsrrev")
         ccButton.cipherID="SingRedRev"
         ccButton.addEventListener("click", cipherProxy)
+
+        ccButton=document.getElementById("ccfibo")
+        ccButton.cipherID="Fibonacci"
+        ccButton.addEventListener("click", cipherProxy)
+
+        ccButton=document.getElementById("ccfiborev")
+        ccButton.cipherID="FibonacciRev"
+        ccButton.addEventListener("click", cipherProxy)
+
 
         #Implement these too---v
 
