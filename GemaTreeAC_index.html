@@ -184,7 +184,7 @@
         def changeCipher(mE):
             localStorage.setItem("cipher", mE.currentTarget.cipherID)
             document.getElementById('cipherButton').innerHTML="Cipher In Use: "+localStorage.getItem("cipher")
-            console.log(localStorage.getItem("cipher"))
+            #console.log(localStorage.getItem("cipher"))
             smviewDOC.getElementById("WizardsComments").innerHTML=""
             smviewDOC.getElementById("WizardsHelper").innerHTML=""
             clearSentenceFormulaNoMouse()
@@ -418,14 +418,15 @@
         <py-script> 
         from js import setInterval
 
-        def rgbCallBack():
+        def rgbCallBack01():
             red=randint(0,255)
             green=randint(0,255)
             blue=randint(0,255)
             document.getElementById("messageout").style.color = f"rgb({red}, {green}, {blue})"
             return
 
-        setInterval(create_proxy(rgbCallBack), 333)
+        setInterval(create_proxy(rgbCallBack01), 333)
+
 
         htdbDOC = document.getElementById('howToLoadLocalDB').contentWindow.document
 
@@ -453,26 +454,26 @@
             try:
                 fileHandle = await window.showOpenFilePicker()
             except Exception as e:
-                console.log(str(e))
-                console.log("Shit Happened, No Local DB now...")
+                #console.log(str(e))
+                #console.log("Shit Happened, No Local DB now...")
                 return
 
             try:
                 file = await fileHandle[0].getFile()
             except Exception as e:
-                console.log(str(e)+"\n Shit Happened... dunno what but no Local DB.")
+                #console.log(str(e)+"\n Shit Happened... dunno what but no Local DB.")
                 return
 
             try:
                 data = await file.text()
             except Exception as e:
-                console.log(str(e)+"\n Shit happened. No Local DB.")
+                #console.log(str(e)+"\n Shit happened. No Local DB.")
                 return
 
             data = data.split()
 
-            console.log("Local DB data array split: ")
-            console.log(str(data))
+            #console.log("Local DB data array split: ")
+            #console.log(str(data))
 
             dataLoweredAndSpecialCharsRemoved=[]
             for word in data:
@@ -486,15 +487,15 @@
 
             data = list(dict.fromkeys(dataLoweredAndSpecialCharsRemoved))
 
-            console.log("Local DB data, duplicate words, numbers and special characters removed and text lower-cased: ")
-            console.log(str(data))
+            #console.log("Local DB data, duplicate words, numbers and special characters removed and text lower-cased: ")
+            #console.log(str(data))
 
             dataStr=""
             for i in data:
                 dataStr+=i+" "
 
-            console.log("Local DB, final string representation: ")
-            console.log(dataStr)
+            #console.log("Local DB, final string representation: ")
+            #console.log(dataStr)
 
             localStorage.setItem("wizardsHelper", dataStr)            
             htdbDOC.getElementById("dataDiv").innerHTML=localStorage.getItem("wizardsHelper")
@@ -553,7 +554,7 @@
                 for j in wvpairsFromDeepMem:
 
                     hyperWord = nds.makeWCHyperWord(j[0]) #in an external python function because inline doesn not work
-                    console.log(hyperWord)
+                    #console.log(hyperWord)
                     wvpairsFromDeepMemFormatted+=hyperWord+" "+str(j[1])+"\n"
 
                 wvpairsFromDeepMemFormattedPL+=wvpairsFromDeepMemFormatted
@@ -590,9 +591,9 @@
         proxyFunc=create_proxy(printWizardsComments)
 
         def moveWordFromDMtoSW(mE):
-            console.log(mE)
+            #console.log(mE)
             pressedWord=mE.currentTarget.sana
-            console.log("moveWordFromDMtoSW: "+pressedWord)
+            #console.log("moveWordFromDMtoSW: "+pressedWord)
 
             nds.clearRAM()
             words = localStorage.getItem("words")
@@ -605,7 +606,7 @@
             outputWords()     
             makeSWListeners()
             upDateSentenceFormulaNoChange()
-            console.log("updated udsfnc in mwfdw2sw")
+            #console.log("updated udsfnc in mwfdw2sw")
             smviewDOC.location = "./sessionmemory.html#number"+str(getGematria(pressedWord, localStorage.getItem("cipher")))
             return
 
@@ -614,9 +615,9 @@
         hwMenuControl={}
         def hwMenuReveal(mE):
             global hwMenuControl
-            console.log(str(hwMenuControl))            
+            #console.log(str(hwMenuControl))            
             datum=mE.currentTarget.datum
-            console.log("hwMenuReveal:"+str(datum))
+            #console.log("hwMenuReveal:"+str(datum))
             element=smviewDOC.getElementById("hwmc_"+datum)
             
             if not hwMenuControl["hwmenu_"+datum]:
@@ -629,9 +630,9 @@
 
         def hwNumberMenuReveal(mE):
             global hwMenuControl 
-            console.log(str(hwMenuControl))           
+            #console.log(str(hwMenuControl))           
             datum=mE.currentTarget.datum
-            console.log("hwNumberMenuReveal:"+str(datum))
+            #console.log("hwNumberMenuReveal:"+str(datum))
             element=smviewDOC.getElementById("hwmc_"+datum)
             
             if not hwMenuControl["hwmenu_"+datum]:
@@ -644,14 +645,14 @@
 
     
         def hwSearchWM(mE):
-            console.log("hwSearchWM:"+str(mE.currentTarget.datum))
+            #console.log("hwSearchWM:"+str(mE.currentTarget.datum))
             printWizardsComments(mE)
             return
 
         hwSearchProxy = create_proxy(hwSearchWM)
 
         def hwAddToSF(mE):            
-            console.log("hwAddToSF:"+str(mE.currentTarget.datum))
+            #console.log("hwAddToSF:"+str(mE.currentTarget.datum))
             upDateSentenceFormula(mE)
             return
 
@@ -664,15 +665,13 @@
             return
 
         def deleteFromSM(mE):
-            console.log("deleteFromSM:"+str(mE.currentTarget.datum))
+            #console.log("deleteFromSM:"+str(mE.currentTarget.datum))
             oldWords=localStorage.getItem("words").split()
             word = mE.currentTarget.datum
             newWordStr=""
             
             if word in oldWords:
                 oldWords.remove(word)
-            else:
-                console.log("Fuckery in remove word.")
             
             for i in oldWords:
                 newWordStr+=i+" "
@@ -720,7 +719,7 @@
         hwNumberMenuProxy=create_proxy(hwNumberMenuReveal)
 
         def makeSWListeners():
-            console.log("makeSWListeners()")
+            #console.log("makeSWListeners()")
             wvpairs=getWordValuePairsOuter()
             global hwMenuControl, hwMenuProxy, hwNumberMenuProxy
             hwMenuControl={}
@@ -732,26 +731,17 @@
 
                     hwNumberButton = smviewDOC.getElementById("hwb_"+str(currentNumber))
                     hwMenuControl["hwmenu_"+str(currentNumber)]=False
-                    if hwNumberButton != None:
-                        console.log("creating eL at numberButtonMenuReveal hwb_"+str(currentNumber))
-                    else:
-                        console.log("FAIL: hwb_"+str(currentNumber))
+
                     hwNumberButton.datum=str(currentNumber)
                     hwNumberButton.addEventListener("click", hwNumberMenuProxy)
 
                     hwnbMenuElement1 = smviewDOC.getElementById("hwWCSearch_"+str(currentNumber))
-                    if hwnbMenuElement1 != None:
-                        console.log("creating eL at numberButtonMenu1 hwWCSearch_"+str(currentNumber))
-                    else:
-                        console.log("FAIL: hwWCSearch_"+str(currentNumber))    
+                    
                     hwnbMenuElement1.datum=str(currentNumber)
                     hwnbMenuElement1.addEventListener("click", hwSearchProxy)
                     
                     hwnbMenuElement2 = smviewDOC.getElementById("hwSF_"+str(currentNumber))
-                    if hwnbMenuElement2 != None:
-                        console.log("creating eL at numberButtonMenu2 hwSF_"+str(currentNumber))
-                    else:
-                        console.log("FAIL: hwSF_"+str(currentNumber))
+
                     hwnbMenuElement2.datum=currentNumber
                     hwnbMenuElement2.addEventListener("click", hwAddToSFProxy)
                     
@@ -764,34 +754,28 @@
                             
                             hwWordButton1 = smviewDOC.getElementById("hwb_"+word)
                             hwMenuControl["hwmenu_"+str(word)]=False
-                            if hwWordButton1 != None:
-                                console.log("creating eL at wordButtonMenuReveal hwb_"+word)
-                            else:
-                                console.log("FAIL: hwb_"+word)
+
                             hwWordButton1.addEventListener("click", hwNumberMenuProxy)
                             hwWordButton1.datum=word
                                                     
                             hwwbMenuElement1 = smviewDOC.getElementById("hwDel_"+word)
-                            if hwwbMenuElement1 != None:
-                                console.log("creating eL at wordButtonDelMenuItem hwDel_"+word)
-                            else:
-                                console.log("FAIL: hwDel_"+word)
+
                             hwwbMenuElement1.datum = word
 
                             hwwbMenuElement1.addEventListener("click", deleteFromSMProxy)
                         
-            console.log(str(hwMenuControl))
+            #console.log(str(hwMenuControl))
             return   
         
         def makeFinalSentenceListeners():
-            console.log("makeFinalSentenceListeners()")
+            #console.log("makeFinalSentenceListeners()")
             wordArray = nds.make2DWordArrayFromString(localStorage.getItem("words"), localStorage.getItem("cipher"))
             sentenceFormulaArray = localStorage.getItem("sentenceFormula").split()
             for i in sentenceFormulaArray:
                 for j in wordArray:
                     if int(i)==getGematria(j[0], localStorage.getItem("cipher")):                       
                         for k in range(len(j)):
-                            console.log("word is: "+j[k])
+                            #console.log("word is: "+j[k])
                             sfWordButton=smviewDOC.getElementById("SF"+j[k])
                             sfWordButton.index=k
                             sfWordButton.gemVal=getGematria(j[0], localStorage.getItem("cipher"))
@@ -801,14 +785,14 @@
             return
 
         def makeWCListener(word):
-            console.log("makeWCListener: "+word)
+            #console.log("makeWCListener: "+word)
             wordButton=smviewDOC.getElementById("WC"+word)
             wordButton.sana=word
             wordButton.addEventListener("click", wcProxyFunc)
             return
     
         def makeLocDBListener(word):
-            console.log("makeLocDBListener: "+word)
+            #console.log("makeLocDBListener: "+word)
             wordButton=smviewDOC.getElementById("LDB"+word)
             wordButton.sana=word
             wordButton.addEventListener("click", wcProxyFunc)
@@ -824,12 +808,9 @@
             nds.addWordArray(localStorage.getItem("words").split(), localStorage.getItem("cipher"))
 
             gtRepre=nds.printAll(localStorage.getItem("cipher"))
-            console.log("From outputWords: gtRepre\n"+gtRepre)
-            console.log("nds.roots[n].getWords():")
+            #console.log("From outputWords: gtRepre\n"+gtRepre)
+            #console.log("nds.roots[n].getWords():")
             
-            for root in nds.roots:
-                console.log("Root "+str(root.root)+" words:\n"+str(root.getWords()))
-
             smviewDOC.getElementById("smview_output").innerHTML=gtRepre
             return
 
@@ -989,7 +970,7 @@
                 newFormula+=str(afe_gem)
 
             localStorage.setItem("sentenceFormula", newFormula)
-            console.log("IMPORTANT!! udSF/newFormula: '"+str(newFormula)+"'")
+            #console.log("IMPORTANT!! udSF/newFormula: '"+str(newFormula)+"'")
             sfOutputStr=nds.makeHyperFormula(newFormula, localStorage.getItem("words"), localStorage.getItem("cipher"))
             
             #initFS()
@@ -1012,7 +993,7 @@
                 newFString+=i+" "
             
             localStorage.setItem("sentenceFormula", newFString)
-            console.log("new Formula String: '"+newFString+"'")
+            #console.log("new Formula String: '"+newFString+"'")
  
             return
 
@@ -1028,7 +1009,7 @@
             #initFS()
             updateFsIdx()
 
-            console.log("upDateSentenceFormulaNoChange: html change in sentenceFormulaLair.")
+            #console.log("upDateSentenceFormulaNoChange: html change in sentenceFormulaLair.")
             makeFinalSentenceListeners()
             printFinalSentence()
             return
@@ -1054,7 +1035,7 @@
         def saveNewFinalSentenceIndex(changedWord, gemVal, index):
             fsFormulaArray=localStorage.getItem("sentenceFormula").split()
             fsIdxArray=localStorage.getItem("finalSentenceIdx").split()
-            console.log("snfsi/fsI:"+str(fsIdxArray))
+            #console.log("snfsi/fsI:"+str(fsIdxArray))
 
             newFsIdxStr=""
 
@@ -1080,11 +1061,11 @@
             wordArray=nds.make2DWordArrayFromString(localStorage.getItem("words"), localStorage.getItem("cipher"))
             
             fsFormulaStr=localStorage.getItem("sentenceFormula")
-            console.log("fsFormulaStr: '"+fsFormulaStr+"'")
+            #console.log("fsFormulaStr: '"+fsFormulaStr+"'")
             fsFormulaArray=fsFormulaStr.split()
             
             fsIdxStr=localStorage.getItem("finalSentenceIdx")
-            console.log("fsIdx: '"+fsIdxStr+"'")
+            #console.log("fsIdx: '"+fsIdxStr+"'")
             fsIdxArray=fsIdxStr.split()
 
             outputString=""     
@@ -1094,7 +1075,7 @@
                 for j in wordArray:
                     if getGematria(j[0], localStorage.getItem("cipher"))==int(i):
                         outputString+=j[int(fsIdxArray[fwc])]+" "
-                        console.log("mfs: outputString:"+outputString)
+                        #console.log("mfs: outputString:"+outputString)
                         fwc+=1
 
             return outputString
