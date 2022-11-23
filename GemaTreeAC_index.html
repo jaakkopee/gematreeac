@@ -21,6 +21,7 @@
                 color: red;
                 background-color: #0000aa;
                 text-align: center;
+                display: none;
             }
 
             .sv_style{
@@ -154,7 +155,7 @@
         
     </head>   
 
-    <body class="myBody">
+    <body class="myBody" id="mainBody">
         
         <div class="credits"><h1>GemaTreeAC 2=0 Gematria Calculator, Numerological Classification Algorithm and Database. Copyleft 2022, Jake Pii Taivossuora, Do What Thou Wilt.</h1></div>
 
@@ -177,6 +178,8 @@
         from gemNumFuncs import getGematria, getParentList
         from getwordsfromdbs import searchDeepMemByNumberArray
         from random import randint
+
+        document.getElementById("mainBody").style.display="block" #show the page only after pyscript has loaded everyting
 
         def changeCipher(mE):
             localStorage.setItem("cipher", mE.currentTarget.cipherID)
