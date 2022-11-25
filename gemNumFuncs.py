@@ -46,7 +46,7 @@ class DistanceTeddyBear:
 
         selfString+="""\
             The distance is calculated with:
-                totalPoints = closenessWeight*(commonNds + commonRoot + commonRoute + commonNumber + sameWord)
+                totalPoints = closenessWeight*(commonNds + commonRoot + commonRoute + commonNumber + sameWord + poinBias)
                 numberDistance = numberDistanceWeight*(abs(gematria(word1) - gematria(word2))
                 rootDistance = rootDistanceWeight*(abs(root(word1) - root(word2)))
 
