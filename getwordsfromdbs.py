@@ -1,6 +1,46 @@
 import sqlite3
 
-from gemNumFuncs import getGematria
+from gemNumFuncs import getGematria, getDistance
+
+def searchWordListByDistance(word, wordList, currentCipher, closenessWeight = 1.0, maxDistance = 1.0):
+    
+    outputArray=[]
+    for i in wordList:
+        distance = getDistance(word, i, currentCipher, closenessWeight)
+        if distance < maxDistance and i not in outputArray:
+            outputArray+=[(i, getGematria(i, currentCipher))]
+
+
+    return outputArray
+
+def getDeepMem():
+    con=sqlite3.connect("./gematriac.db")
+    cur=con.cursor() 
+    cur.execute("select * from deepmem order by word")
+    data = cur.fetchall()
+    con.close()
+    outArray = []
+    for i in data:
+        outArray += [i[0]]
+    
+    return outArray
+
+def searchDeepMemByDistance(word, currentCipher, closenessWeight=1.0, maxDistance = 1.0):
+    con=sqlite3.connect("./gematriac.db")
+    cur=con.cursor() 
+    cur.execute("select * from deepmem order by word")
+    data = cur.fetchall()
+    con.close()
+    
+    outputArray=[]
+    for i in data:
+        distance = getDistance(word, i[0], currentCipher, closenessWeight)
+        if distance < maxDistance and i not in outputArray:
+            if not getGematria(word, currentCipher) == getGematria(i[0], currentCipher):
+                outputArray+=[(i[0], getGematria(i[0], currentCipher))]
+
+
+    return outputArray
 
 def addWordToDeepMem(word):
     conDM=sqlite3.connect("./gematriac.db")
