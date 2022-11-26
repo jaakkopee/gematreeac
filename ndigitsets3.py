@@ -52,6 +52,7 @@ class Root:
                             "<button class='hyperWordButton' id='hwb_"+i+"'>"+i+"</button>\
                             <div class='hyperWordMenuContent' id='hwmc_"+i+"'>\
                                 <a href='#smview_output' id='hwDel_"+i+"'>delete</a>\
+                                <a href='#DMShdr' id='hwDiMe_"+i+"'>DMSearch</a>\
                             </div>\
                             </div>"
 

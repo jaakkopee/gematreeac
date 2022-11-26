@@ -175,8 +175,8 @@
         import ndigitsets3 as nds
         from alphabet import getCipher
         from alphabet import cipher as allCiphers
-        from gemNumFuncs import getGematria, getParentList
-        from getwordsfromdbs import searchDeepMemByNumberArray
+        from gemNumFuncs import getGematria, getParentList, DistanceTeddyBear
+        from getwordsfromdbs import searchDeepMemByNumberArray, getDeepMem
         from random import randint
 
         document.getElementById("mainBody").style.display="block" #show the page only after pyscript has loaded everyting
@@ -415,8 +415,99 @@
 
         <div class="gemValMsg_div" id="messageout"></div>
 
+        <div class="dmsSettingsStyle" id ="dmsSettings">
+            <h1>Distance Measure Search Parameters:</h1>
+            <form id="distanceTeddyBearParameters">
+                <label for="pointBias">Point bias (pointBias):</label>
+                <input type="number" id="pointBias" name="pointBias" min="0.001" max="1.0" step="0.001" value="0.001"><br>
+                <label for="commonNds">Points for common n-digit set (commonNds):</label>
+                <input type="number" id="commonNds" name="commonNds" min="0.0" max="64.0" step="0.001" value="0.001"><br>
+                <label for="commonRoot">Points for common root (commonRoot):</label>
+                <input type="number" id="commonRoot" name="commonRoot" min="0.0" max="64.0" step="0.001" value="0.3"><br>
+                <label for="commonRoute">Points for common route (commonRoute):</label>
+                <input type="number" id="commonRoute" name="commonRoute" min="0.0" max="64.0" step="0.001" value="0.001"><br>
+                <label for="commonNumber">Points for common number (commonNumber):</label>
+                <input type="number" id="commonNumber" name="commonNumber" min="0.0" max="64.0" step="0.001" value="0.001"><br>
+                <label for="sameWord">Points for same word (sameWord):</label>
+                <input type="number" id="sameWord" name="sameWord" min="0.0" max="64.0" step="0.001" value="0.001"><br>
+                <label for="closenessWeight">Weight on total points (closenessWeight):</label>
+                <input type="number" id="closenessWeight" name="closenessWeight" min="0.0" max="1.0" step="0.00001" value="0.3"><br>
+                <label for="numberDistanceWeight">Weight on distance of gematria values (numberDistanceWeight):</label>
+                <input type="number" id="numberDistanceWeight" name="numberDistanceWeight" min="0.0" max="1.0" step="0.00001" value="0.3"><br>
+                <label for="rootDistanceWeight">Weight on distance of roots (rootDistanceWeight):</label>
+                <input type="number" id="rootDistanceWeight" name="rootDistanceWeight" min="0.0" max="1.0" step="0.00001" value="0.3"><br>
+                <label for="maxDistance">Search threshold (maxDistance):</label>
+                <input type="number" id="maxDistance" name="maxDistance" min="0.0" max="1000.0" step="0.1" value="10.0"><br>
+            </form>
+        </div>
         <py-script> 
         from js import setInterval
+
+        def changeDMSParameter(evt):
+            inputId = evt.currentTarget.inputId
+
+            if inputId == "pointBias":
+                localStorage.setItem("teddy_pointBias", document.getElementById(inputId).valueAsNumber)
+            if inputId == "commonNds":
+                localStorage.setItem("teddy_commonNds", document.getElementById(inputId).valueAsNumber)
+            if inputId == "commonRoot":
+                localStorage.setItem("teddy_commonRoot", document.getElementById(inputId).valueAsNumber)
+            if inputId == "commonRoute":
+                localStorage.setItem("teddy_commonRoute", document.getElementById(inputId).valueAsNumber)
+            if inputId == "commonNumber":
+                localStorage.setItem("teddy_commonNumber", document.getElementById(inputId).valueAsNumber)
+            if inputId == "sameWord":
+                localStorage.setItem("teddy_sameWord", document.getElementById(inputId).valueAsNumber)
+            if inputId == "closenessWeight":
+                localStorage.setItem("teddy_closenessWeight", document.getElementById(inputId).valueAsNumber)
+            if inputId == "numberDistanceWeight":
+                localStorage.setItem("teddy_numberDistanceWeight", document.getElementById(inputId).valueAsNumber)
+            if inputId == "rootDistanceWeight":
+                localStorage.setItem("teddy_rootDistanceWeight", document.getElementById(inputId).valueAsNumber)
+            if inputId == "maxDistance":
+                localStorage.setItem("teddy_maxDistance", document.getElementById(inputId).valueAsNumber)
+
+            return
+
+        slider = document.getElementById("pointBias")
+        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.inputId = "pointBias"
+
+        slider = document.getElementById("commonNds")
+        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.inputId = "commonNds"
+
+        slider = document.getElementById("commonRoot")
+        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.inputId = "commonRoot"
+
+        slider = document.getElementById("commonRoute")
+        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.inputId = "commonRoute"
+
+        slider = document.getElementById("commonNumber")
+        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.inputId = "commonNumber"
+
+        slider = document.getElementById("sameWord")
+        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.inputId = "sameWord"
+
+        slider = document.getElementById("closenessWeight")
+        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.inputId = "closenessWeight"
+
+        slider = document.getElementById("numberDistanceWeight")
+        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.inputId = "numberDistanceWeight"
+
+        slider = document.getElementById("rootDistanceWeight")
+        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.inputId = "rootDistanceWeight"
+
+        slider = document.getElementById("maxDistance")
+        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.inputId = "maxDistance"
 
         def rgbCallBack01():
             red=randint(0,255)
@@ -763,10 +854,57 @@
                             hwwbMenuElement1.datum = word
 
                             hwwbMenuElement1.addEventListener("click", deleteFromSMProxy)
-                        
+
+                            hwwbMenuElement2 = smviewDOC.getElementById("hwDiMe_"+word)
+                            hwwbMenuElement2.datum = word
+                            hwwbMenuElement2.addEventListener("click", dmprx)
+
             #console.log(str(hwMenuControl))
-            return   
-        
+            return  
+            
+        def distanceMeasureSearch(mE):
+            teddy = DistanceTeddyBear(getDeepMem())
+            
+            if localStorage.getItem("teddy_pointBias"):
+                teddy.pointBias=float(localStorage.getItem("teddy_pointBias"))
+
+            if localStorage.getItem("teddy_commonNds"):
+                teddy.pointBias=float(localStorage.getItem("teddy_pointBias"))
+
+            if localStorage.getItem("teddy_commonRoot"):
+                teddy.commonRoot=float(localStorage.getItem("teddy_commonRoot"))
+
+            if localStorage.getItem("teddy_commonRoute"):
+                teddy.commonRoute=float(localStorage.getItem("teddy_commonRoute"))
+            
+            if localStorage.getItem("teddy_commonNumber"):
+                teddy.commonNumber=float(localStorage.getItem("teddy_commonNumber"))
+
+            if localStorage.getItem("teddy_sameWord"):
+                teddy.sameWord=float(localStorage.getItem("teddy_sameWord"))
+
+            if localStorage.getItem("teddy_closenessWeight"):
+                teddy.closenessWeight=float(localStorage.getItem("teddy_closenessWeight"))
+
+            if localStorage.getItem("teddy_numberDistanceWeight"):
+                teddy.numberDistanceWeight=float(localStorage.getItem("teddy_numberDistanceWeight"))
+
+            if localStorage.getItem("teddy_rootDistanceWeight"):
+                teddy.rootDistanceWeight=float(localStorage.getItem("teddy_rootDistanceWeight"))
+
+            if localStorage.getItem("teddy_maxDistance"):
+                teddy.maxDistance=float(localStorage.getItem("teddy_maxDistance"))
+            
+            searchResults = teddy.getRestrictedWordSet_wd(mE.currentTarget.datum, localStorage.getItem("cipher"))
+            srString=""
+            for i in searchResults:
+                srString+=str(i)+"\n"
+
+            smviewDOC.getElementById("dmSearchOutput").innerHTML=mE.currentTarget.datum+"\n"+str(teddy)+"\n"+srString
+            return
+
+        dmprx = create_proxy(distanceMeasureSearch)
+
         def makeFinalSentenceListeners():
             #console.log("makeFinalSentenceListeners()")
             wordArray = nds.make2DWordArrayFromString(localStorage.getItem("words"), localStorage.getItem("cipher"))

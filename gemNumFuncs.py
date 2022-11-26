@@ -104,6 +104,16 @@ class DistanceTeddyBear:
 
         return outputArray
 
+    def getRestrictedWordSet_wd(self, word, currentCipher):
+        
+        outputArray=[]
+        for i in self.wordList:
+            distance = self.getDistance(word, i, currentCipher)
+            if distance < self.maxDistance:
+                outputArray+=[[i, getGematria(i, currentCipher), distance]]
+
+        return outputArray
+
     def getGemValsAndDistancesInRWS(self, word, currentCipher):
         rws = self.getRestrictedWordSet(word, currentCipher)
         gwdArray=[]
