@@ -199,8 +199,7 @@
             localStorage.setItem("cipher", mE.currentTarget.cipherID)
             document.getElementById('cipherButton').innerHTML="Cipher In Use: "+localStorage.getItem("cipher")
             #console.log(localStorage.getItem("cipher"))
-            smviewDOC.getElementById("WizardsComments").innerHTML=""
-            smviewDOC.getElementById("WizardsHelper").innerHTML=""
+            clearWizard()
             clearSentenceFormulaNoMouse()
             smNoAddWordNoMouseNoChange()
             updateGemValMsgNotMouse()     
@@ -797,10 +796,10 @@
 
         hwAddToSFProxy = create_proxy(hwAddToSF)
         
-
         def clearWizard():
             smviewDOC.getElementById("WizardsComments").innerHTML=""
             smviewDOC.getElementById("WizardsHelper").innerHTML=""
+            smviewDOC.getElementById("dmSearchOutput").innerHTML=""
             return
 
         def deleteFromSM(mE):
@@ -1097,9 +1096,7 @@
             initFS()
             nds.clearRAM()
             nds.addWord("0", localStorage.getItem("cipher"))
-            smviewDOC.getElementById("WizardsComments").innerHTML=""
-            smviewDOC.getElementById("WizardsHelper").innerHTML=""
-
+            clearWizard()
             outputWords()
             makeSWListeners()
             upDateSentenceFormulaNoChange()
@@ -1112,9 +1109,7 @@
             initFS()
             nds.clearRAM()
             nds.addWord("0", localStorage.getItem("cipher"))
-            smviewDOC.getElementById("WizardsComments").innerHTML=""
-            smviewDOC.getElementById("WizardsHelper").innerHTML=""
-
+            clearWizard()
             outputWords()
             makeSWListeners()
             upDateSentenceFormulaNoChange()
