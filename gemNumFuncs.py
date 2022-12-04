@@ -19,6 +19,7 @@ class DistanceTeddyBear:
     def __init__(self, wordList):
         self.wordList = wordList
         self.pointBias = 0.01
+        self.distanceBias = 0.01
         self.commonNds = 0.01
         self.commonRoot = 0.02
         self.commonRoute = 0.08
@@ -27,6 +28,7 @@ class DistanceTeddyBear:
         self.closenessWeight = 0.01
         self.numberDistanceWeight = 0.06
         self.rootDistanceWeight=0.6
+        self.ndsDistanceWeight = 0.001
         self.maxDistance = 0.666
 
         return
@@ -34,6 +36,7 @@ class DistanceTeddyBear:
     def __str__(self):
         selfString=""
         selfString+="Point Bias: "+str(self.pointBias)+" parameter pointBias\n"
+        selfString+="Distance Bias: "+str(self.distanceBias)+" parameter distanceBias\n"
         selfString+="Points from having a common nds: "+str(self.commonNds)+" parameter commonNds\n"
         selfString+="Points from having a common root: "+str(self.commonRoot)+" parameter commonRoot\n"
         selfString+="Points from having a common route: "+str(self.commonRoute)+" parameter commonRoute\n"
@@ -42,15 +45,17 @@ class DistanceTeddyBear:
         selfString+="Weight on points (how much points matter): "+str(self.closenessWeight)+" parameter closenessWeight\n"
         selfString+="Weight on distance measure of numbers: "+str(self.numberDistanceWeight)+" parameter numberDistanceWeight\n"
         selfString+="Weight on distance measure of roots: "+str(self.rootDistanceWeight)+" parameter rootDistanceWeight\n"
+        selfString+="Weight on distance measure of n-digit sets: "+str(self.ndsDistanceWeight)+" parameter ndsDistanceWeight\n"
         selfString+="Maximum distance threshold: "+str(self.maxDistance)+" parameter maxDistance\n\n"
 
         selfString+="""\
             The distance is calculated with:
-                totalPoints = closenessWeight*(commonNds + commonRoot + commonRoute + commonNumber + sameWord + pointBias)
+                totalPoints = closenessWeight*(commonNds + commonRoot + commonRoute + commonNumber + sameWord)
                 numberDistance = numberDistanceWeight*(abs(gematria(word1) - gematria(word2))
                 rootDistance = rootDistanceWeight*(abs(root(word1) - root(word2)))
+                ndsDistance = ndsDistanceWeight*(abs(nds(word1) - nds(word2)))
 
-                distance = numberDistance + rootDistance / totalPoints
+                distance = numberDistance + rootDistance + ndsDistance + distanceBias / totalPoints + pointBias
 
         """
         return selfString
@@ -60,12 +65,15 @@ class DistanceTeddyBear:
         number02 = getGematria(word2, currentCipher)
         root01 = getRootNumber(number01)
         root02 = getRootNumber(number02)
-        route01 = getParentList(number01)
-        route02 = getParentList(number02)
-        points = self.pointBias #an inverse measure of distance (the more the points, the closer the words are)
+        route01 = getParentList(number01)[1:]
+        route02 = getParentList(number02)[1:]
+        nds01 = len(str(number01))
+        nds02 = len(str(number02))
+        
+        points = 0 #an inverse measure of distance (the more the points, the closer the words are)
 
         #common n digit set
-        if len(str(number01)) == len(str(number02)):
+        if nds01 == nds02:
             points+=self.commonNds
 
         #common root
@@ -85,12 +93,15 @@ class DistanceTeddyBear:
             points+=self.sameWord
 
         #a measure of distance (of gematria values). higher numberDistance means farther away
-        numberDistance = self.numberDistanceWeight*(fabs(float(number01) - float(number02)))
+        numberDistance = self.numberDistanceWeight * ( fabs( float(number01) - float(number02) ) )
 
         #a measure of distance (of roots). higher is farther away
-        rootDistance = self.rootDistanceWeight*(fabs(float(root01) - float(root02)))
+        rootDistance = self.rootDistanceWeight * ( fabs( float(root01) - float(root02) ) )
 
-        totalDistance = rootDistance+numberDistance /  points * self.closenessWeight
+        #distance of n-digit sets
+        ndsDistance = self.ndsDistanceWeight * ( fabs( float(nds01) - float(nds02) ) )
+
+        totalDistance = (rootDistance+numberDistance+ndsDistance+self.distanceBias) /  ((points * self.closenessWeight) + self.pointBias)
 
         return totalDistance
 
@@ -142,8 +153,8 @@ def getDistance(word1, word2, currentCipher, closenessWeight = 1.0):
     number02 = getGematria(word2, currentCipher)
     root01 = getRootNumber(number01)
     root02 = getRootNumber(number02)
-    route01 = getParentList(number01)
-    route02 = getParentList(number02)
+    route01 = getParentList(number01)[1:]
+    route02 = getParentList(number02)[1:]
     points = 0.01 #an inverse measure of distance (the more the points, the closer the words are)
 
     #common n digit set

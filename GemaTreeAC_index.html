@@ -434,6 +434,8 @@
             <form id="distanceTeddyBearParameters">
                 <label for="pointBias">Point bias (pointBias):</label>
                 <input type="number" class="dmsNumber" id="pointBias" name="pointBias" min="0.001" max="1.0" step="0.001" value="0.001"><br>
+                <label for="distanceBias">Distance bias (distanceBias):</label>
+                <input type="number" class="dmsNumber" id="distanceBias" name="distanceBias" min="0.0" max="1.0" step="0.001" value="0.001"><br>
                 <label for="commonNds">Points for common n-digit set (commonNds):</label>
                 <input type="number" class="dmsNumber" id="commonNds" name="commonNds" min="0.0" max="64.0" step="0.001" value="0.001"><br>
                 <label for="commonRoot">Points for common root (commonRoot):</label>
@@ -450,6 +452,8 @@
                 <input type="number" class="dmsNumber" id="numberDistanceWeight" name="numberDistanceWeight" min="0.0" max="1.0" step="0.00001" value="0.3"><br>
                 <label for="rootDistanceWeight">Weight on distance of roots (rootDistanceWeight):</label>
                 <input type="number" class="dmsNumber" id="rootDistanceWeight" name="rootDistanceWeight" min="0.0" max="1.0" step="0.00001" value="0.3"><br>
+                <label for="ndsDistanceWeight">Weight on distance of n-digit sets (ndsDistanceWeight):</label>
+                <input type="number" class="dmsNumber" id="ndsDistanceWeight" name="ndsDistanceWeight" min="0.0" max="1.0" step="0.00001" value="0.3"><br>
                 <label for="maxDistance">Search threshold (maxDistance):</label>
                 <input type="number" class="dmsNumber" id="maxDistance" name="maxDistance" min="0.0" max="1000.0" step="0.1" value="10.0"><br>
             </form>
@@ -473,7 +477,11 @@
         if not localStorage.getItem("teddy_pointBias"):
             localStorage.setItem("teddy_pointBias", 0.001)
         document.getElementById("pointBias").value=localStorage.getItem("teddy_pointBias")
-        
+
+        if not localStorage.getItem("teddy_distanceBias"):
+            localStorage.setItem("teddy_distanceBias", 0.001)
+        document.getElementById("distanceBias").value=localStorage.getItem("teddy_distanceBias")
+         
         if not localStorage.getItem("teddy_commonNds"):
             localStorage.setItem("teddy_commonNds", 0.001)
         document.getElementById("commonNds").value=localStorage.getItem("teddy_commonNds")
@@ -506,6 +514,10 @@
             localStorage.setItem("teddy_rootDistanceWeight", 0.3)
         document.getElementById("rootDistanceWeight").value=localStorage.getItem("teddy_rootDistanceWeight")
 
+        if not localStorage.getItem("teddy_ndsDistanceWeight"):
+            localStorage.setItem("teddy_ndsDistanceWeight", 0.3)
+        document.getElementById("ndsDistanceWeight").value=localStorage.getItem("teddy_ndsDistanceWeight")
+
         if not localStorage.getItem("teddy_maxDistance"):
             localStorage.setItem("teddy_maxDistance", 10.0)
         document.getElementById("maxDistance").value=localStorage.getItem("teddy_maxDistance")         
@@ -516,44 +528,54 @@
             console.log(inputId+" "+str(document.getElementById(inputId).valueAsNumber))
             return
 
+        changeDMSParameter_proxy = create_proxy(changeDMSParameter)
+
         slider = document.getElementById("pointBias")
-        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.addEventListener("change", changeDMSParameter_proxy)
         slider.inputId = "pointBias"
 
+        slider = document.getElementById("distanceBias")
+        slider.addEventListener("change", changeDMSParameter_proxy)
+        slider.inputId = "distanceBias"
+
         slider = document.getElementById("commonNds")
-        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.addEventListener("change", changeDMSParameter_proxy)
         slider.inputId = "commonNds"
 
         slider = document.getElementById("commonRoot")
-        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.addEventListener("change", changeDMSParameter_proxy)
         slider.inputId = "commonRoot"
 
         slider = document.getElementById("commonRoute")
-        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.addEventListener("change", changeDMSParameter_proxy)
         slider.inputId = "commonRoute"
 
         slider = document.getElementById("commonNumber")
-        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.addEventListener("change", changeDMSParameter_proxy)
         slider.inputId = "commonNumber"
 
         slider = document.getElementById("sameWord")
-        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.addEventListener("change", changeDMSParameter_proxy)
         slider.inputId = "sameWord"
 
         slider = document.getElementById("closenessWeight")
-        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.addEventListener("change", changeDMSParameter_proxy)
         slider.inputId = "closenessWeight"
 
         slider = document.getElementById("numberDistanceWeight")
-        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.addEventListener("change", changeDMSParameter_proxy)
         slider.inputId = "numberDistanceWeight"
 
         slider = document.getElementById("rootDistanceWeight")
-        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.addEventListener("change", changeDMSParameter_proxy)
         slider.inputId = "rootDistanceWeight"
 
+        slider = document.getElementById("ndsDistanceWeight")
+        slider.addEventListener("change", changeDMSParameter_proxy)
+        slider.inputId = "ndsDistanceWeight"
+
         slider = document.getElementById("maxDistance")
-        slider.addEventListener("change", create_proxy(changeDMSParameter))
+        slider.addEventListener("change", changeDMSParameter_proxy)
         slider.inputId = "maxDistance"
 
         def rgbCallBack01():
@@ -915,6 +937,9 @@
             if localStorage.getItem("teddy_pointBias"):
                 teddy.pointBias=float(localStorage.getItem("teddy_pointBias"))
 
+            if localStorage.getItem("teddy_distanceBias"):
+                teddy.distanceBias=float(localStorage.getItem("teddy_distanceBias"))
+
             if localStorage.getItem("teddy_commonNds"):
                 teddy.commonNds=float(localStorage.getItem("teddy_commonNds"))
 
@@ -938,6 +963,9 @@
 
             if localStorage.getItem("teddy_rootDistanceWeight"):
                 teddy.rootDistanceWeight=float(localStorage.getItem("teddy_rootDistanceWeight"))
+
+            if localStorage.getItem("teddy_ndsDistanceWeight"):
+                teddy.ndsDistanceWeight=float(localStorage.getItem("teddy_ndsDistanceWeight"))
 
             if localStorage.getItem("teddy_maxDistance"):
                 teddy.maxDistance=float(localStorage.getItem("teddy_maxDistance"))
