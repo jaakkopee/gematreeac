@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <py-env>
+            - numpy
+            - matplotlib
+            - paths:
+                - ./ndigitsets3.py
+                - ./gematriac.db
+                - ./gemNumFuncs.py
+                - ./alphabet.py
+                - ./getwordsfromdbs.py   
+    
+        </py-env>
+        <py-script output="dmsDiv">
+        import matplotlib.pyplot as plt
+        import gemNumFuncs as gnf
+        import getwordsfromdbs as gwdb
+
+        teddy=gnf.DistanceTeddyBear(gwdb.getDeepMem())
+        teddy.pointBias=0.001
+        teddy.distanceBias=1.0
+        teddy.commonNds=1.0
+        teddy.commonRoot=1.0
+        teddy.commonRoute=1.0
+        teddy.commonNumber=0.0
+        teddy.sameWord=0.0
+        teddy.ndsDistanceWeight=0.01
+        teddy.rootDistanceWeight=0.01
+        teddy.numberDistanceWeight=0.01
+        teddy.closenessWeight=1.0
+        teddy.maxDistance=10.0
+
+        dataArray=teddy.getRestrictedWordSet_wdxy("sekopäisyys", "ScaExt")
+        
+        fig, ax = plt.subplots()
+
+        uniqueNumbers=[]
+        x = []
+        y = []
+
+        for i in dataArray:
+            if not i[1] in uniqueNumbers:
+                    uniqueNumbers+=[i[1]]
+                    x += [i[3]]
+                    y += [i[4]]
+                    
+
+        ax.scatter(x, y)
+
+        fig
+
+        </py-script>
+
+        <div id="dmsDiv"></div>
+    </body>
+</html>

@@ -175,6 +175,8 @@
 
         <img src="./GemaTreeAC_logo02.jpeg" width="1100" height="200"><br />
         <py-env>
+            - numpy
+            - matplotlib
             - paths:
                 - ./ndigitsets3.py
                 - ./gematriac.db
@@ -192,7 +194,7 @@
         from gemNumFuncs import getGematria, getParentList, DistanceTeddyBear
         from getwordsfromdbs import searchDeepMemByNumberArray, getDeepMem
         from random import randint
-
+        
         document.getElementById("mainBody").style.display="block" #show the page only after pyscript has loaded everyting
 
         def changeCipher(mE):
@@ -970,12 +972,14 @@
             if localStorage.getItem("teddy_maxDistance"):
                 teddy.maxDistance=float(localStorage.getItem("teddy_maxDistance"))
             
-            searchResults = teddy.getRestrictedWordSet_wd(mE.currentTarget.datum, localStorage.getItem("cipher"))
+            searchResults = teddy.getRestrictedWordSet_wdxy(mE.currentTarget.datum, localStorage.getItem("cipher"))
+
             srString=""
             for i in searchResults:
                 srString+=str(i)+"\n"
 
             smviewDOC.getElementById("dmSearchOutput").innerHTML=mE.currentTarget.datum+"\n"+str(teddy)+"\n"+srString
+            #plotDMSData(searchResults)
             return
 
         dmprx = create_proxy(distanceMeasureSearch)
@@ -1338,7 +1342,33 @@
         updateGemValMsgNotMouse()
         </py-script>
 
+        <py-script>
+        import matplotlib.pyplot as plt
+        
+        def plotDMSData(dataArray):
+            output=document.getElementById("plot")
+            uniqueNumbers=[]
+            x = []
+            y = []
+            
+            for i in dataArray:
+                if not i[1] in uniqueNumbers:
+                        uniqueNumbers+=[i[1]]
+                        x += [i[3]]
+                        y += [i[4]]
+                        
+            fig, ax = plt.subplots()
+
+            ax.scatter(x, y)
+
+            fig
+
+            return
+
+        </py-script>
+
         <!--py-repl></py-repl-->
+        <div id="dmSearchPlot"><figure id="plot"></figure></div>
         <iframe height="600" width="1100" src="sessionmemory.html" id="smview"></iframe>
 	    <div id="payPalMe" class="money"><a href="https://paypal.me/taivossuora" target="_blank" class="moneyLink" >Send Money To The Author Via PayPal</a></div>
 	    <div id="emailMe" class="contactMe"><a href="mailto:iipekaj@gmail.com" class="emailLink">Contact The Author</a></div>

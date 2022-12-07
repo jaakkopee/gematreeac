@@ -1,5 +1,5 @@
 from alphabet import getCipher
-from math import pow, fabs
+from math import pow, fabs, sin, cos
 
 def printDistanceData(word1, word2, currentCipher, closenessWeight = 1.0):
     number01 = getGematria(word1, currentCipher)
@@ -19,17 +19,17 @@ class DistanceTeddyBear:
     def __init__(self, wordList):
         self.wordList = wordList
         self.pointBias = 0.01
-        self.distanceBias = 0.01
-        self.commonNds = 0.01
-        self.commonRoot = 0.02
-        self.commonRoute = 0.08
-        self.commonNumber = 0.16
-        self.sameWord = 0.061
-        self.closenessWeight = 0.01
-        self.numberDistanceWeight = 0.06
-        self.rootDistanceWeight=0.6
-        self.ndsDistanceWeight = 0.001
-        self.maxDistance = 0.666
+        self.distanceBias = 1.0
+        self.commonNds = 0.0
+        self.commonRoot = 0.0
+        self.commonRoute = 1.0
+        self.commonNumber = 0.0
+        self.sameWord = 0.0
+        self.closenessWeight = 1.0
+        self.numberDistanceWeight = 0.0
+        self.rootDistanceWeight= 0.0
+        self.ndsDistanceWeight = 0.0
+        self.maxDistance = 3.0
 
         return
 
@@ -124,6 +124,33 @@ class DistanceTeddyBear:
                 outputArray+=[[i, getGematria(i, currentCipher), distance]]
 
         return outputArray
+
+    def getRestrictedWordSet_wdxy(self, word, currentCipher):
+        outputArray=[]
+        dataSetForXY = []
+        for i in self.wordList:
+            distance = self.getDistance(word, i, currentCipher)
+            gemVal = getGematria(i, currentCipher)
+            if distance < self.maxDistance:
+                outputArray+=[[i, gemVal, distance, 0, 0]]
+                if not gemVal in dataSetForXY:
+                    dataSetForXY+=[gemVal]
+
+        highestNumberInDataSet = 0.0
+        for i in dataSetForXY:
+            if i > highestNumberInDataSet:
+                highestNumberInDataSet=i
+   
+        for i in outputArray:
+            angle = (float(i[1])/float(highestNumberInDataSet))*360.0
+            x = sin(angle)*float(i[2])
+            y = cos(angle)*float(i[2])
+
+            i[3] = x
+            i[4] = y
+
+        return outputArray
+
 
     def getGemValsAndDistancesInRWS(self, word, currentCipher):
         rws = self.getRestrictedWordSet(word, currentCipher)
