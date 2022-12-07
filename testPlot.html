@@ -19,37 +19,36 @@
         import matplotlib.pyplot as plt
         import gemNumFuncs as gnf
         import getwordsfromdbs as gwdb
+        from js import localStorage, console
 
-        teddy=gnf.DistanceTeddyBear(gwdb.getDeepMem())
-        teddy.pointBias=0.001
-        teddy.distanceBias=1.0
-        teddy.commonNds=1.0
-        teddy.commonRoot=1.0
-        teddy.commonRoute=1.0
-        teddy.commonNumber=0.0
-        teddy.sameWord=0.0
-        teddy.ndsDistanceWeight=0.01
-        teddy.rootDistanceWeight=0.01
-        teddy.numberDistanceWeight=0.01
-        teddy.closenessWeight=1.0
-        teddy.maxDistance=10.0
+        gvArray=localStorage.getItem("dataForPlot_gv").split()
+        distanceArray=localStorage.getItem("dataForPlot_distance").split()
+        xArray=localStorage.getItem("dataForPlot_x").split()
+        yArray=localStorage.getItem("dataForPlot_y").split()
 
-        dataArray=teddy.getRestrictedWordSet_wdxy("sekopäisyys", "ScaExt")
+        x=[]
+        y=[]
+        distances=[]
+        colors=[]
+        highestDistance=0.0
+        for i in range(len(gvArray)):
+            distances+=[float(distanceArray[i])]
+            x+=[float(xArray[i])]
+            y+=[float(yArray[i])]
+
+            if float(distanceArray[i]) > highestDistance:
+                highestDistance=float(distanceArray[i])
         
+        for i in distances:
+            r=(0.9*float(i))/highestDistance
+            g=(0.5*float(i))/highestDistance
+            b=(1.0*float(i))/highestDistance
+
+            colors+=[[r,g,b]]
+
         fig, ax = plt.subplots()
 
-        uniqueNumbers=[]
-        x = []
-        y = []
-
-        for i in dataArray:
-            if not i[1] in uniqueNumbers:
-                    uniqueNumbers+=[i[1]]
-                    x += [i[3]]
-                    y += [i[4]]
-                    
-
-        ax.scatter(x, y)
+        ax.scatter(x, y, s=6, c=colors)
 
         fig
 

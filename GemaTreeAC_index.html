@@ -457,7 +457,7 @@
                 <label for="ndsDistanceWeight">Weight on distance of n-digit sets (ndsDistanceWeight):</label>
                 <input type="number" class="dmsNumber" id="ndsDistanceWeight" name="ndsDistanceWeight" min="0.0" max="1.0" step="0.00001" value="0.3"><br>
                 <label for="maxDistance">Search threshold (maxDistance):</label>
-                <input type="number" class="dmsNumber" id="maxDistance" name="maxDistance" min="0.0" max="1000.0" step="0.1" value="10.0"><br>
+                <input type="number" class="dmsNumber" id="maxDistance" name="maxDistance" min="0.0" max="1000000.0" step="0.1" value="10.0"><br>
             </form>
         </div>
         <py-script> 
@@ -975,11 +975,30 @@
             searchResults = teddy.getRestrictedWordSet_wdxy(mE.currentTarget.datum, localStorage.getItem("cipher"))
 
             srString=""
+            gvString=""
+            distanceString=""
+            xString=""
+            yString=""
+            uniqueNumbers=[]
             for i in searchResults:
                 srString+=str(i)+"\n"
+                
+                if not int(i[1]) in uniqueNumbers:
+                    uniqueNumbers+=[int(i[1])]
+                    gvString+=str(i[1])+" "
+                    distanceString+=str(i[2])+" "
+                    xString+=str(i[3])+" "
+                    yString+=str(i[4])+" "
 
             smviewDOC.getElementById("dmSearchOutput").innerHTML=mE.currentTarget.datum+"\n"+str(teddy)+"\n"+srString
-            #plotDMSData(searchResults)
+
+            localStorage.setItem("dataForPlot_gv", gvString)
+            localStorage.setItem("dataForPlot_distance", distanceString)
+            localStorage.setItem("dataForPlot_x", xString)
+            localStorage.setItem("dataForPlot_y", yString)
+
+            dmsPlot = smviewDOC.getElementById("dmSearchPlot")
+            dmsPlot.src="./testPlot.html"
             return
 
         dmprx = create_proxy(distanceMeasureSearch)
