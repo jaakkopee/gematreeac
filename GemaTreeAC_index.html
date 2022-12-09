@@ -974,6 +974,7 @@
             
             searchResults = teddy.getRestrictedWordSet_wdxy(mE.currentTarget.datum, localStorage.getItem("cipher"))
 
+            searchedGemVal = str(getGematria(mE.currentTarget.datum, localStorage.getItem("cipher")))
             srString=""
             gvString=""
             distanceString=""
@@ -992,6 +993,7 @@
 
             smviewDOC.getElementById("dmSearchOutput").innerHTML=mE.currentTarget.datum+"\n"+str(teddy)+"\n"+srString
 
+            localStorage.setItem("dataForPlot_SGV", searchedGemVal)
             localStorage.setItem("dataForPlot_gv", gvString)
             localStorage.setItem("dataForPlot_distance", distanceString)
             localStorage.setItem("dataForPlot_x", xString)

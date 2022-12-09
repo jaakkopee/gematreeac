@@ -2,6 +2,12 @@
     <head>
         <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
         <meta charset="utf-8">
+        <style>
+            .dmsLegend{
+                color:rgb(0, 0, 0);
+                background-color: #ffffff;
+            }
+        </style>
     </head>
     <body>
         <py-env>
@@ -19,6 +25,7 @@
         import getwordsfromdbs as gwdb
         from js import localStorage, console
 
+        searchedGemVal = localStorage.getItem("dataForPlot_SGV")
         gvArray=localStorage.getItem("dataForPlot_gv").split()
         distanceArray=localStorage.getItem("dataForPlot_distance").split()
         xArray=localStorage.getItem("dataForPlot_x").split()
@@ -34,13 +41,36 @@
             x+=[float(xArray[i])]
             y+=[float(yArray[i])]
 
-            if float(distanceArray[i]) > highestDistance:
-                highestDistance=float(distanceArray[i])
-        
-        for i in distances:
-            r=(0.9*float(i))/highestDistance
-            g=(0.5*float(i))/highestDistance
-            b=(1.0*float(i))/highestDistance
+            #if float(distanceArray[i]) > highestDistance:
+            #    highestDistance=float(distanceArray[i])
+
+        rootNumber = gnf.getRootNumber(int(searchedGemVal))
+        routeToRoot = gnf.getParentList(int(searchedGemVal))[1:]
+
+        for i in range(len(gvArray)):
+            r = 0.0
+            g = 0.0
+            b = 0.0
+
+            if len(str(gvArray[i])) == len(str(searchedGemVal)):
+                r = 0.0
+                g = 0.0
+                b = 0.8
+
+            if gnf.getRootNumber(int(gvArray[i])) == rootNumber:
+                r = 0.0
+                g = 0.8
+                b = 0.8
+
+            if gnf.getParentList(int(gvArray[i]))[1:] == routeToRoot:
+                r = 0.8
+                g = 0.0
+                b = 0.5
+
+            if int(gvArray[i]) == int(searchedGemVal):
+                r = 0.6
+                g = 0.6
+                b = 0.0
 
             colors+=[[r,g,b]]
 
@@ -53,5 +83,43 @@
         </py-script>
 
         <div id="dmsDiv"></div>
+        <div class="dmsLegend">
+            <h1>About the DMS plot</h1>
+            <p>
+                <ul>
+                    <li style="color:rgb(0,0,0)">Black: no calculated relation</li>
+                    <li style="color:rgb(0,0,204)">Blue: common n-digit set</li>
+                    <li style="color:rgb(0,204,204)">Cyan: common root</li>
+                    <li style="color:rgb(204,0,127)">Violet: common route</li>
+                    <li style="color:rgb(153,153,0)">Camouflage green: common number</li>
+                </ul>
+            </p>
+            <p>
+                For the plot, gematria values of words
+                in the database are analyzed numerologically:
+                in addition to the gematria value,
+                the n-digit set,
+                the digital root
+                and the route to the root of the numbers are calculated.
+            </p>
+            <p>
+                The denominator of the distance measure is obtained by
+                giving points to a pair of numbers according to these properties.
+                The algorithm also calculates simple distance measures
+                (abs(x0-x1)) of these properties, giving the numerator.
+            </p>
+            <p>
+                The distance measure is calculated between
+                the gematria value of the search input word
+                and each gematria value of a word in the database.
+            </p>
+            <p>
+                In the plot, the gematria values are
+                plotted as points at their distance
+                from the origin with an angle relative
+                to the gematria value of a word in the database.
+                360 degrees represents the largest value in a search.
+            </p>
+        </div>
     </body>
 </html>
