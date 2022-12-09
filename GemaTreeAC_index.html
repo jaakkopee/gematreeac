@@ -1363,31 +1363,6 @@
         updateGemValMsgNotMouse()
         </py-script>
 
-        <py-script>
-        import matplotlib.pyplot as plt
-        
-        def plotDMSData(dataArray):
-            output=document.getElementById("plot")
-            uniqueNumbers=[]
-            x = []
-            y = []
-            
-            for i in dataArray:
-                if not i[1] in uniqueNumbers:
-                        uniqueNumbers+=[i[1]]
-                        x += [i[3]]
-                        y += [i[4]]
-                        
-            fig, ax = plt.subplots()
-
-            ax.scatter(x, y)
-
-            fig
-
-            return
-
-        </py-script>
-
         <!--py-repl></py-repl-->
         <div id="dmSearchPlot"><figure id="plot"></figure></div>
         <iframe height="600" width="1100" src="sessionmemory.html" id="smview"></iframe>
