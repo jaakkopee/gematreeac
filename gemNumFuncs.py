@@ -149,8 +149,7 @@ class DistanceTeddyBear:
             i[3] = x
             i[4] = y
 
-        return outputArray
-
+        return outputArray   
 
     def getGemValsAndDistancesInRWS(self, word, currentCipher):
         rws = self.getRestrictedWordSet(word, currentCipher)

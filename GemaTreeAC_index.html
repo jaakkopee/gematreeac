@@ -824,6 +824,7 @@
             smviewDOC.getElementById("WizardsComments").innerHTML=""
             smviewDOC.getElementById("WizardsHelper").innerHTML=""
             smviewDOC.getElementById("dmSearchOutput").innerHTML=""
+            #smviewDOC.getElementById("dmSearchPlot").innerHTML=""
             return
 
         def deleteFromSM(mE):
@@ -974,15 +975,15 @@
             
             searchResults = teddy.getRestrictedWordSet_wdxy(mE.currentTarget.datum, localStorage.getItem("cipher"))
 
+            searchResults = sorted(searchResults, key = lambda x: x[2], reverse=True)
+
             searchedGemVal = str(getGematria(mE.currentTarget.datum, localStorage.getItem("cipher")))
-            srString=""
             gvString=""
             distanceString=""
             xString=""
             yString=""
             uniqueNumbers=[]
             for i in searchResults:
-                srString+=str(i)+"\n"
                 
                 if not int(i[1]) in uniqueNumbers:
                     uniqueNumbers+=[int(i[1])]
@@ -991,7 +992,15 @@
                     xString+=str(i[3])+" "
                     yString+=str(i[4])+" "
 
-            smviewDOC.getElementById("dmSearchOutput").innerHTML=mE.currentTarget.datum+"\n"+str(teddy)+"\n"+srString
+
+            searchResults = sorted(searchResults, key = lambda x: x[2])
+
+            srString=nds.makeDMSHyperRepre(searchResults, int(searchedGemVal), localStorage.getItem("cipher"))
+            
+            smviewDOC.getElementById("dmSearchOutput").innerHTML=srString
+
+            for i in searchResults:
+                makeDMSListener(i[0])
 
             localStorage.setItem("dataForPlot_SGV", searchedGemVal)
             localStorage.setItem("dataForPlot_gv", gvString)
@@ -1035,6 +1044,14 @@
             wordButton.sana=word
             wordButton.addEventListener("click", wcProxyFunc)
             return
+
+        def makeDMSListener(word):
+            #console.log("makeDMSListener: "+word)
+            wordButton=smviewDOC.getElementById("dmsButton"+word)
+            wordButton.sana=word
+            wordButton.addEventListener("click", wcProxyFunc)
+            return
+       
 
         def outputWords():
             #wvpairs=getWordValuePairsOuter()

@@ -162,6 +162,32 @@ def makeHyperFormula(formula, wordListStr, currentCipher):
 
     return outputString
 
+def makeDMSHyperRepre(inputArray, searchedGemVal, currentCipher):
+    outputString=""
+    
+    rootNumber = getRootNumber(searchedGemVal)
+    routeToRoot = getParentList(searchedGemVal)[1:]
+
+    for i in inputArray:
+        colorRGB = "rgb(0,0,0)"
+        
+        if len(str(i[1])) == len(str(searchedGemVal)):
+            colorRGB = "rgb(0,0,204)"
+        
+        if getRootNumber(i[1]) == rootNumber:
+            colorRGB = "rgb(0,204,204)"  
+
+        if getParentList(i[1])[1:] == routeToRoot:
+            colorRGB = "rgb(204,0,127)"
+        
+        if int(i[1]) == int(searchedGemVal):
+            colorRGB = "rgb(153,153,0)"
+
+        outputString += "<button class='dmsButton' id='dmsButton"+i[0]+\
+            "' style='color:"+colorRGB+"' value='"+i[0]+"' >"+i[0]+"</button>"
+
+    return outputString
+
 def make2DWordArrayFromString(wordString, currentCipher):
     wordArrayFlat=wordString.split()
     wordArray=[]
