@@ -481,47 +481,47 @@
         document.getElementById("pointBias").value=localStorage.getItem("teddy_pointBias")
 
         if not localStorage.getItem("teddy_distanceBias"):
-            localStorage.setItem("teddy_distanceBias", 0.001)
+            localStorage.setItem("teddy_distanceBias", 1.0)
         document.getElementById("distanceBias").value=localStorage.getItem("teddy_distanceBias")
          
         if not localStorage.getItem("teddy_commonNds"):
-            localStorage.setItem("teddy_commonNds", 0.001)
+            localStorage.setItem("teddy_commonNds", 0.0)
         document.getElementById("commonNds").value=localStorage.getItem("teddy_commonNds")
 
         if not localStorage.getItem("teddy_commonRoot"):
-            localStorage.setItem("teddy_commonRoot", 0.3)
+            localStorage.setItem("teddy_commonRoot", 1.0)
         document.getElementById("commonRoot").value=localStorage.getItem("teddy_commonRoot")
          
         if not localStorage.getItem("teddy_commonRoute"):
-            localStorage.setItem("teddy_commonRoute", 0.001)
+            localStorage.setItem("teddy_commonRoute", 1.0)
         document.getElementById("commonRoute").value=localStorage.getItem("teddy_commonRoute")
 
         if not localStorage.getItem("teddy_commonNumber"):
-            localStorage.setItem("teddy_commonNumber", 0.001)
+            localStorage.setItem("teddy_commonNumber", 0.0)
         document.getElementById("commonNumber").value=localStorage.getItem("teddy_commonNumber")
  
         if not localStorage.getItem("teddy_sameWord"):
-            localStorage.setItem("teddy_sameWord", 0.001)
+            localStorage.setItem("teddy_sameWord", 0.0)
         document.getElementById("sameWord").value=localStorage.getItem("teddy_sameWord")
   
         if not localStorage.getItem("teddy_closenessWeight"):
-            localStorage.setItem("teddy_closenessWeight", 0.3)
+            localStorage.setItem("teddy_closenessWeight", 1.0)
         document.getElementById("closenessWeight").value=localStorage.getItem("teddy_closenessWeight")
  
         if not localStorage.getItem("teddy_numberDistanceWeight"):
-            localStorage.setItem("teddy_numberDistanceWeight", 0.3)
+            localStorage.setItem("teddy_numberDistanceWeight", 0.0001)
         document.getElementById("numberDistanceWeight").value=localStorage.getItem("teddy_numberDistanceWeight")
 
         if not localStorage.getItem("teddy_rootDistanceWeight"):
-            localStorage.setItem("teddy_rootDistanceWeight", 0.3)
+            localStorage.setItem("teddy_rootDistanceWeight", 0.0)
         document.getElementById("rootDistanceWeight").value=localStorage.getItem("teddy_rootDistanceWeight")
 
         if not localStorage.getItem("teddy_ndsDistanceWeight"):
-            localStorage.setItem("teddy_ndsDistanceWeight", 0.3)
+            localStorage.setItem("teddy_ndsDistanceWeight", 0.0)
         document.getElementById("ndsDistanceWeight").value=localStorage.getItem("teddy_ndsDistanceWeight")
 
         if not localStorage.getItem("teddy_maxDistance"):
-            localStorage.setItem("teddy_maxDistance", 10.0)
+            localStorage.setItem("teddy_maxDistance", 1000.0)
         document.getElementById("maxDistance").value=localStorage.getItem("teddy_maxDistance")         
 
         def changeDMSParameter(evt):
