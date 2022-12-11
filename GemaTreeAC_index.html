@@ -521,7 +521,7 @@
         document.getElementById("ndsDistanceWeight").value=localStorage.getItem("teddy_ndsDistanceWeight")
 
         if not localStorage.getItem("teddy_maxDistance"):
-            localStorage.setItem("teddy_maxDistance", 1000.0)
+            localStorage.setItem("teddy_maxDistance", 10.0)
         document.getElementById("maxDistance").value=localStorage.getItem("teddy_maxDistance")         
 
         def changeDMSParameter(evt):
