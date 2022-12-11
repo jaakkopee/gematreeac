@@ -824,7 +824,15 @@
             smviewDOC.getElementById("WizardsComments").innerHTML=""
             smviewDOC.getElementById("WizardsHelper").innerHTML=""
             smviewDOC.getElementById("dmSearchOutput").innerHTML=""
-            #smviewDOC.getElementById("dmSearchPlot").innerHTML=""
+
+            if not smviewDOC.getElementById("dmSearchPlot").src == "":
+                dmsDOC=smviewDOC.getElementById("dmSearchPlot").contentWindow.document
+                #console.log("found dmsDOC")
+                dmsDOC.getElementById("dmsLegendDiv").innerHTML=""
+                #console.log("found dmsLegend")
+                dmsDOC.getElementById("dmsDiv").innerHTML=""
+                #console.log("found dmsDiv")
+            
             return
 
         def deleteFromSM(mE):
@@ -975,38 +983,18 @@
             
             searchResults = teddy.getRestrictedWordSet_wdxy(mE.currentTarget.datum, localStorage.getItem("cipher"))
 
-            searchResults = sorted(searchResults, key = lambda x: x[2], reverse=True)
-
-            searchedGemVal = str(getGematria(mE.currentTarget.datum, localStorage.getItem("cipher")))
-            gvString=""
-            distanceString=""
-            xString=""
-            yString=""
-            uniqueNumbers=[]
-            for i in searchResults:
-                
-                if not int(i[1]) in uniqueNumbers:
-                    uniqueNumbers+=[int(i[1])]
-                    gvString+=str(i[1])+" "
-                    distanceString+=str(i[2])+" "
-                    xString+=str(i[3])+" "
-                    yString+=str(i[4])+" "
-
-
             searchResults = sorted(searchResults, key = lambda x: x[2])
 
-            srString=nds.makeDMSHyperRepre(searchResults, int(searchedGemVal), localStorage.getItem("cipher"))
+            searchedGemVal = getGematria(mE.currentTarget.datum, localStorage.getItem("cipher"))
+
+            srString=nds.makeDMSHyperRepre(searchResults, searchedGemVal, localStorage.getItem("cipher"))
             
             smviewDOC.getElementById("dmSearchOutput").innerHTML=srString
 
             for i in searchResults:
                 makeDMSListener(i[0])
 
-            localStorage.setItem("dataForPlot_SGV", searchedGemVal)
-            localStorage.setItem("dataForPlot_gv", gvString)
-            localStorage.setItem("dataForPlot_distance", distanceString)
-            localStorage.setItem("dataForPlot_x", xString)
-            localStorage.setItem("dataForPlot_y", yString)
+            localStorage.setItem("dataForPlot_SW", mE.currentTarget.datum)
 
             dmsPlot = smviewDOC.getElementById("dmSearchPlot")
             dmsPlot.src="./testPlot.html"

@@ -15,37 +15,78 @@
             - matplotlib
             - paths:
                 - ./gemNumFuncs.py
+                - ./ndigitsets3.py
                 - ./alphabet.py
-                - ./getwordsfromdbs.py   
+                - ./getwordsfromdbs.py 
+                - ./gematriac.db  
     
         </py-env>
         <py-script output="dmsDiv">
         import matplotlib.pyplot as plt
         import gemNumFuncs as gnf
+        import ndigitsets3 as nds
         import getwordsfromdbs as gwdb
         from js import localStorage, console
 
-        searchedGemVal = localStorage.getItem("dataForPlot_SGV")
-        gvArray=localStorage.getItem("dataForPlot_gv").split()
-        distanceArray=localStorage.getItem("dataForPlot_distance").split()
-        xArray=localStorage.getItem("dataForPlot_x").split()
-        yArray=localStorage.getItem("dataForPlot_y").split()
+        teddy = gnf.DistanceTeddyBear(gwdb.getDeepMem())
+            
+        if localStorage.getItem("teddy_pointBias"):
+            teddy.pointBias=float(localStorage.getItem("teddy_pointBias"))
 
-        x=[]
-        y=[]
-        distances=[]
+        if localStorage.getItem("teddy_distanceBias"):
+            teddy.distanceBias=float(localStorage.getItem("teddy_distanceBias"))
+
+        if localStorage.getItem("teddy_commonNds"):
+            teddy.commonNds=float(localStorage.getItem("teddy_commonNds"))
+
+        if localStorage.getItem("teddy_commonRoot"):
+            teddy.commonRoot=float(localStorage.getItem("teddy_commonRoot"))
+
+        if localStorage.getItem("teddy_commonRoute"):
+            teddy.commonRoute=float(localStorage.getItem("teddy_commonRoute"))
+        
+        if localStorage.getItem("teddy_commonNumber"):
+            teddy.commonNumber=float(localStorage.getItem("teddy_commonNumber"))
+
+        if localStorage.getItem("teddy_sameWord"):
+            teddy.sameWord=float(localStorage.getItem("teddy_sameWord"))
+
+        if localStorage.getItem("teddy_closenessWeight"):
+            teddy.closenessWeight=float(localStorage.getItem("teddy_closenessWeight"))
+
+        if localStorage.getItem("teddy_numberDistanceWeight"):
+            teddy.numberDistanceWeight=float(localStorage.getItem("teddy_numberDistanceWeight"))
+
+        if localStorage.getItem("teddy_rootDistanceWeight"):
+            teddy.rootDistanceWeight=float(localStorage.getItem("teddy_rootDistanceWeight"))
+
+        if localStorage.getItem("teddy_ndsDistanceWeight"):
+            teddy.ndsDistanceWeight=float(localStorage.getItem("teddy_ndsDistanceWeight"))
+
+        if localStorage.getItem("teddy_maxDistance"):
+            teddy.maxDistance=float(localStorage.getItem("teddy_maxDistance"))
+        
+        searchResults = teddy.getRestrictedWordSet_wdxy(localStorage.getItem("dataForPlot_SW"), localStorage.getItem("cipher"))
+
+        searchResults = sorted(searchResults, key = lambda x: x[2], reverse=True)
+
+        gvArray=[]
+        xArray=[]
+        yArray=[]
+        uniqueNumbers=[]
+
+        for i in searchResults:    
+            if not i[1] in uniqueNumbers:
+                uniqueNumbers+=[i[1]]
+                gvArray+=[i[1]]
+                xArray+=[i[3]]
+                yArray+=[i[4]]
+
+
+        searchedGemVal = gnf.getGematria(localStorage.getItem("dataForPlot_SW"), localStorage.getItem("cipher"))
+        rootNumber = gnf.getRootNumber(searchedGemVal)
+        routeToRoot = gnf.getParentList(searchedGemVal)[1:]
         colors=[]
-        highestDistance=0.0
-        for i in range(len(gvArray)):
-            distances+=[float(distanceArray[i])]
-            x+=[float(xArray[i])]
-            y+=[float(yArray[i])]
-
-            #if float(distanceArray[i]) > highestDistance:
-            #    highestDistance=float(distanceArray[i])
-
-        rootNumber = gnf.getRootNumber(int(searchedGemVal))
-        routeToRoot = gnf.getParentList(int(searchedGemVal))[1:]
 
         for i in range(len(gvArray)):
             r = 0.0
@@ -57,17 +98,17 @@
                 g = 0.0
                 b = 0.8
 
-            if gnf.getRootNumber(int(gvArray[i])) == rootNumber:
+            if gnf.getRootNumber(gvArray[i]) == rootNumber:
                 r = 0.0
                 g = 0.8
                 b = 0.8
 
-            if gnf.getParentList(int(gvArray[i]))[1:] == routeToRoot:
+            if gnf.getParentList(gvArray[i])[1:] == routeToRoot:
                 r = 0.8
                 g = 0.0
                 b = 0.5
 
-            if int(gvArray[i]) == int(searchedGemVal):
+            if gvArray[i] == searchedGemVal:
                 r = 0.6
                 g = 0.6
                 b = 0.0
@@ -76,14 +117,14 @@
 
         fig, ax = plt.subplots()
 
-        ax.scatter(x, y, s=6, c=colors)
+        ax.scatter(xArray, yArray, s=6, c=colors)
 
         fig
 
         </py-script>
 
         <div id="dmsDiv"></div>
-        <div class="dmsLegend">
+        <div class="dmsLegend" id = "dmsLegendDiv">
             <h1>About the DMS plot</h1>
             <p>
                 <ul>
