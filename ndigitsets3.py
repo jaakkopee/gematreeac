@@ -119,7 +119,7 @@ def makeHyperNumber(numStr):
           "<div class='hyperWordDiv' id='hwd_"+numStr+"_"+numStr+"'>\
             <button class='hyperNumberButton' id='hwb_nolla'>"+numStr+"</button>\
             <div class='hyperWordMenuContent' id='hwmc_"+numStr+"'>\
-                <a href='#WCHdr' id='hwWCSearch_"+numStr+"'>Wizard:"+numStr+"</a>\
+                <a href='#WCHdr' id='hwWCSearch_"+numStr+"'>GemVal:"+numStr+"</a>\
                 <a href='#SentenceFormulaLair' id='hwSF_"+numStr+"'>SentForm:"+numStr+"</a>\
             </div>\
           </div>"
@@ -128,7 +128,7 @@ def makeHyperNumber(numStr):
         "<div class='hyperWordDiv' id='hwd_"+numStr+"_"+numStr+"'>\
             <button class='hyperNumberButton' id='hwb_"+numStr+"'>"+numStr+"</button>\
             <div class='hyperWordMenuContent' id='hwmc_"+numStr+"'>\
-                <a href='#WCHdr' id='hwWCSearch_"+numStr+"'>Wizard:"+numStr+"</a>\
+                <a href='#WCHdr' id='hwWCSearch_"+numStr+"'>GemVal:"+numStr+"</a>\
                 <a href='#SentenceFormulaLair' id='hwSF_"+numStr+"'>SentForm:"+numStr+"</a>\
             </div>\
         </div>"
@@ -184,7 +184,7 @@ def makeDMSHyperRepre(inputArray, searchedGemVal, currentCipher):
             colorRGB = "rgb(153,153,0)"
 
         outputString += "<button class='dmsButton' id='dmsButton"+i[0]+\
-            "' style='color:"+colorRGB+"' value='"+i[0]+"' >"+i[0]+"</button>"
+            "' style='color:"+colorRGB+"' value='"+i[0]+"' >"+i[0]+"</button>"+str(getGematria(i[0], currentCipher))
 
     return outputString
 
