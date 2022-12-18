@@ -49,6 +49,6 @@ Sentence formula in action.
 <img src="./IMG_7292.jpg"/>
 
 A DMS Plot of the word 'suuripetotaivos' in the Fibonacci cipher. Parameters commonRoot and commonRoute are sought after. Also distance of gematria values is used to induce the
-vortex like pattern in the plot. Other 9 parameters are set to zero or close. Oh, and distanceBias is 1.0, too.
+vortex like pattern in the plot. Other parameters are set to zero or close. Oh, and distanceBias is 1.0, too, if I recall correctly.
 <img src="./suuripetotaivos66360.png"/>
 
