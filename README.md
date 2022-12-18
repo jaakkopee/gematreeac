@@ -40,3 +40,4 @@ Jaakko Prättälä
 iipekaj@gmail.com
 
 <img src="./IMG_7292.jpg"/>
+<img src="./suuripetotaivos66360.png"/>
