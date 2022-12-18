@@ -19,6 +19,12 @@ All numbers have occult meanings in the tree of life. Number nine is called ”T
 
 At the moment GemaTreeAC has only 8 ciphers that are used commonly in gematria study. I’d like to add more, hopefully original ciphers that work with gematria (produce lots of interesting associative meanings). I also want to develop and refine the data representation in GemaTreeAC. The nine-rooted tree is there already. The numbers are studied only by equivalence at the moment. I’d want to give the user tools for exploration of farther numerological relations. Via study of nwcp:s (numbers with common parents) other numerological relations can be explored.
 
+ADDITION 18.12.2022:
+[This date, the alpha.6 pre-release was packed up and the package has now a
+GemaTreeAC that can do searches into numbers with common n-digit set, common root, common route to root, common number and a common word. This is due to
+a distance measure which is calculated with a formula developed by me. Mathematics... gotta love it. gtac_math.pdf has a mathematical analysis of the Distance Measure Search algorithm. It is difficult to use, with it's 12 parameters and erratic behavior but I'm planning to make templates that will ease the search process. Also session memory is going to go through a reform
+in the future to enable the use of these new numerological relationships in sentence formula and final sentence formulation.]
+
 GemaTreeAC comes with database functionality and a read-only database called DeepMem of ca. 500000 words in Finnish, Swedish and English. DeepMem-database is gathered from kotus-sanalista_v1, WordNet 3.1, Gothenburg uni. Saldo 2.3 and Väestötietojärjestelmän Etunimitilasto
 
 GemaTreeAC is a web application hosted at https://jpts.aprx.io .
