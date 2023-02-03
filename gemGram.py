@@ -1,6 +1,7 @@
 import random
 import getwordsfromdbs as gwdb
 import sys
+from termcolor import colored, COLORS
 
 def calculateGematria(word, cipher="English extended"):
     # Dictionary of letter to numerical value mappings
@@ -44,8 +45,23 @@ def transformText(text, gematria_dict):
             transformed_text += word + " "
     return transformed_text
 
-wordlist = gwdb.getDeepMem()
+wordlist = gwdb.getDeepMem() 
 gematria_dict = buildGematriaDictionary(wordlist)
-text = sys.argv[1]
-transformed_text = transformText(text, gematria_dict)
-print(transformed_text)
+
+if len(sys.argv)>1:
+    text = sys.argv[1]
+else:
+    text = "testisana"
+
+if len(sys.argv)>2:
+    iter = int(sys.argv[2])
+else:
+    iter = 1
+
+print("Transforming sentence: "+text)
+
+
+for i in range(iter):
+    transformed_text = transformText(text, gematria_dict)
+    print(colored(transformed_text, "red"))
+
