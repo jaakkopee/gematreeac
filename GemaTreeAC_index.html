@@ -21,7 +21,7 @@
                 color: red;
                 background-color: #0000aa;
                 text-align: center;
-                display: none;
+                display: block;
             }
 
             .sv_style{
@@ -172,6 +172,17 @@
                 background-color: black;
             }
 
+            .rndOut{
+                display:inline;
+                color: #ffffff;
+                height:60px;
+                font-size:38px;
+                position: relative;
+                left: 20%;
+                width: 60%;
+            }
+
+
         </style>
         
     </head>   
@@ -184,6 +195,7 @@
         <py-env>
             - numpy
             - matplotlib
+            - nltk
             - paths:
                 - ./ndigitsets3.py
                 - ./gematriac.db
@@ -201,8 +213,15 @@
         from gemNumFuncs import getGematria, getParentList, DistanceTeddyBear
         from getwordsfromdbs import searchDeepMemByNumberArray, getDeepMem
         from random import randint
-        
-        document.getElementById("mainBody").style.display="block" #show the page only after pyscript has loaded everyting
+        import nltk
+        from nltk.tokenize import SyllableTokenizer
+        import random
+        import warnings
+        warnings.filterwarnings("ignore")
+        import random
+
+
+        #document.getElementById("mainBody").style.display="block" #show the page only after pyscript has loaded everyting
 
         def changeCipher(mE):
             localStorage.setItem("cipher", mE.currentTarget.cipherID)
@@ -437,6 +456,9 @@
         <!--py-repl></py-repl-->
 
         <div class="gemValMsg_div" id="messageout"></div>
+        <div class = "rndOut" id="randomSentenceOut"></div>
+        <button type="button" id="RSButton">Random Syllables</button>
+        <button type="button" id="RSButton2">Random Words</button>
 
         <div class="dmsSettingsStyle" id ="dmsSettings">
             <h1>Distance Measure Search Parameters:</h1>
@@ -594,9 +616,79 @@
             document.getElementById("messageout").style.color = f"rgb({red}, {green}, {blue})"
             return
 
+        def extract_syllables(word):
+            syllable_tokenizer = SyllableTokenizer()
+            return syllable_tokenizer.tokenize(word)
+
+        deepMemSyllables=[]
+        for i in getDeepMem():
+            deepMemSyllables += extract_syllables(i)
+  
+        def replace_syllables(word, syllable_list):
+            syllables = extract_syllables(word)
+            new_syllables = []
+            for syllable in syllables:
+                gematria_value = getGematria(syllable, localStorage.getItem("cipher"))
+                matching_syllables = [s for s in syllable_list if getGematria(s, localStorage.getItem("cipher")) == gematria_value]
+                new_syllables.append(random.choice(matching_syllables))
+            return new_syllables
+
+        def randomSentence(mE):
+            console.log("randomSentence")
+            new_syllables=[]
+            for i in document.getElementById("wordsHere").value.split():
+                new_syllables+=[replace_syllables(i, deepMemSyllables)]
+            
+            newSentence = ""
+            for i in new_syllables:
+                newSentence+=" "
+                for j in i:
+                    newSentence+=str(j)
+
+            document.getElementById("wordsHere").value = newSentence
+            return
+
+        randomSentence_proxy=create_proxy(randomSentence)
+        RSButton = document.getElementById("RSButton")
+        RSButton.addEventListener("click", randomSentence_proxy)
+
+
+        def buildGematriaDictionary(wordlist):
+            gematria_dict = {}
+            for word in wordlist:
+                gematria = getGematria(word, localStorage.getItem("cipher"))
+                if gematria in gematria_dict:
+                    gematria_dict[gematria].append(word)
+                else:
+                    gematria_dict[gematria] = [word]
+            return gematria_dict
+
+
+
+        def randomSentence2(mE):
+            gd = buildGematriaDictionary(getDeepMem())
+            trText = transformText(document.getElementById("wordsHere").value, gd)
+            document.getElementById("wordsHere").value=trText
+
+        def transformText(text, gematria_dict):
+            transformed_text = ""
+            words = text.split()
+            for word in words:
+                gematria = getGematria(word, localStorage.getItem("cipher"))
+                if gematria in gematria_dict:
+                    replacement_word = random.choice(gematria_dict[gematria])
+                    transformed_text += replacement_word + " "
+                else:
+                    transformed_text += word + " "
+            return transformed_text
+
+        randomSentence2_proxy=create_proxy(randomSentence2)
+        RSButton2 = document.getElementById("RSButton2")
+        RSButton2.addEventListener("click", randomSentence2_proxy)
+
+
         setInterval(create_proxy(rgbCallBack01), 333)
-
-
+        
         htdbDOC = document.getElementById('howToLoadLocalDB').contentWindow.document
 
         htdb_isOpen=False
