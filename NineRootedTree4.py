@@ -1,5 +1,6 @@
 import gemNumFuncs as gnf
 import getwordsfromdbs as gwdb
+
 from nltk.tokenize import SyllableTokenizer
 syllable_tokenizer = SyllableTokenizer()
 def extract_syllables(word_list):
@@ -9,8 +10,8 @@ def extract_syllables(word_list):
     syllables.extend(word_syllables)
   return list(dict.fromkeys(syllables))
 
-word_list = gwdb.getDeepMem()
-syllables = extract_syllables(word_list)
+deepMemAsList = gwdb.getDeepMem()
+deepMemSyllables = extract_syllables(deepMemAsList)
 
 def extract_syllables2(word):
   return syllable_tokenizer.tokenize(word)
@@ -23,9 +24,9 @@ class Syllable:
     return
   
 
-  def findSyllables(self, value):
+  def findSyllables(self, value, cipher):
     for i in list(self.children.values()):
-      gemval = gnf.getGematria(i.syllables[0], "ScaExt")
+      gemval = gnf.getGematria(i.syllables[0], cipher)
       #print (str(gemval)+" "+str(value), end=" ")
       if gemval == value:
         return i.syllables
@@ -39,14 +40,14 @@ class Syllable:
           
 class NineRootedTree:
 
-    def __init__(self, syllables):
+    def __init__(self, syllables, cipher):
       self.roots = [None, None, None, None, None, None, None, None, None, None]
       for syllable in syllables:
-        route = gnf.getParentList(gnf.getGematria(syllable, "ScaExt"))
+        route = gnf.getParentList(gnf.getGematria(syllable, cipher))
         parent = self.roots[gnf.getRootNumber(route[0])]
         if parent is None:
           self.roots[gnf.getRootNumber(route[0])] = Syllable(gnf.getRootNumber(route[0]))
-          self.roots[gnf.getRootNumber(route[0])].syllables.extend([i for i in syllables if gnf.getGematria(i, "ScaExt") == gnf.getGematria(syllable, "ScaExt")])
+          self.roots[gnf.getRootNumber(route[0])].syllables.extend([i for i in syllables if gnf.getGematria(i, cipher) == gnf.getGematria(syllable, cipher)])
           parent = self.roots[gnf.getRootNumber(route[0])]
         route.reverse()
         for digit in route[1:]: 
@@ -55,7 +56,7 @@ class NineRootedTree:
             next = Syllable(digit)
             #print("next.value:"+str(next.value))
             parent.children[digit] = next
-            next.syllables+=[i for i in syllables if gnf.getGematria(i, "ScaExt") == digit]
+            next.syllables+=[i for i in syllables if gnf.getGematria(i, cipher) == digit]
           parent=next  
       return
 
@@ -72,8 +73,8 @@ class NineRootedTree:
         else:
           continue
         
-    def route_to_root(self, syllable):
-        return gnf.getParentList(gnf.getGematria(syllable, "ScaExt"))
+    def route_to_root(self, syllable, cipher):
+        return gnf.getParentList(gnf.getGematria(syllable, cipher))
                                
     def __str__(self):
         tree_str = ''
@@ -89,7 +90,7 @@ class NineRootedTree:
             tree_str += self.print_tree(child, prefix)
         return tree_str
 
-def list_to_NineRootedTree(syllables):
-  tree = NineRootedTree(syllables)
+def syllableList_to_NineRootedTree(syllables, cipher):
+  tree = NineRootedTree(syllables, cipher)
   return tree
 
