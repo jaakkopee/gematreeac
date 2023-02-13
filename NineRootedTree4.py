@@ -10,8 +10,8 @@ def extract_syllables(word_list):
     syllables.extend(word_syllables)
   return list(dict.fromkeys(syllables))
 
-deepMemAsList = gwdb.getDeepMem()
-deepMemSyllables = extract_syllables(deepMemAsList)
+#deepMemAsList = gwdb.getDeepMem()
+#deepMemSyllables = extract_syllables(deepMemAsList)
 
 def extract_syllables2(word):
   return syllable_tokenizer.tokenize(word)
@@ -33,10 +33,11 @@ class Syllable:
       
       else:
         for j in list(self.children.values()):
-          syllables=j.findSyllables(value)
+          syllables=j.findSyllables(value, cipher)
           if syllables:
             return syllables
-          
+        
+      return [""]
           
 class NineRootedTree:
 
@@ -67,7 +68,7 @@ class NineRootedTree:
           return r.syllables
       for root in self.roots[1:]:
         #print ("calling recursive findSyllables, root value:"+str(root.value))
-        syllables = root.findSyllables(value)
+        syllables = root.findSyllables(value, "ScaExt")
         if syllables:
           return syllables
         else:
