@@ -31,8 +31,9 @@ class NineRootedTree:
 
     def __init__(self, words, cipher):
       self.roots = [None, None, None, None, None, None, None, None, None, None]
-      for i in words:
-        self.addWord(i, cipher)        
+      if words:
+        for i in words:
+          self.addWord(i, cipher)        
       return
 
     def addWord(self, word, cipher):
@@ -49,10 +50,6 @@ class NineRootedTree:
           parent.children[digit] = next
         parent=next  
       parent.words+=[word]
-      return
-      
-      
-      
       return
 
 
@@ -86,6 +83,25 @@ class NineRootedTree:
             tree_str += self.print_tree(child, prefix)
         return tree_str
 
+    def generateNestedList(self):
+        result = "<ul>"
+        for root in self.roots:
+          if root is not None:
+            result+=self.generateListItems(root)
+        result+="</ul>"
+        return result
+
+    def generateListItems(self, word):
+      result = "<li>" + str(word.value) + "<div>"+str(word.words)+"</div></li>"
+      if word.children:
+          result += "<ul>"
+          for child in word.children.values():
+              result += self.generateListItems(child)
+          result += "</ul>"
+      return result
+
+
 def wordList_to_NineRootedTree(words, cipher):
   tree = NineRootedTree(words, cipher)
   return tree
+

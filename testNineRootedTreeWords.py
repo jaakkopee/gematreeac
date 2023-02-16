@@ -1,5 +1,5 @@
 from NineRootedTreeWords import *
-text = open("testisanatsaatana.txt", "r").read()
+text = open("parisanaa.txt", "r").read()
 for char in text:
     if not char.isalnum() and not char.isspace():
         text = text.replace(char, "")
@@ -16,5 +16,7 @@ tree = wordList_to_NineRootedTree(wordList, "ScaExt")
 print(tree)
 
 for i in tree.roots[1:]:
-    print (i.words)
+    if i:
+        print (i.words)
 
+print(tree.generateNestedList())
