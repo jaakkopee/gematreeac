@@ -11,21 +11,23 @@ class Word:
 
   def findWords(self, value, cipher):
     if value == 0:
-      return [""]
+      return []
 
-    for i in list(self.children.values()):
-      gemval = gnf.getGematria(i.words[0], cipher)
-      #print (str(gemval)+" "+str(value), end=" ")
-      if gemval == value:
-        return i
+    clist = list(self.children.values())
+    for i in clist:
+      if not i.words == []:
+        gemval = gnf.getGematria(i.words[0], cipher)
+        #print (str(gemval)+" "+str(value), end=" ")
+        if gemval == value:
+          return i
       
-      else:
-        for j in list(self.children.values()):
-          words=j.findWords(value, cipher)
-          if words:
-            return words
+        else:
+          for j in list(self.children.values()):
+            words=j.findWords(value, cipher)
+            if words:
+              return words
         
-      return ["?"]
+      return []
           
 class NineRootedTree:
 
@@ -49,23 +51,21 @@ class NineRootedTree:
           next = Word(digit)
           parent.children[digit] = next
         parent=next  
-      parent.words+=[word]
+      if not word in parent.words:
+        parent.words+=[word]
       return
 
 
     def findWords(self, value):
-      for r in self.roots[1:]:
-        #print("findWords:"+str(r.value)+" "+str(value))
-        if value == r.value:
-          return r.words
       for root in self.roots[1:]:
-        #print ("calling recursive findWords, root value:"+str(root.value))
-        words = root.findWords(value, "ScaExt")
-        if words:
-          return words
-        else:
-          continue
-        
+        if not root is None:
+          words = root.findWords(value, "ScaExt")
+          if words:
+            return words
+          else:
+            continue
+      return []
+
     def route_to_root(self, word, cipher):
         return gnf.getParentList(gnf.getGematria(word, cipher))
                                

@@ -14,6 +14,13 @@
 
     </head>
     <body>
+        <div id = "NRTWDiv" class = "NRTWDivStyle"></div>
+        <input id="wordsHere" value="text here"></input>
+        <button type="button" id ="addWordToNRTW">Add Word(s) To Nine Rooted Tree</button>
+        <button type="button" id="clearNRTWbutton">Clear Tree</button>
+
+
+
         <py-env>
             - numpy
             - matplotlib
@@ -21,6 +28,7 @@
             - paths:
                 - ./ndigitsets3.py
                 - ./gematriac.db
+                - ./gemNumFuncs2.py
                 - ./gemNumFuncs.py
                 - ./alphabet.py
                 - ./getwordsfromdbs.py 
@@ -29,12 +37,58 @@
  
         <py-script>
             import NineRootedTreeWords as nrtw
+            from pyodide import create_proxy
             from js import window, document, MouseEvent, localStorage, console
-            tree = nrtw.NineRootedTree(["minä", "sinä", "hän", "me", "te", "he", "nämä", "nuo", "ne", "tämä", "tuo", "se"], "ScaExt")
-            document.getElementById("NRTWDiv").innerHTML=tree.generateNestedList()
+            import gemNumFuncs2 as gnf
+
+            console.log("Here We Are")
+            
+            tree_ScaExt = nrtw.NineRootedTree([], "ScaExt")
+            
+            document.getElementById("NRTWDiv").innerHTML=tree_ScaExt.generateNestedList()
+
+            def addWordNRTW(mE):
+                console.log("addWordNRTW()")
+                
+                global tree_ScaExt
+                new_words = document.getElementById("wordsHere").value.split()
+                for word in new_words:
+                    gemval = gnf.getGematria(word, "ScaExt")
+                    route = gnf.getParentList(gemval).reverse()
+                    word=word.lower()  
+
+                    for i in word: 
+                        if not i.isalpha():
+                            word=word.replace(i,"")
+                    
+                    console.log("Lisään: "+str(word))
+                    tree_ScaExt.addWord(word, "ScaExt")
+                
+                document.getElementById("NRTWDiv").innerHTML=tree_ScaExt.generateNestedList()               
+                return
+
+            aw_proxy = create_proxy(addWordNRTW)
+                
+            wordAdder = document.getElementById("addWordToNRTW")
+            wordAdder.addEventListener("click", aw_proxy)
+
+            def clearNRTW(mE):
+                global tree_ScaExt
+                tree_ScaExt = nrtw.NineRootedTree([], "ScaExt")
+                document.getElementById("NRTWDiv").innerHTML=tree_ScaExt.generateNestedList()
+                return
+
+            clrNRTW_proxy = create_proxy(clearNRTW)
+
+            clearer = document.getElementById("clearNRTWbutton")
+            clearer.addEventListener("click", clrNRTW_proxy)
+            
         </py-script>
 
-        <div id = "NRTWDiv" class = "NRTWDivStyle">            
-        </div>
+
+
+
+
+
     </body>
 </html>
