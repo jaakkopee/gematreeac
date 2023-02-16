@@ -25,6 +25,9 @@ class Syllable:
   
 
   def findSyllables(self, value, cipher):
+    if value == 0:
+      return [""]
+
     for i in list(self.children.values()):
       gemval = gnf.getGematria(i.syllables[0], cipher)
       #print (str(gemval)+" "+str(value), end=" ")
@@ -37,7 +40,7 @@ class Syllable:
           if syllables:
             return syllables
         
-      return [""]
+      return ["?"]
           
 class NineRootedTree:
 

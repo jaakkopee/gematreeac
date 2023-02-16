@@ -79,23 +79,30 @@ for i in range(len(charGVs)):
 result = model.predict(inputChars)
 import random
 import NineRootedTree4 as nrt4
-
+import getwordsfromdbs as gwdb
 print(result)
 resultSyllableGVs=[]
 for i in range(len(result)):
     resultSyllableGVs+=[result[i]]
 
+for i in gwdb.getDeepMem():
+    allSyllables.extend(extract_syllables(i))
+
+maxSylGV = max([gnf2.getGematria(i, "ScaExt") for i in allSyllables])
+sylGVs =[]
+
 for i in range(len(resultSyllableGVs)):
     for j in range(len(resultSyllableGVs[i])):
-        resultSyllableGVs[i][j]=int(round(resultSyllableGVs[i][j]*1024))
-print(resultSyllableGVs)
+        sylGVs+=[int(round(resultSyllableGVs[i][j]*maxSylGV))]
+
+print(sylGVs)
+
 tree = nrt4.syllableList_to_NineRootedTree(list(dict.fromkeys(allSyllables)), "ScaExt")
 print(tree)
 
 endSentence = ""
-for i in resultSyllableGVs:
-    for j in i:
-        endSentence+=random.choice(tree.findSyllables(j))
+for i in sylGVs:
+        endSentence+=random.choice(tree.findSyllables(i))
 
 print(endSentence)
 
