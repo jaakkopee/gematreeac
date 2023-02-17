@@ -1,10 +1,11 @@
 import gemNumFuncs2 as gnf2
-import NineRootedTree4 as nrt4
-
+import NineRootedTreeWords as nrtw
+import getwordsfromdbs as gwdb
 import numpy as np
 from keras.layers import LSTM, Dense
-from keras.models import Sequential
-
+from keras.models import Sequential, load_model
+import random
+import sys
 import nltk
 from nltk.tokenize import SyllableTokenizer
 
@@ -20,7 +21,7 @@ for i in textbase:
         textbase=textbase.replace(i, " ")
 
 words = textbase.split()
-
+#words = gwdb.getDeepMem() 
 charsAndSyls=[]
 allSyllables=[]
 for i in range(len(words)-1):
@@ -29,6 +30,9 @@ for i in range(len(words)-1):
     allSyllables.extend(syllables)
     syllableGVs=[gnf2.getGematria(syl, "ScaExt") for syl in syllables]
     charsAndSyls+=[(charGVs, syllableGVs)]
+
+maxCharGV = float(max([i for i in charGVs]))
+maxSylGV = float(max([i for i in syllableGVs]))
 
 print (charsAndSyls)
 chrArray=[]
@@ -46,10 +50,10 @@ outArray=np.zeros((len(chrArray), max_length_chars), dtype=np.float32)
 
 for i in range(len(chrArray)):
     for j in range(len(chrArray[i])):
-        inArray[i][j]=float(chrArray[i][j])
+        inArray[i][j]=float(chrArray[i][j])/maxCharGV
         if i < len(sylArray):
             if j < len(sylArray[i]):
-                outArray[i][j]=float(sylArray[i][j])
+                outArray[i][j]=float(sylArray[i][j])/maxSylGV
 
 print("Numpy Arrays:")
 print(inArray, outArray)
@@ -59,50 +63,55 @@ outArray=outArray.reshape(len(outArray), len(outArray[0]), 1)
 print (inArray.shape)
 print (outArray.shape)
 
+"""
 model = Sequential()
 model.add(LSTM(128))
 model.add(Dense((max_length_chars), activation='softmax'))
 
 model.compile(loss='categorical_crossentropy', optimizer='adam')
-model.fit(inArray, outArray, batch_size=64, epochs=100)
-import sys
+model.fit(inArray, outArray, batch_size=64, epochs=128)
+
+model.save("./gematriaLSTM")
+"""
+#for i in gwdb.getDeepMem():
+#    allSyllables.extend(extract_syllables(i))
+
+tree = nrtw.NineRootedTree(list(dict.fromkeys(allSyllables)), "ScaExt")
+
+model = load_model("./gematriaLSTM")
+
+seed = sys.argv[1]
+
 print("Prediction")
 inputChars = np.zeros(inArray[0].shape, dtype=np.float32)
-sentence = sys.argv[1]
-words = [i for i in sentence]
+
+
+words = [i for i in seed]
 chars = [i for i in words]
 charGVs = [gnf2.getGematria(i, "ScaExt") for i in chars]
 
-for i in range(len(charGVs)):
-    inputChars[i]=charGVs[i]
+maxNewCharGVs = max(charGVs)
+
+for i in range(len(charGVs)-1):
+    inputChars[i]=float(charGVs[i])/float(maxNewCharGVs)
+
 
 result = model.predict(inputChars)
-import random
-import NineRootedTree4 as nrt4
-import getwordsfromdbs as gwdb
-print(result)
-resultSyllableGVs=[]
-for i in range(len(result)):
-    resultSyllableGVs+=[result[i]]
 
-for i in gwdb.getDeepMem():
-    allSyllables.extend(extract_syllables(i))
+sylGVs = []
+for i in result[0]:
+    sylGVs+=[i]
 
-maxSylGV = max([gnf2.getGematria(i, "ScaExt") for i in allSyllables])
-sylGVs =[]
 
-for i in range(len(resultSyllableGVs)):
-    for j in range(len(resultSyllableGVs[i])):
-        sylGVs+=[int(round(resultSyllableGVs[i][j]*maxSylGV))]
-
-print(sylGVs)
-
-tree = nrt4.syllableList_to_NineRootedTree(list(dict.fromkeys(allSyllables)), "ScaExt")
-print(tree)
+for i in range(len(sylGVs)):
+    sylGVs[i] = int(round(sylGVs[i]*maxSylGV))
 
 endSentence = ""
+
 for i in sylGVs:
-        endSentence+=random.choice(tree.findSyllables(i))
+    syls = tree.findWords(i)
+    if not syls == []:
+        endSentence+=random.choice(syls)
 
-print(endSentence)
-
+print (sylGVs)
+print (endSentence)
