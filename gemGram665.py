@@ -1,7 +1,7 @@
 import nltk
 from nltk.tokenize import SyllableTokenizer
 import getwordsfromdbs as gwdb
-import gemNumFuncs as gnf
+import gemNumFuncs_old as gnf
 import random
 import sys
 

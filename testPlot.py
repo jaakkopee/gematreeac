@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import gemNumFuncs as gnf
+import gemNumFuncs_old as gnf
 import getwordsfromdbs as gwdb
 
 teddy=gnf.DistanceTeddyBear(gwdb.getDeepMem())

@@ -1,5 +1,5 @@
 from typing import List
-from gemNumFuncs import getGematria
+from gemNumFuncs_old import getGematria
 import getwordsfromdbs as gwdb
 import pyphen
 import sys
