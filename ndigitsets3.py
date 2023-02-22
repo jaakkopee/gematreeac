@@ -1,5 +1,5 @@
 from math import pow
-from gemNumFuncs_old import *
+from gemNumFuncs import *
 from alphabet import getCipher
 
 class Root:

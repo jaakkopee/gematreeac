@@ -1,6 +1,6 @@
 import sqlite3
 
-from gemNumFuncs_old import getGematria, getDistance
+from gemNumFuncs import getGematria, getDistance
 
 def searchWordListByDistance(word, wordList, currentCipher, closenessWeight = 1.0, maxDistance = 1.0):
     

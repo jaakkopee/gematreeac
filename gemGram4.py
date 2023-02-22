@@ -1,7 +1,7 @@
 from collections import defaultdict
 from itertools import product
 import getwordsfromdbs as gwdb
-from gemNumFuncs_old import getGematria
+from gemNumFuncs import getGematria
 import pyphen
 import sys
 

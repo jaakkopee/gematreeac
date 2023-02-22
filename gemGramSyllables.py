@@ -5,7 +5,7 @@ import sys
 import nltk
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.corpus import cmudict
-from gemNumFuncs_old import getGematria
+from gemNumFuncs import getGematria
 import pyphen
 
 def calculateGematria(word, cipher="English extended"):
