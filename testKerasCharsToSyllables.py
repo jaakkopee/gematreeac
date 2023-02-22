@@ -1,4 +1,4 @@
-import gemNumFuncs2 as gnf2
+import gemNumFuncs as gnf
 import NineRootedTreeWords as nrtw
 import getwordsfromdbs as gwdb
 import numpy as np
@@ -25,10 +25,10 @@ words = textbase.split()
 charsAndSyls=[]
 allSyllables=[]
 for i in range(len(words)-1):
-    charGVs=[gnf2.getGematria(char, "ScaExt") for char in words[i]]
+    charGVs=[gnf.getGematria(char, "ScaExt") for char in words[i]]
     syllables = extract_syllables(words[i+1])
     allSyllables.extend(syllables)
-    syllableGVs=[gnf2.getGematria(syl, "ScaExt") for syl in syllables]
+    syllableGVs=[gnf.getGematria(syl, "ScaExt") for syl in syllables]
     charsAndSyls+=[(charGVs, syllableGVs)]
 
 maxCharGV = float(max([i for i in charGVs]))
@@ -88,7 +88,7 @@ inputChars = np.zeros(inArray[0].shape, dtype=np.float32)
 
 words = [i for i in seed]
 chars = [i for i in words]
-charGVs = [gnf2.getGematria(i, "ScaExt") for i in chars]
+charGVs = [gnf.getGematria(i, "ScaExt") for i in chars]
 
 maxNewCharGVs = max(charGVs)
 

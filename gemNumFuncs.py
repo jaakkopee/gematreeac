@@ -217,7 +217,7 @@ def getGematria(word, currentCipher):
     number=0
     cipherInUse=getCipher(currentCipher)
     for i in word:
-        number+=cipherInUse[i]
+        number+=cipherInUse.get(i, 0)
 		
     return number
 

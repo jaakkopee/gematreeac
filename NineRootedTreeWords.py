@@ -8,51 +8,6 @@ class Word:
     self.words = []
     return
 
-  """
-  def findWords(self, value, cipher):
-    if value == 0:
-      return []
-    
-    gemval = 0
-
-    if self.words != []:
-      gemval = gnf.getGematria(self.words[0], cipher)
-    
-    if gemval == value:
-      return self.words
-    
-    for child in list(self.children.values()):
-      return child.findWords(value, cipher)
-
-    return []
-
-
- 
-  def findWords(self, value, cipher):
-
-    if value == 0:
-      return []
-
-    clist = list(self.children.values())
-    for wordie in clist:
-      gemval=0
-
-      if not wordie.words == []:
-          gemval = gnf.getGematria(wordie.words[0], cipher)
-          
-      if gemval == value:
-        print("return "+str(wordie.words))
-        return wordie.words
-      
-      else:
-        for recursiveWordie in list(wordie.children.values()):
-          recWords = recursiveWordie.findWords(value, cipher)
-          if not recWords==[]:
-            return recWords
-
-      return []
-     """
-
 class NineRootedTree:
 
     def __init__(self, words, cipher):
@@ -85,19 +40,15 @@ class NineRootedTree:
         
       route = gnf.getParentList(value)
       route.reverse()
-      print(str(route))
+
       node = self.roots[route[0]]
       if value == node.value:
         return node.words
 
-      print ("Node is "+str(node.value))
-
       for i in route[1:]:
-        print(i)
         node = node.children.get(i)
         if node != None:
           if i == value:
-            print("FOUND:"+str(value))
             return node.words
       return []
 
