@@ -85,6 +85,8 @@ def transformSyllables(wordList):
             outputString += random.choice(sylsFromTree)
         outputString+=" "
 
+    outputString = outputString[0:-1]
+
     return outputString
 
 
