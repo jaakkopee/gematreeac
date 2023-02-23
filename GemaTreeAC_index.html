@@ -204,7 +204,7 @@
         import random
         import asyncio
 
-        loadInfoContainer = {"isLoading":False}
+        loadInfo = False
 
         #document.getElementById("mainBody").style.display="block" #show the page only after pyscript has loaded everyting
 
@@ -597,15 +597,10 @@
         slider.inputId = "maxDistance"
 
         def rgbCallBack01():
-            global loadInfoContainer
             red=randint(0,255)
             green=randint(0,255)
             blue=randint(0,255)
             document.getElementById("messageout").style.color = f"rgb({red}, {green}, {blue})"
-            if loadInfoContainer["isLoading"]:
-                document.getElementById("messageout").innerHTML = "Loading... Please Wait"
-            if not loadInfoContainer["isLoading"]:
-                updateGemValMsgNotMouse()
             return
 
         setInterval(create_proxy(rgbCallBack01), 333)
@@ -627,10 +622,21 @@
                 new_syllables.append(random.choice(matching_syllables))
             return new_syllables
 
+
+        def changeLoadMode():
+            console.log("changeLoadMode")
+            global loadInfo
+            if not loadInfo:
+                loadInfo=True
+                document.getElementById("messageout").innerHTML="Loading... please wait."
+                return 
+            loadInfo = False
+            document.getElementById("messageout").innerHTML = getGematria(document.getElementById("wordsHere").value, "ScaExt")
+            return
+
         def randomSentence(mE):
-            global loadInfoContainer
-            loadInfoContainer["isLoading"] = True
             console.log("randomSentence")
+            #pyscript.loop.call_soon(changeLoadMode())
             new_syllables=[]
             for i in document.getElementById("wordsHere").value.split():
                 new_syllables+=[replace_syllables(i, deepMemSyllables)]
@@ -641,7 +647,7 @@
                     newSentence+=str(j)
 
             document.getElementById("wordsHere").value = newSentence
-            loadInfoContainer["isLoading"] = False
+            #pyscript.loop.call_soon(changeLoadMode())
             return
 
         randomSentence_proxy=create_proxy(randomSentence)
