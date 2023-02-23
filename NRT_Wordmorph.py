@@ -69,6 +69,8 @@ def transformWord(wordList):
     for i in outList:
         outputString+=i+" "
 
+    outputString = outputString[0:-1]
+    
     return outputString
 
 def transformSyllables(wordList):
