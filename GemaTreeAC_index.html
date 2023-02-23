@@ -444,7 +444,7 @@
         <!--py-repl></py-repl-->
 
         <div class="gemValMsg_div" id="messageout"></div>
-        <button type="button" id="RSButton" py-onCLick="loadInfoContainer['isLoading']=True">Random Syllables</button>
+        <button type="button" id="RSButton">Random Syllables</button>
         <button type="button" id="RSButton2">Random Words</button>
 
         <div class="dmsSettingsStyle" id ="dmsSettings">
@@ -618,7 +618,7 @@
         for i in getDeepMem():
             deepMemSyllables += extract_syllables(i)
   
-        async def replace_syllables(word, syllable_list):
+        def replace_syllables(word, syllable_list):
             syllables = extract_syllables(word)
             new_syllables = []
             for syllable in syllables:
@@ -629,12 +629,11 @@
 
         def randomSentence(mE):
             global loadInfoContainer
+            loadInfoContainer["isLoading"] = True
             console.log("randomSentence")
             new_syllables=[]
             for i in document.getElementById("wordsHere").value.split():
-                sl = replace_syllables(i, deepMemSyllables)
                 new_syllables+=[replace_syllables(i, deepMemSyllables)]
-            
             newSentence = ""
             for i in new_syllables:
                 newSentence+=" "
