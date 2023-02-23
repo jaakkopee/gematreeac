@@ -3,8 +3,8 @@
     <head>
         <title>GemaTreeAC 2=0 Gematria Calculator</title> 
 
-        <!--link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css"-->
-        <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
         <meta charset="utf-8">
         <meta name="description" content="Gematria and Numerology Based Word Classification Algorithm">
         
@@ -16,7 +16,6 @@
                 background-color: aquamarine;
             }
             .myBody{
-                font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
                 font-size: 20px;
                 color: red;
                 background-color: #0000aa;
@@ -172,19 +171,14 @@
                 background-color: black;
             }
 
-            .rndOut{
-                display:inline;
-                color: #ffffff;
-                height:60px;
-                font-size:38px;
-                position: relative;
-                left: 20%;
-                width: 60%;
-            }
 
 
         </style>
-        
+        <py-config>
+            packages = ["numpy", "matplotlib", "nltk"]
+            [[fetch]]
+            files = ["./NineRootedTreeWords.py", "./gematriac.db", "./ndigitsets3.py", "./gemNumFuncs.py", "./alphabet.py", "./getwordsfromdbs.py"]
+        </py-config>
     </head>   
 
     <body class="myBody" id="mainBody">
@@ -192,18 +186,7 @@
         <div class="credits"><h1>GemaTreeAC 2=0 Gematria Calculator, Numerological Classification Algorithm and Database. Copyleft 2022, Jake Pii Taivossuora, Do What Thou Wilt.</h1></div>
 
         <img src="./GemaTreeAC_logo02.jpeg" width="1100" height="200"><br />
-        <py-env>
-            - numpy
-            - matplotlib
-            - nltk
-            - paths:
-                - ./ndigitsets3.py
-                - ./gematriac.db
-                - ./gemNumFuncs.py
-                - ./alphabet.py
-                - ./getwordsfromdbs.py   
-        </py-env>
-        
+
         <py-script>
         from js import window, document, MouseEvent, localStorage, console
         from pyodide import create_proxy
@@ -212,14 +195,15 @@
         from alphabet import cipher as allCiphers
         from gemNumFuncs import getGematria, getParentList, DistanceTeddyBear
         from getwordsfromdbs import searchDeepMemByNumberArray, getDeepMem
-        from random import randint
+        from random import randint, choice
+        import NineRootedTreeWords as nrt
         import nltk
         from nltk.tokenize import SyllableTokenizer
-        import random
         import warnings
         warnings.filterwarnings("ignore")
         import random
 
+        loadInfoContainer = {"isLoading":False}
 
         #document.getElementById("mainBody").style.display="block" #show the page only after pyscript has loaded everyting
 
@@ -227,6 +211,9 @@
             localStorage.setItem("cipher", mE.currentTarget.cipherID)
             document.getElementById('cipherButton').innerHTML="Cipher In Use: "+localStorage.getItem("cipher")
             #console.log(localStorage.getItem("cipher"))
+
+            #compute NRT's for the new cipher (to be implemented)
+
             clearWizard()
             clearSentenceFormulaNoMouse()
             smNoAddWordNoMouseNoChange()
@@ -455,8 +442,7 @@
 
         <!--py-repl></py-repl-->
 
-        <div class="gemValMsg_div" id="messageout">Loading... Please wait.</div>
-        <div class = "rndOut" id="randomSentenceOut"></div>
+        <div class="gemValMsg_div" id="messageout"></div>
         <button type="button" id="RSButton">Random Syllables</button>
         <button type="button" id="RSButton2">Random Words</button>
 
@@ -610,12 +596,19 @@
         slider.inputId = "maxDistance"
 
         def rgbCallBack01():
+            global loadInfoContainer
             red=randint(0,255)
             green=randint(0,255)
             blue=randint(0,255)
             document.getElementById("messageout").style.color = f"rgb({red}, {green}, {blue})"
+            if loadInfoContainer["isLoading"]:
+                document.getElementById("messageout").innerHTML = "Loading... Please Wait"
+            if not loadInfoContainer["isLoading"]:
+                updateGemValMsgNotMouse()
             return
 
+        setInterval(create_proxy(rgbCallBack01), 333)
+        
         def extract_syllables(word):
             syllable_tokenizer = SyllableTokenizer()
             return syllable_tokenizer.tokenize(word)
@@ -634,6 +627,8 @@
             return new_syllables
 
         def randomSentence(mE):
+            global loadInfoContainer
+            loadInfoContainer["isLoading"]=True
             console.log("randomSentence")
             new_syllables=[]
             for i in document.getElementById("wordsHere").value.split():
@@ -646,6 +641,7 @@
                     newSentence+=str(j)
 
             document.getElementById("wordsHere").value = newSentence
+            loadInfoContainer["isLoading"] = False
             return
 
         randomSentence_proxy=create_proxy(randomSentence)
@@ -687,7 +683,8 @@
         RSButton2.addEventListener("click", randomSentence2_proxy)
 
 
-        setInterval(create_proxy(rgbCallBack01), 333)
+        #set up loadinginfo (to be implemented)
+
         
         htdbDOC = document.getElementById('howToLoadLocalDB').contentWindow.document
 
