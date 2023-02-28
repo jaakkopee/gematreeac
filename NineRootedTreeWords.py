@@ -32,7 +32,7 @@ class NineRootedTree:
         parent=next  
       if not word in parent.words:
         parent.words+=[word]
-      return
+      return word
 
     def findWords(self, value):
       if value == 0:

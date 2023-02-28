@@ -194,17 +194,29 @@
         from alphabet import getCipher
         from alphabet import cipher as allCiphers
         from gemNumFuncs import getGematria, getParentList, DistanceTeddyBear
-        from getwordsfromdbs import searchDeepMemByNumberArray, getDeepMem
+        from getwordsfromdbs import searchDeepMemByNumberArray, getDeepMem, getDeepMemSyllables
         from random import randint
         import NineRootedTreeWords as nrt
         import nltk
         from nltk.tokenize import SyllableTokenizer
         import warnings
-        warnings.filterwarnings("ignore")
         import random
         import asyncio
 
+        warnings.filterwarnings("ignore")
+
         loadInfo = False
+
+        def changeLoadMode():
+            console.log("changeLoadMode")
+            global loadInfo
+            if not loadInfo:
+                loadInfo=True
+                document.getElementById("messageout").innerHTML="Loading... please wait."
+                return 
+            loadInfo = False
+            document.getElementById("messageout").innerHTML = getGematria(document.getElementById("wordsHere").value, localStorage.getItem("cipher"))
+            return
 
         #document.getElementById("mainBody").style.display="block" #show the page only after pyscript has loaded everyting
 
@@ -213,7 +225,7 @@
             document.getElementById('cipherButton').innerHTML="Cipher In Use: "+localStorage.getItem("cipher")
             #console.log(localStorage.getItem("cipher"))
 
-            #compute NRT's for the new cipher (to be implemented)
+            initTrees() #experimental
 
             clearWizard()
             clearSentenceFormulaNoMouse()
@@ -604,93 +616,8 @@
             return
 
         setInterval(create_proxy(rgbCallBack01), 333)
-        
-        def extract_syllables(word):
-            syllable_tokenizer = SyllableTokenizer()
-            return syllable_tokenizer.tokenize(word)
-
-        deepMemSyllables=[]
-        for i in getDeepMem():
-            deepMemSyllables += extract_syllables(i)
-  
-        def replace_syllables(word, syllable_list):
-            syllables = extract_syllables(word)
-            new_syllables = []
-            for syllable in syllables:
-                gematria_value = getGematria(syllable, localStorage.getItem("cipher"))
-                matching_syllables = [s for s in syllable_list if getGematria(s, localStorage.getItem("cipher")) == gematria_value]
-                new_syllables.append(random.choice(matching_syllables))
-            return new_syllables
-
-
-        def changeLoadMode():
-            console.log("changeLoadMode")
-            global loadInfo
-            if not loadInfo:
-                loadInfo=True
-                document.getElementById("messageout").innerHTML="Loading... please wait."
-                return 
-            loadInfo = False
-            document.getElementById("messageout").innerHTML = getGematria(document.getElementById("wordsHere").value, "ScaExt")
-            return
-
-        def randomSentence(mE):
-            console.log("randomSentence")
-            #pyscript.loop.call_soon(changeLoadMode())
-            new_syllables=[]
-            for i in document.getElementById("wordsHere").value.split():
-                new_syllables+=[replace_syllables(i, deepMemSyllables)]
-            newSentence = ""
-            for i in new_syllables:
-                newSentence+=" "
-                for j in i:
-                    newSentence+=str(j)
-
-            document.getElementById("wordsHere").value = newSentence
-            #pyscript.loop.call_soon(changeLoadMode())
-            return
-
-        randomSentence_proxy=create_proxy(randomSentence)
-        RSButton = document.getElementById("RSButton")
-        RSButton.addEventListener("click", randomSentence_proxy)
-
-
-        def buildGematriaDictionary(wordlist):
-            gematria_dict = {}
-            for word in wordlist:
-                gematria = getGematria(word, localStorage.getItem("cipher"))
-                if gematria in gematria_dict:
-                    gematria_dict[gematria].append(word)
-                else:
-                    gematria_dict[gematria] = [word]
-            return gematria_dict
-
-
-
-        def randomSentence2(mE):
-            gd = buildGematriaDictionary(getDeepMem())
-            trText = transformText(document.getElementById("wordsHere").value, gd)
-            document.getElementById("wordsHere").value=trText
-
-        def transformText(text, gematria_dict):
-            transformed_text = ""
-            words = text.split()
-            for word in words:
-                gematria = getGematria(word, localStorage.getItem("cipher"))
-                if gematria in gematria_dict:
-                    replacement_word = random.choice(gematria_dict[gematria])
-                    transformed_text += replacement_word + " "
-                else:
-                    transformed_text += word + " "
-            return transformed_text
-
-        randomSentence2_proxy=create_proxy(randomSentence2)
-        RSButton2 = document.getElementById("RSButton2")
-        RSButton2.addEventListener("click", randomSentence2_proxy)
-
 
         #set up loadinginfo (to be implemented)
-
         
         htdbDOC = document.getElementById('howToLoadLocalDB').contentWindow.document
 
@@ -1447,7 +1374,9 @@
         #localStorage.removeItem("finalSentenceIdx")
         #localStorage.removeItem("cipher")
         #end DBG
+
         
+        #INIT PAGE
         if not localStorage.getItem("cipher"):
             localStorage.setItem("cipher", "ScaExt")
 
@@ -1467,6 +1396,128 @@
         makeSWListeners()
         upDateSentenceFormulaNoChange()
         updateGemValMsgNotMouse()
+
+        #NRT_INIT
+        #NineRootedTree stuff
+        #setting up the scene form NineRootedTree instance creation
+ 
+        syllableTokenizer = SyllableTokenizer()
+
+        def extractSyllables(wordList):
+            outArray = []
+            for i in wordList:
+                outArray += [syllableTokenizer.tokenize(i)]
+            return outArray
+
+        deepMemWordTree=None
+        deepMemSyllableTree=None
+        sessionMemoryWordTree=None
+        sessionMemorySyllableTree=None
+
+
+        def initTrees():
+            global deepMemWordTree, deepMemSyllableTree, sessionMemoryWordTree, sessionMemorySyllableTree
+
+            console.log("initTrees()")
+
+            dmTreeWordList = getDeepMem()
+            console.log("deepMem words fetched.")
+            dmTreeSyllableList1D = getDeepMemSyllables()
+            console.log("deepMem syllables fetched.")
+
+            smTreeWordList = localStorage.getItem("words").split()
+            smTreeSyllableList2D = extractSyllables(smTreeWordList)
+            smTreeSyllableList1D = []
+
+            for i in smTreeSyllableList2D:
+                for j in i:
+                    smTreeSyllableList1D += [j]
+
+            console.log("smwt init:")
+            sessionMemoryWordTree = nrt.NineRootedTree(smTreeWordList, localStorage.getItem("cipher"))
+            console.log("smwt initialized.")
+
+            console.log("smst init:")
+            sessionMemorySyllableTree = nrt.NineRootedTree(smTreeSyllableList1D, localStorage.getItem("cipher"))
+            console.log("smst initialized.")
+            
+            console.log("dmwt init:")
+            deepMemWordTree = nrt.NineRootedTree(dmTreeWordList, localStorage.getItem("cipher"))
+            console.log("dmwt initialized.")
+
+            console.log("dmst init:")
+            deepMemSyllableTree = nrt.NineRootedTree(dmTreeSyllableList1D, localStorage.getItem("cipher"))
+            console.log("dmst initialized.")
+
+            return
+
+        initTrees()
+
+
+        #Two transform callbacks for the text input field
+        def randomSentence(mE):
+            console.log("randomSentence/syllabletransform")
+
+            sentenceToTransform = document.getElementById("wordsHere").value
+
+            sentenceToTransform=sentenceToTransform.lower()  
+
+            for i in sentenceToTransform: 
+                if not i.isalpha():
+                    if not i.isspace():
+                        sentenceToTransform=sentenceToTransform.replace(i,"")
+
+            inputWordArray = sentenceToTransform.split()
+            inputSyllables2D = extractSyllables(inputWordArray)
+
+            for i in range(len(inputSyllables2D)):
+                for j in range(len(inputSyllables2D[i])):
+                    inputSyllables2D[i][j] = random.choice(deepMemSyllableTree.findWords(getGematria(inputSyllables2D[i][j], localStorage.getItem("cipher"))))
+
+
+            outputSentence = ""
+
+            for i in inputSyllables2D:
+                for j in i:
+                    outputSentence+=j
+                outputSentence+=" "
+
+            outputSentence = outputSentence[0:-1] #remove the last space
+
+            document.getElementById("wordsHere").value = outputSentence
+
+            return
+            
+        randomSentence_proxy=create_proxy(randomSentence)
+        RSButton = document.getElementById("RSButton")
+        RSButton.addEventListener("click", randomSentence_proxy)
+
+        def randomSentence2(mE):
+            console.log("randomSentence/wordtransform")
+
+            sentenceToTransform = document.getElementById("wordsHere").value
+
+            sentenceToTransform=sentenceToTransform.lower()  
+
+            for i in sentenceToTransform: 
+                if not i.isalpha():
+                    if not i.isspace():
+                        sentenceToTransform=sentenceToTransform.replace(i,"")
+
+            inputWordArray = sentenceToTransform.split()
+            outputWordString = ""
+            for i in range(len(inputWordArray)):
+                outputWordString+=random.choice(deepMemWordTree.findWords(getGematria(inputWordArray[i], localStorage.getItem("cipher"))))+" "
+            
+            outputWordString=outputWordString[0:-1]
+            document.getElementById("wordsHere").value=outputWordString
+
+            return
+
+        randomSentence2_proxy=create_proxy(randomSentence2)
+        RSButton2 = document.getElementById("RSButton2")
+        RSButton2.addEventListener("click", randomSentence2_proxy)
+
         </py-script>
 
         <!--py-repl></py-repl-->

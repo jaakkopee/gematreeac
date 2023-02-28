@@ -25,6 +25,18 @@ def getDeepMem():
     
     return outArray
 
+def getDeepMemSyllables():
+    con=sqlite3.connect("./gematriac.db")
+    cur=con.cursor() 
+    cur.execute("select * from deepmem_syls order by syllable")
+    data = cur.fetchall()
+    con.close()
+    outArray = []
+    for i in data:
+        outArray += [i[0]]
+    
+    return outArray
+
 def searchDeepMemByDistance(word, currentCipher, closenessWeight=1.0, maxDistance = 1.0):
     con=sqlite3.connect("./gematriac.db")
     cur=con.cursor() 
