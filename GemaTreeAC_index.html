@@ -1472,8 +1472,9 @@
 
             for i in range(len(inputSyllables2D)):
                 for j in range(len(inputSyllables2D[i])):
-                    inputSyllables2D[i][j] = random.choice(deepMemSyllableTree.findWords(getGematria(inputSyllables2D[i][j], localStorage.getItem("cipher"))))
-
+                    dmSyls = deepMemSyllableTree.findWords(getGematria(inputSyllables2D[i][j], localStorage.getItem("cipher")))
+                    if dmSyls not in [[], [""], None]:
+                        inputSyllables2D[i][j] = random.choice(dmSyls)
 
             outputSentence = ""
 
@@ -1507,8 +1508,12 @@
             inputWordArray = sentenceToTransform.split()
             outputWordString = ""
             for i in range(len(inputWordArray)):
-                outputWordString+=random.choice(deepMemWordTree.findWords(getGematria(inputWordArray[i], localStorage.getItem("cipher"))))+" "
-            
+                dmWords = deepMemWordTree.findWords(getGematria(inputWordArray[i], localStorage.getItem("cipher")))
+                if not dmWords in [[], [""], None]:
+                    outputWordString+=random.choice(dmWords)+" "
+                else:
+                    outputWordString+=inputWordArray[i]+" "
+
             outputWordString=outputWordString[0:-1]
             document.getElementById("wordsHere").value=outputWordString
 
