@@ -189,7 +189,7 @@
 
         <py-script>
         from js import window, document, MouseEvent, localStorage, console
-        from pyodide import create_proxy
+        from pyodide.ffi import create_proxy
         import ndigitsets3 as nds
         from alphabet import getCipher
         from alphabet import cipher as allCiphers
