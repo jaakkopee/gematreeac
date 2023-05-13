@@ -1,5 +1,7 @@
 import gemNumFuncs as gnf
 import getwordsfromdbs as gwdb
+from rich.tree import Tree
+from rich import print
 
 class Word:
   def __init__(self, value):
@@ -71,6 +73,26 @@ class NineRootedTree:
             tree_str += self.print_tree(child, prefix)
         return tree_str
     
+    global globalColorTree
+    globalColorTree = Tree("[red]NineRootedTree")
+
+    def iterRoots(self, colorTree=None):
+        colorTree = globalColorTree if colorTree is None else colorTree
+        for root in self.roots:
+          if root is not None:
+            newColorTree = colorTree.add("[blue]"+str(root.value) + "[magenta]"+str(root.words))
+            self.iterChildren(root, newColorTree)
+           
+        return globalColorTree
+    
+    def iterChildren(self, word, colorTree):
+        for child in word.children.values():
+            newColorTree = colorTree.add("[blue]"+str(child.value) + "[magenta]"+str(child.words))
+            self.iterChildren(child, newColorTree)
+        return globalColorTree
+    
+    def tree_in_color(self):
+        return self.iterRoots()
     
     def generateNestedList(self):
         result = "<ul>"
