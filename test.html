@@ -19,60 +19,96 @@
 
             try {
                 // Test 1: Check if modules loaded
-                testResults.push('✓ Modules loaded successfully');
+                if (typeof window.GemaTreeAC === 'object') {
+                    testResults.push('✓ GemaTreeAC namespace created');
+                } else {
+                    testResults.push('✗ GemaTreeAC namespace not found');
+                    throw new Error('GemaTreeAC namespace not found');
+                }
 
                 // Test 2: Test getCipher function
-                const cipher = window.GemaTreeAC.getCipher('ScaExt');
-                if (cipher && cipher['a'] === 1) {
-                    testResults.push('✓ getCipher function works');
+                if (typeof window.GemaTreeAC.getCipher === 'function') {
+                    const cipher = window.GemaTreeAC.getCipher('ScaExt');
+                    if (cipher && cipher['a'] === 1) {
+                        testResults.push('✓ getCipher function works');
+                    } else {
+                        testResults.push('✗ getCipher function failed - cipher: ' + JSON.stringify(cipher));
+                    }
                 } else {
-                    testResults.push('✗ getCipher function failed');
+                    testResults.push('✗ getCipher function not found');
                 }
 
                 // Test 3: Test getGematria function
-                const gemValue = window.GemaTreeAC.getGematria('hello', 'ScaExt');
-                if (typeof gemValue === 'number') {
-                    testResults.push(`✓ getGematria('hello', 'ScaExt') = ${gemValue}`);
+                if (typeof window.GemaTreeAC.getGematria === 'function') {
+                    const gemValue = window.GemaTreeAC.getGematria('hello', 'ScaExt');
+                    if (typeof gemValue === 'number') {
+                        testResults.push(`✓ getGematria('hello', 'ScaExt') = ${gemValue}`);
+                    } else {
+                        testResults.push('✗ getGematria function failed - result: ' + gemValue);
+                    }
                 } else {
-                    testResults.push('✗ getGematria function failed');
+                    testResults.push('✗ getGematria function not found');
                 }
 
                 // Test 4: Test getRootNumber function
-                const root = window.GemaTreeAC.getRootNumber(123);
-                if (root === 6) { // 1+2+3 = 6
-                    testResults.push('✓ getRootNumber function works');
+                if (typeof window.GemaTreeAC.getRootNumber === 'function') {
+                    const root = window.GemaTreeAC.getRootNumber(123);
+                    if (root === 6) { // 1+2+3 = 6
+                        testResults.push('✓ getRootNumber function works');
+                    } else {
+                        testResults.push('✗ getRootNumber function failed - result: ' + root);
+                    }
                 } else {
-                    testResults.push('✗ getRootNumber function failed');
+                    testResults.push('✗ getRootNumber function not found');
                 }
 
                 // Test 5: Test getParentList function
-                const parents = window.GemaTreeAC.getParentList(123);
-                if (Array.isArray(parents) && parents[0] === 123) {
-                    testResults.push('✓ getParentList function works');
+                if (typeof window.GemaTreeAC.getParentList === 'function') {
+                    const parents = window.GemaTreeAC.getParentList(123);
+                    if (Array.isArray(parents) && parents[0] === 123) {
+                        testResults.push('✓ getParentList function works');
+                    } else {
+                        testResults.push('✗ getParentList function failed - result: ' + JSON.stringify(parents));
+                    }
                 } else {
-                    testResults.push('✗ getParentList function failed');
+                    testResults.push('✗ getParentList function not found');
                 }
 
                 // Test 6: Test deep memory functions
-                const deepMem = window.GemaTreeAC.getDeepMem();
-                if (Array.isArray(deepMem)) {
-                    testResults.push('✓ getDeepMem function works');
+                if (typeof window.GemaTreeAC.getDeepMem === 'function') {
+                    const deepMem = window.GemaTreeAC.getDeepMem();
+                    if (Array.isArray(deepMem)) {
+                        testResults.push(`✓ getDeepMem function works - ${deepMem.length} words`);
+                    } else {
+                        testResults.push('✗ getDeepMem function failed');
+                    }
                 } else {
-                    testResults.push('✗ getDeepMem function failed');
+                    testResults.push('✗ getDeepMem function not found');
                 }
 
                 // Test 7: Test ndigitsets functions
-                window.GemaTreeAC.clearRAM();
-                window.GemaTreeAC.addWord('test', 'ScaExt');
-                const output = window.GemaTreeAC.printAll('ScaExt');
-                if (typeof output === 'string') {
-                    testResults.push('✓ ndigitsets functions work');
+                if (typeof window.GemaTreeAC.clearRAM === 'function' && 
+                    typeof window.GemaTreeAC.addWord === 'function' &&
+                    typeof window.GemaTreeAC.printAll === 'function') {
+                    window.GemaTreeAC.clearRAM();
+                    window.GemaTreeAC.addWord('test', 'ScaExt');
+                    const output = window.GemaTreeAC.printAll('ScaExt');
+                    if (typeof output === 'string') {
+                        testResults.push('✓ ndigitsets functions work');
+                    } else {
+                        testResults.push('✗ ndigitsets functions failed');
+                    }
                 } else {
-                    testResults.push('✗ ndigitsets functions failed');
+                    testResults.push('✗ ndigitsets functions not found');
                 }
+
+                // Test 8: List all available functions
+                const availableFunctions = Object.keys(window.GemaTreeAC).filter(key => typeof window.GemaTreeAC[key] === 'function');
+                testResults.push(`Available functions: ${availableFunctions.join(', ')}`);
 
             } catch (error) {
                 testResults.push('✗ Error during testing: ' + error.message);
+                testResults.push('Stack trace: ' + error.stack);
             }
 
             output.innerHTML = testResults.join('<br>');

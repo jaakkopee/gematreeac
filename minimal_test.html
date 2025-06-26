@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Minimal GemaTreeAC Test</title>
+</head>
+<body>
+    <h1>Minimal GemaTreeAC Test</h1>
+    <p id="test-result">Loading...</p>
+    
+    <!-- Load modules individually and test each -->
+    <script src="js/alphabet.js"></script>
+    <script>
+        document.getElementById('test-result').innerHTML = 'Alphabet module loaded';
+        console.log('Alphabet module:', typeof window.GemaTreeAC);
+        console.log('getCipher function:', typeof window.GemaTreeAC.getCipher);
+        
+        if (typeof window.GemaTreeAC.getCipher === 'function') {
+            const testCipher = window.GemaTreeAC.getCipher('ScaExt');
+            console.log('Test cipher:', testCipher);
+            console.log('Value of "a":', testCipher['a']);
+        }
+    </script>
+    
+    <script src="js/gemNumFuncs.js"></script>
+    <script>
+        console.log('gemNumFuncs module loaded');
+        console.log('getGematria function:', typeof window.GemaTreeAC.getGematria);
+        
+        if (typeof window.GemaTreeAC.getGematria === 'function') {
+            const testValue = window.GemaTreeAC.getGematria('test', 'ScaExt');
+            console.log('getGematria("test", "ScaExt"):', testValue);
+            document.getElementById('test-result').innerHTML = 'Test value: ' + testValue;
+        }
+    </script>
+</body>
+</html>

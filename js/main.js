@@ -536,7 +536,10 @@ function initializePage() {
         localStorage.setItem("cipher", "ScaExt");
     }
 
-    document.getElementById('cipherButton').innerHTML = "Cipher In Use: " + localStorage.getItem("cipher");
+    const cipherButton = document.getElementById('cipherButton');
+    if (cipherButton) {
+        cipherButton.innerHTML = "Cipher In Use: " + localStorage.getItem("cipher");
+    }
 
     if (!localStorage.getItem("words")) {
         localStorage.setItem("words", "0 ");
@@ -576,11 +579,15 @@ function initializePage() {
 
     // Set up dropdown menu
     const ddButton = document.getElementById("cipherButton");
-    ddButton.addEventListener("click", toggleMenu);
+    if (ddButton) {
+        ddButton.addEventListener("click", toggleMenu);
+    }
 
     // Set up DMS parameters
     const dmsParamsButton = document.getElementById("showDMSParams");
-    dmsParamsButton.addEventListener("click", toggleDMSP);
+    if (dmsParamsButton) {
+        dmsParamsButton.addEventListener("click", toggleDMSP);
+    }
 
     // Initialize DMS parameters from localStorage
     const dmsParams = [
@@ -609,14 +616,27 @@ function initializePage() {
     });
 
     // Set up input field event listeners
-    document.getElementById("wordsHere").addEventListener("click", delWordsFromInputBox);
-    document.getElementById("wordsHere").addEventListener("keypress", addWordsWithEnter);
-    document.getElementById("wordsHere").addEventListener("input", updateGemValMsg);
+    const wordsHereInput = document.getElementById("wordsHere");
+    const addWordButton = document.getElementById("addWordToSM");
+    const clearSMButton = document.getElementById("clearSM");
+    const clearSFButton = document.getElementById("clearSF");
+
+    if (wordsHereInput) {
+        wordsHereInput.addEventListener("click", delWordsFromInputBox);
+        wordsHereInput.addEventListener("keypress", addWordsWithEnter);
+        wordsHereInput.addEventListener("input", updateGemValMsg);
+    }
 
     // Set up button event listeners
-    document.getElementById("addWordToSM").addEventListener("click", smAddWordWithEnter);
-    document.getElementById("clearSM").addEventListener("click", clearSessionMemory);
-    document.getElementById("clearSF").addEventListener("click", clearSentenceFormula);
+    if (addWordButton) {
+        addWordButton.addEventListener("click", smAddWordWithEnter);
+    }
+    if (clearSMButton) {
+        clearSMButton.addEventListener("click", clearSessionMemory);
+    }
+    if (clearSFButton) {
+        clearSFButton.addEventListener("click", clearSentenceFormula);
+    }
 
     // Start RGB animation
     setInterval(rgbCallBack01, 333);
