@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GemaTreeAC JavaScript Comprehensive Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { border: 1px solid #ccc; margin: 10px 0; padding: 15px; }
+        .pass { color: green; }
+        .fail { color: red; }
+        .info { color: blue; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>GemaTreeAC JavaScript Comprehensive Test</h1>
+    
+    <div class="test-section">
+        <h2>Module Loading Test</h2>
+        <div id="module-test">Loading modules...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Cipher Functions Test</h2>
+        <div id="cipher-test">Testing cipher functions...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Gematria Calculations Test</h2>
+        <div id="gematria-test">Testing gematria calculations...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Numerological Functions Test</h2>
+        <div id="numerology-test">Testing numerological functions...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Database Functions Test</h2>
+        <div id="database-test">Testing database functions...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Tree Structure Test</h2>
+        <div id="tree-test">Testing tree structure...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Main Application Functions Test</h2>
+        <div id="main-test">Testing main application functions...</div>
+    </div>
+
+    <!-- Load JavaScript modules -->
+    <script src="js/alphabet.js"></script>
+    <script src="js/gemNumFuncs.js"></script>
+    <script src="js/getwordsfromdbs.js"></script>
+    <script src="js/ndigitsets3.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        function addResult(containerId, message, type = 'info') {
+            const container = document.getElementById(containerId);
+            const p = document.createElement('p');
+            p.className = type;
+            p.innerHTML = message;
+            container.appendChild(p);
+        }
+
+        function runTests() {
+            console.log('Starting comprehensive tests...');
+            
+            // Test 1: Module Loading
+            try {
+                if (typeof window.GemaTreeAC === 'object') {
+                    addResult('module-test', '✓ GemaTreeAC namespace created', 'pass');
+                    
+                    const expectedFunctions = [
+                        'getCipher', 'getGematria', 'getRootNumber', 'getParentList', 
+                        'getDeepMem', 'clearRAM', 'addWord', 'printAll'
+                    ];
+                    
+                    let missingFunctions = [];
+                    expectedFunctions.forEach(func => {
+                        if (typeof window.GemaTreeAC[func] !== 'function') {
+                            missingFunctions.push(func);
+                        }
+                    });
+                    
+                    if (missingFunctions.length === 0) {
+                        addResult('module-test', '✓ All expected functions are available', 'pass');
+                    } else {
+                        addResult('module-test', '✗ Missing functions: ' + missingFunctions.join(', '), 'fail');
+                    }
+                } else {
+                    addResult('module-test', '✗ GemaTreeAC namespace not found', 'fail');
+                }
+            } catch (error) {
+                addResult('module-test', '✗ Module loading error: ' + error.message, 'fail');
+            }
+            
+            // Test 2: Cipher Functions
+            try {
+                const ciphers = ['ScaExt', 'Ord', 'FullR', 'Fibonacci'];
+                let cipherTestsPassed = 0;
+                
+                ciphers.forEach(cipherName => {
+                    try {
+                        const cipher = window.GemaTreeAC.getCipher(cipherName);
+                        if (cipher && typeof cipher === 'object' && cipher['a'] !== undefined) {
+                            addResult('cipher-test', `✓ ${cipherName} cipher loaded correctly (a=${cipher['a']})`, 'pass');
+                            cipherTestsPassed++;
+                        } else {
+                            addResult('cipher-test', `✗ ${cipherName} cipher failed to load`, 'fail');
+                        }
+                    } catch (error) {
+                        addResult('cipher-test', `✗ ${cipherName} cipher error: ${error.message}`, 'fail');
+                    }
+                });
+                
+                addResult('cipher-test', `Summary: ${cipherTestsPassed}/${ciphers.length} ciphers working`, 'info');
+            } catch (error) {
+                addResult('cipher-test', '✗ Cipher test error: ' + error.message, 'fail');
+            }
+            
+            // Test 3: Gematria Calculations
+            try {
+                const testWords = ['hello', 'world', 'gematria', 'test'];
+                const testCiphers = ['ScaExt', 'Ord', 'FullR'];
+                
+                testCiphers.forEach(cipher => {
+                    testWords.forEach(word => {
+                        try {
+                            const value = window.GemaTreeAC.getGematria(word, cipher);
+                            if (typeof value === 'number' && value >= 0) {
+                                addResult('gematria-test', `✓ "${word}" in ${cipher}: ${value}`, 'pass');
+                            } else {
+                                addResult('gematria-test', `✗ "${word}" in ${cipher}: invalid result ${value}`, 'fail');
+                            }
+                        } catch (error) {
+                            addResult('gematria-test', `✗ "${word}" in ${cipher}: ${error.message}`, 'fail');
+                        }
+                    });
+                });
+            } catch (error) {
+                addResult('gematria-test', '✗ Gematria test error: ' + error.message, 'fail');
+            }
+            
+            // Test 4: Numerological Functions
+            try {
+                const testNumbers = [123, 456, 999, 1234];
+                
+                testNumbers.forEach(num => {
+                    try {
+                        const root = window.GemaTreeAC.getRootNumber(num);
+                        const parents = window.GemaTreeAC.getParentList(num);
+                        
+                        if (root >= 1 && root <= 9) {
+                            addResult('numerology-test', `✓ getRootNumber(${num}) = ${root}`, 'pass');
+                        } else {
+                            addResult('numerology-test', `✗ getRootNumber(${num}) = ${root} (invalid)`, 'fail');
+                        }
+                        
+                        if (Array.isArray(parents) && parents[0] === num) {
+                            addResult('numerology-test', `✓ getParentList(${num}) = [${parents.join(', ')}]`, 'pass');
+                        } else {
+                            addResult('numerology-test', `✗ getParentList(${num}) invalid`, 'fail');
+                        }
+                    } catch (error) {
+                        addResult('numerology-test', `✗ Numerology test for ${num}: ${error.message}`, 'fail');
+                    }
+                });
+            } catch (error) {
+                addResult('numerology-test', '✗ Numerology test error: ' + error.message, 'fail');
+            }
+            
+            // Test 5: Database Functions
+            try {
+                const deepMem = window.GemaTreeAC.getDeepMem();
+                if (Array.isArray(deepMem)) {
+                    addResult('database-test', `✓ getDeepMem() returned ${deepMem.length} words`, 'pass');
+                    
+                    // Test search function
+                    const searchResults = window.GemaTreeAC.searchDeepMemByNumberArray(100, 'ScaExt');
+                    if (Array.isArray(searchResults)) {
+                        addResult('database-test', `✓ searchDeepMemByNumberArray() returned ${searchResults.length} results`, 'pass');
+                    } else {
+                        addResult('database-test', '✗ searchDeepMemByNumberArray() failed', 'fail');
+                    }
+                } else {
+                    addResult('database-test', '✗ getDeepMem() failed', 'fail');
+                }
+            } catch (error) {
+                addResult('database-test', '✗ Database test error: ' + error.message, 'fail');
+            }
+            
+            // Test 6: Tree Structure
+            try {
+                window.GemaTreeAC.clearRAM();
+                const testWords = ['test', 'hello', 'world'];
+                
+                testWords.forEach(word => {
+                    window.GemaTreeAC.addWord(word, 'ScaExt');
+                });
+                
+                const treeOutput = window.GemaTreeAC.printAll('ScaExt');
+                if (typeof treeOutput === 'string' && treeOutput.length > 0) {
+                    addResult('tree-test', '✓ Tree structure working correctly', 'pass');
+                    addResult('tree-test', `Tree output length: ${treeOutput.length} characters`, 'info');
+                } else {
+                    addResult('tree-test', '✗ Tree structure failed', 'fail');
+                }
+            } catch (error) {
+                addResult('tree-test', '✗ Tree test error: ' + error.message, 'fail');
+            }
+            
+            // Test 7: Main Application Functions
+            try {
+                // Test localStorage initialization
+                if (!localStorage.getItem("cipher")) {
+                    localStorage.setItem("cipher", "ScaExt");
+                }
+                
+                // Test cipher change
+                let testEvent = { currentTarget: { cipherID: "Ord" } };
+                if (typeof changeCipher === 'function') {
+                    changeCipher(testEvent);
+                    if (localStorage.getItem("cipher") === "Ord") {
+                        addResult('main-test', '✓ changeCipher function working', 'pass');
+                    } else {
+                        addResult('main-test', '✗ changeCipher function failed', 'fail');
+                    }
+                } else {
+                    addResult('main-test', '✗ changeCipher function not found', 'fail');
+                }
+                
+                // Test gematria value calculation
+                if (typeof getInputStringGemValue === 'function') {
+                    const testValue = getInputStringGemValue("test");
+                    if (typeof testValue === 'number') {
+                        addResult('main-test', `✓ getInputStringGemValue("test") = ${testValue}`, 'pass');
+                    } else {
+                        addResult('main-test', '✗ getInputStringGemValue failed', 'fail');
+                    }
+                } else {
+                    addResult('main-test', '✗ getInputStringGemValue function not found', 'fail');
+                }
+                
+            } catch (error) {
+                addResult('main-test', '✗ Main application test error: ' + error.message, 'fail');
+            }
+            
+            console.log('All tests completed!');
+        }
+
+        // Run tests when page loads
+        window.addEventListener('load', function() {
+            setTimeout(runTests, 100); // Small delay to ensure all modules are loaded
+        });
+    </script>
+</body>
+</html>

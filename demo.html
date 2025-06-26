@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GemaTreeAC JavaScript Demo</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px;
+            background-color: #0000aa;
+            color: white;
+        }
+        .demo-section { 
+            border: 1px solid #ccc; 
+            margin: 10px 0; 
+            padding: 15px; 
+            background-color: #1b1b3d;
+            border-radius: 5px;
+        }
+        input, button, select { 
+            padding: 8px; 
+            margin: 5px;
+            font-size: 14px;
+        }
+        .result { 
+            background: #333; 
+            padding: 10px; 
+            border-radius: 4px; 
+            margin: 10px 0;
+            min-height: 20px;
+        }
+        .gematria-value {
+            font-size: 24px;
+            color: #00ff00;
+            font-weight: bold;
+        }
+        h1, h2 { color: #00ffaa; }
+    </style>
+</head>
+<body>
+    <h1>🔢 GemaTreeAC JavaScript Demo</h1>
+    <p>This demonstrates the ported JavaScript functionality from the original PyScript version.</p>
+    
+    <div class="demo-section">
+        <h2>Gematria Calculator</h2>
+        <input type="text" id="word-input" placeholder="Enter a word..." value="hello">
+        <select id="cipher-select">
+            <option value="ScaExt">English/Scandinavian Extended</option>
+            <option value="Ord">Ordinal</option>
+            <option value="FullR">Full Reduction</option>
+            <option value="Fibonacci">Fibonacci</option>
+        </select>
+        <button onclick="calculateGematria()">Calculate</button>
+        <div class="result">
+            <div>Gematria Value: <span id="gematria-result" class="gematria-value">-</span></div>
+            <div>Root Number: <span id="root-result">-</span></div>
+            <div>Parent List: <span id="parents-result">-</span></div>
+        </div>
+    </div>
+    
+    <div class="demo-section">
+        <h2>Cipher Comparison</h2>
+        <input type="text" id="compare-input" placeholder="Enter a word..." value="gematria">
+        <button onclick="compareCiphers()">Compare All Ciphers</button>
+        <div class="result" id="cipher-comparison">
+            <p>Click "Compare All Ciphers" to see how the same word calculates in different ciphers.</p>
+        </div>
+    </div>
+    
+    <div class="demo-section">
+        <h2>Deep Memory Search</h2>
+        <input type="number" id="search-number" placeholder="Enter a number..." value="100">
+        <button onclick="searchDeepMemory()">Search</button>
+        <div class="result" id="search-results">
+            <p>Enter a number to find words with that gematria value in the database.</p>
+        </div>
+    </div>
+    
+    <div class="demo-section">
+        <h2>Session Memory (Tree Structure)</h2>
+        <input type="text" id="word-list" placeholder="Enter words separated by spaces..." value="hello world test">
+        <button onclick="updateSessionMemory()">Build Tree</button>
+        <div class="result" id="tree-output">
+            <p>Enter words to see them organized in the nine-rooted tree structure.</p>
+        </div>
+    </div>
+
+    <!-- Load JavaScript modules -->
+    <script src="js/alphabet.js"></script>
+    <script src="js/gemNumFuncs.js"></script>
+    <script src="js/getwordsfromdbs.js"></script>
+    <script src="js/ndigitsets3.js"></script>
+    
+    <script>
+        // Initialize localStorage
+        if (!localStorage.getItem("cipher")) {
+            localStorage.setItem("cipher", "ScaExt");
+        }
+        
+        function calculateGematria() {
+            const word = document.getElementById('word-input').value;
+            const cipher = document.getElementById('cipher-select').value;
+            
+            if (!word) {
+                alert('Please enter a word');
+                return;
+            }
+            
+            try {
+                const gematriaValue = window.GemaTreeAC.getGematria(word, cipher);
+                const rootNumber = window.GemaTreeAC.getRootNumber(gematriaValue);
+                const parentList = window.GemaTreeAC.getParentList(gematriaValue);
+                
+                document.getElementById('gematria-result').textContent = gematriaValue;
+                document.getElementById('root-result').textContent = rootNumber;
+                document.getElementById('parents-result').textContent = JSON.stringify(parentList);
+            } catch (error) {
+                alert('Error calculating gematria: ' + error.message);
+            }
+        }
+        
+        function compareCiphers() {
+            const word = document.getElementById('compare-input').value;
+            
+            if (!word) {
+                alert('Please enter a word');
+                return;
+            }
+            
+            const ciphers = [
+                { name: 'ScaExt', fullName: 'English/Scandinavian Extended' },
+                { name: 'Ord', fullName: 'Ordinal' },
+                { name: 'OrdRev', fullName: 'Reverse Ordinal' },
+                { name: 'FullR', fullName: 'Full Reduction' },
+                { name: 'FullRRev', fullName: 'Reverse Full Reduction' },
+                { name: 'Fibonacci', fullName: 'Fibonacci' }
+            ];
+            
+            let html = `<h3>Gematria values for "${word}":</h3><table style="width: 100%;">`;
+            
+            ciphers.forEach(cipher => {
+                try {
+                    const value = window.GemaTreeAC.getGematria(word, cipher.name);
+                    const root = window.GemaTreeAC.getRootNumber(value);
+                    html += `<tr><td><strong>${cipher.fullName}:</strong></td><td>${value}</td><td>(root: ${root})</td></tr>`;
+                } catch (error) {
+                    html += `<tr><td><strong>${cipher.fullName}:</strong></td><td colspan="2">Error: ${error.message}</td></tr>`;
+                }
+            });
+            
+            html += '</table>';
+            document.getElementById('cipher-comparison').innerHTML = html;
+        }
+        
+        function searchDeepMemory() {
+            const number = parseInt(document.getElementById('search-number').value);
+            
+            if (isNaN(number)) {
+                alert('Please enter a valid number');
+                return;
+            }
+            
+            try {
+                const cipher = 'ScaExt';
+                const results = window.GemaTreeAC.searchDeepMemByNumberArray(number, cipher);
+                
+                let html = `<h3>Words with gematria value ${number} in ${cipher}:</h3>`;
+                
+                if (results.length > 0) {
+                    html += '<ul>';
+                    results.forEach(result => {
+                        html += `<li><strong>${result[0]}</strong> = ${result[1]}</li>`;
+                    });
+                    html += '</ul>';
+                } else {
+                    html += '<p>No words found with this gematria value in the database.</p>';
+                }
+                
+                document.getElementById('search-results').innerHTML = html;
+            } catch (error) {
+                alert('Error searching database: ' + error.message);
+            }
+        }
+        
+        function updateSessionMemory() {
+            const wordList = document.getElementById('word-list').value;
+            
+            if (!wordList) {
+                alert('Please enter some words');
+                return;
+            }
+            
+            try {
+                const words = wordList.split(' ').filter(word => word.trim() !== '');
+                const cipher = 'ScaExt';
+                
+                // Clear and rebuild tree
+                window.GemaTreeAC.clearRAM();
+                words.forEach(word => {
+                    window.GemaTreeAC.addWord(word.toLowerCase(), cipher);
+                });
+                
+                const treeHTML = window.GemaTreeAC.printAll(cipher);
+                
+                let html = `<h3>Nine-Rooted Tree Structure:</h3>`;
+                html += `<p>Words organized by their numerological roots in cipher ${cipher}:</p>`;
+                html += `<div style="background: #000; padding: 10px; border-radius: 4px; font-family: monospace; white-space: pre-wrap;">${treeHTML}</div>`;
+                
+                document.getElementById('tree-output').innerHTML = html;
+            } catch (error) {
+                alert('Error building tree: ' + error.message);
+            }
+        }
+        
+        // Auto-calculate on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                calculateGematria();
+                compareCiphers();
+            }, 100);
+        });
+        
+        // Auto-calculate when input changes
+        document.addEventListener('DOMContentLoaded', function() {
+            const wordInput = document.getElementById('word-input');
+            const cipherSelect = document.getElementById('cipher-select');
+            
+            if (wordInput) {
+                wordInput.addEventListener('input', calculateGematria);
+            }
+            if (cipherSelect) {
+                cipherSelect.addEventListener('change', calculateGematria);
+            }
+        });
+    </script>
+</body>
+</html>
