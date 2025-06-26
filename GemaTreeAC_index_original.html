@@ -1,0 +1,1543 @@
+
+<html>
+    <head>
+        <title>GemaTreeAC 2=0 Gematria Calculator</title> 
+
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+        <meta charset="utf-8">
+        <meta name="description" content="Gematria and Numerology Based Word Classification Algorithm">
+        
+        <style>
+            .opformat{
+                font-size: 45px;
+                white-space: pre;
+                color: red;
+                background-color: aquamarine;
+            }
+            .myBody{
+                font-size: 20px;
+                color: red;
+                background-color: #0000aa;
+                text-align: center;
+                display: block;
+            }
+
+            .sv_style{
+                font-size: 30px;
+                color: black;
+                background-color: blueviolet;
+            }
+            .creditStaili{
+                position: relative;
+                left:40%;
+                color:aqua;
+                background-color: black;
+                width:20%;
+            }
+            .tutStaili{
+                position: relative;
+                left:40%;
+                color:blueviolet;
+                background-color:#3f0e3a;
+                width:20%;
+            }
+            .mFStyle{
+                position: relative;
+                left:40%;
+                color:rgb(60, 22, 95);
+                background-color:#8b7cc3;
+                width:20%;
+            }
+            .money{
+                position:relative;
+                left:40%;
+                color:black;
+                background-color:white;
+                width:20%;
+            }
+            .contactMe{
+                position:relative;
+                left:40%;
+                color:white;
+                background-color:indigo;
+                width:20%;
+            }
+            .moneyLink{
+                color:indigo;
+            }
+            .emailLink{
+                color:white;
+            }
+
+            /* Dropdown Button */
+            .dropbtn {
+                background-color: #084800;
+                color: rgb(255, 79, 223);
+                padding: 16px;
+                font-size: 16px;
+                border: none;
+                transition: background-color 0.5s ease;
+            }
+
+            /* The container <div> - needed to position the dropdown content */
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            /* Dropdown Content (Hidden by Default) */
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #012700;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+
+            /* Links inside the dropdown */
+            .dropdown-content a {
+                color: #73ff00;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                transition: color 0.5s ease;
+            }
+
+            /* Change color of dropdown links on hover */
+            .dropdown-content a:hover {
+                background-color: rgb(101, 217, 221);
+                transition: background-color 1.2s ease;
+                color:#005644
+            }
+
+            /* Change the background color of the dropdown button when hovering */
+            .dropdown:hover .dropbtn {
+                background-color: #21ff03;
+                color:#a80146;        
+            }
+
+            .credits{
+                color:rgb(0, 255, 179);
+                background-color: #1b1b3d;
+                text-align: center;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            .credits h1:hover{
+                color:rgb(61, 8, 8);
+                background-color: rgb(196, 196, 228);
+                transition: background-color 2.0s ease;
+                transition: color 2.0s ease;
+            }
+
+            h1{
+                font-size: 16px;
+            }
+
+            .howtoDBButton{
+                border-width: 10px;
+                border: green;
+                background-color: black;
+                color: yellowgreen;
+            }
+            .howToDB_iframe{
+                display: none;
+                position: absolute;
+                left:200px;
+            }
+
+            .gemValMsg_div{
+                height:60px;
+                font-size:38px;
+                position: relative;
+                left: 40%;
+                width: 20%;
+                transition: color 0.376s ease;
+            }
+
+            .dmsSettingsStyle{
+                display: none;
+                position: relative;
+                left: 20%;
+                width: 60%;
+                color: #487226;
+                background-color: #151535;
+            }
+
+            .dmsNumber{
+                color:#1eff00;
+                background-color: black;
+            }
+
+
+
+        </style>
+        <py-config>
+            packages = ["numpy", "matplotlib", "nltk"]
+            [[fetch]]
+            files = ["./NineRootedTreeWords.py", "./gematriac.db", "./ndigitsets3.py", "./gemNumFuncs.py", "./alphabet.py", "./getwordsfromdbs.py"]
+        </py-config>
+    </head>   
+
+    <body class="myBody" id="mainBody">
+        
+        <div class="credits"><h1>GemaTreeAC 2=0 Gematria Calculator, Numerological Classification Algorithm and Database. Copyleft 2022, Jake Pii Taivossuora, Do What Thou Wilt.</h1></div>
+
+        <img src="./GemaTreeAC_logo02.jpeg" width="1100" height="200"><br />
+
+        <py-script>
+        from js import window, document, MouseEvent, localStorage, console
+        from pyodide.ffi import create_proxy
+        import ndigitsets3 as nds
+        from alphabet import getCipher
+        from alphabet import cipher as allCiphers
+        from gemNumFuncs import getGematria, getParentList, DistanceTeddyBear
+        from getwordsfromdbs import searchDeepMemByNumberArray, getDeepMem, getDeepMemSyllables
+        from random import randint
+        import NineRootedTreeWords as nrt
+        import nltk
+        from nltk.tokenize import SyllableTokenizer
+        import warnings
+        import random
+        import asyncio
+
+        warnings.filterwarnings("ignore")
+
+        loadInfo = False
+
+        def changeLoadMode():
+            console.log("changeLoadMode")
+            global loadInfo
+            if not loadInfo:
+                loadInfo=True
+                document.getElementById("messageout").innerHTML="Loading... please wait."
+                return 
+            loadInfo = False
+            document.getElementById("messageout").innerHTML = getGematria(document.getElementById("wordsHere").value, localStorage.getItem("cipher"))
+            return
+
+        #document.getElementById("mainBody").style.display="block" #show the page only after pyscript has loaded everyting
+
+        def changeCipher(mE):
+            localStorage.setItem("cipher", mE.currentTarget.cipherID)
+            document.getElementById('cipherButton').innerHTML="Cipher In Use: "+localStorage.getItem("cipher")
+            #console.log(localStorage.getItem("cipher"))
+
+            initTrees() #experimental
+
+            clearWizard()
+            clearSentenceFormulaNoMouse()
+            smNoAddWordNoMouseNoChange()
+            updateGemValMsgNotMouse()     
+            return
+       
+        </py-script>
+
+        <div class="dropdown">
+            <button class="dropbtn" id="cipherButton">Cipher in use</button>
+            <div class="dropdown-content" id="ddc">
+                <a href="#cipherButton" id="ccscaext">English/Scandinavian Extended</a>
+                <a href="#cipherButton" id="ccengextrev">Reverse English Extended</a>
+                <a href="#cipherButton" id="ccord">Ordinal</a>
+                <a href="#cipherButton" id="ccordrev">Reverse Ordinal</a>
+                <a href="#cipherButton" id="ccfr">Full Reduction</a>
+                <a href="#cipherButton" id="ccfrrev">Reverse Full Reduction</a>
+                <a href="#cipherButton" id="ccsr">Single Reduction</a>
+                <a href="#cipherButton" id="ccsrrev">Reverse Single Reduction</a>
+                <a href="#cipherButton" id="ccfibo">Fibonacci</a>
+                <a href="#cipherButton" id="ccfiborev">Reverse Fibonacci</a>
+                <!--a href="#cipherButton" id="ccsat">Satanic 36</a>
+                <a href="#cipherButton" id="ccsatrev">Reverse Satanic 36</a>
+                <a href="#cipherButton" id="ccinv">Inverse</a>
+                <a href="#cipherButton" id="ccinvrev">Reverse Inverse</a>
+                <a href="#cipherButton" id="cctri">Tridenary</a>
+                <a href="#cipherButton" id="cctrirev">Reverse Tridenary</a>
+                <a href="#cipherButton" id="cctriad">Tridenary AscDesc</a>
+                <a href="#cipherButton" id="cctriadrev">Reverse Tridenary AscDesc</a>
+                <a href="#cipherButton" id="cc6">Six</a>
+                <a href="#cipherButton" id="cc6rev">Reverse Six</a>
+                <a href="#cipherButton" id="cc11">Eleven</a>
+                <a href="#cipherButton" id="cc11rev">Reverse Eleven</a>
+                <a href="#cipherButton" id="cc18">Eighteen</a>
+                <a href="#cipherButton" id="cc18rev">Reverse Eighteen</a>
+                <a href="#cipherButton" id="cc22">Twenty Two</a>
+                <a href="#cipherButton" id="cc22rev">Reverse Twenty Two</a>
+                <a href="#cipherButton" id="cc26">Twenty Six</a>
+                <a href="#cipherButton" id="cc26rev">Reverse Twenty Six</a>
+                <a href="#cipherButton" id="cc27">Twenty Seven</a>
+                <a href="#cipherButton" id="cc27rev">Reverse Twenty Seven</a>
+                <a href="#cipherButton" id="cc28">Twenty Eight</a>
+                <a href="#cipherButton" id="cc28rev">Reverse Twenty Eight</a>
+                <a href="#cipherButton" id="cc33">Thirty Three</a>
+                <a href="#cipherButton" id="cc33rev">Reverse Thirty Three</a>
+                <a href="#cipherButton" id="cc37">Thirty Seven</a>
+                <a href="#cipherButton" id="cc37rev">Reverse Thirty Seven</a-->
+            </div>
+          </div><br />
+        <py-script>
+
+        menuActive=False
+        def toggleMenu(mE):
+            global menuActive
+            if not menuActive:
+                document.getElementById("ddc").style.display="block"
+                menuActive=True
+            else:
+                document.getElementById("ddc").style.display="none"
+                menuActive=False
+            return
+
+        ddButton=document.getElementById("cipherButton")
+        ddButton.addEventListener("click", create_proxy(toggleMenu))
+    
+        cipherProxy = create_proxy(changeCipher)
+
+        ccButton=document.getElementById("ccscaext")
+        ccButton.cipherID="ScaExt"
+        ccButton.addEventListener("click", cipherProxy)
+
+        ccButton=document.getElementById("ccengextrev")
+        ccButton.cipherID="EngExtRev"
+        ccButton.addEventListener("click", cipherProxy)
+
+        ccButton=document.getElementById("ccord")
+        ccButton.cipherID="Ord"
+        ccButton.addEventListener("click", cipherProxy)
+
+        ccButton=document.getElementById("ccordrev")
+        ccButton.cipherID="OrdRev"
+        ccButton.addEventListener("click", cipherProxy)
+
+        ccButton=document.getElementById("ccfr")
+        ccButton.cipherID="FullR"
+        ccButton.addEventListener("click", cipherProxy)
+
+        ccButton=document.getElementById("ccfrrev")
+        ccButton.cipherID="FullRRev"
+        ccButton.addEventListener("click", cipherProxy)
+
+        ccButton=document.getElementById("ccsr")
+        ccButton.cipherID="SingRed"
+        ccButton.addEventListener("click", cipherProxy)
+
+        ccButton=document.getElementById("ccsrrev")
+        ccButton.cipherID="SingRedRev"
+        ccButton.addEventListener("click", cipherProxy)
+
+        ccButton=document.getElementById("ccfibo")
+        ccButton.cipherID="Fibonacci"
+        ccButton.addEventListener("click", cipherProxy)
+
+        ccButton=document.getElementById("ccfiborev")
+        ccButton.cipherID="FibonacciRev"
+        ccButton.addEventListener("click", cipherProxy)
+
+
+        #Implement these too---v
+
+        #ccButton=document.getElementById("ccsat")
+        #ccButton.cipherID="Sat36"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("ccsatrev")
+        #ccButton.cipherID="Sat36Rev"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("ccinv")
+        #ccButton.cipherID="Inv"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("ccinvrev")
+        #ccButton.cipherID="InvRev"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cctri")
+        #ccButton.cipherID="Trid"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cctrirev")
+        #ccButton.cipherID="TridRev"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cctriad")
+        #ccButton.cipherID="TridAD"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cctriadrev")
+        #ccButton.cipherID="TridADRev"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc6")
+        #ccButton.cipherID="6"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc6rev")
+        #ccButton.cipherID="6Rev"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc11")
+        #ccButton.cipherID="11"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc11rev")
+        #ccButton.cipherID="11Rev"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc18")
+        #ccButton.cipherID="18"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc18rev")
+        #ccButton.cipherID="18Rev"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc22")
+        #ccButton.cipherID="22"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc22rev")
+        #ccButton.cipherID="22Rev"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc26")
+        #ccButton.cipherID="26"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc26rev")
+        #ccButton.cipherID="26Rev"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc27")
+        #ccButton.cipherID="27"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc27rev")
+        #ccButton.cipherID="27Rev"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc28")
+        #ccButton.cipherID="28"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc28rev")
+        #ccButton.cipherID="28Rev"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc33")
+        #ccButton.cipherID="33"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc33rev")
+        #ccButton.cipherID="33Rev"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc37")
+        #ccButton.cipherID="37"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        #ccButton=document.getElementById("cc37rev")
+        #ccButton.cipherID="37Rev"
+        #ccButton.addEventListener("click", cipherProxy)
+
+        </py-script>
+        <input id="wordsHere" value="text here"></input>
+        <button type="button" id ="addWordToSM">Add Word(s) To Session Memory</button>
+        <button type="button" id="clearSM">Clear SM</button>
+        <button type="button" id="clearSF">Clear Sentence Formula</button><br />
+        <button type="button" id="uploadDB">Upload Local DB</button>
+        <button class="howtoDBButton" id="howtoDB">About DB Format</button>
+        <button type="button" id="showDMSParams">Show DMS Parameters</button>
+        <button type="button" id="RSButton">Random Syllables</button>
+        <button type="button" id="RSButton2">Random Words</button>
+        <br>
+
+        <iframe class="howToDB_iframe" id="howToLoadLocalDB" src="db_howto.html" width="360" height="240"></iframe>
+
+        <!--py-repl></py-repl-->
+
+        <div class="gemValMsg_div" id="messageout"></div>
+
+
+        <div class="dmsSettingsStyle" id ="dmsSettings">
+            <h1>Distance Measure Search Parameters:</h1>
+            <form id="distanceTeddyBearParameters">
+                <label for="pointBias">Point bias (pointBias):</label>
+                <input type="number" class="dmsNumber" id="pointBias" name="pointBias" min="0.001" max="1.0" step="0.001" value="0.001"><br>
+                <label for="distanceBias">Distance bias (distanceBias):</label>
+                <input type="number" class="dmsNumber" id="distanceBias" name="distanceBias" min="0.0" max="1.0" step="0.001" value="0.001"><br>
+                <label for="commonNds">Points for common n-digit set (commonNds):</label>
+                <input type="number" class="dmsNumber" id="commonNds" name="commonNds" min="0.0" max="64.0" step="0.001" value="0.001"><br>
+                <label for="commonRoot">Points for common root (commonRoot):</label>
+                <input type="number" class="dmsNumber" id="commonRoot" name="commonRoot" min="0.0" max="64.0" step="0.001" value="0.3"><br>
+                <label for="commonRoute">Points for common route (commonRoute):</label>
+                <input type="number" class="dmsNumber" id="commonRoute" name="commonRoute" min="0.0" max="64.0" step="0.001" value="0.001"><br>
+                <label for="commonNumber">Points for common number (commonNumber):</label>
+                <input type="number" class="dmsNumber" id="commonNumber" name="commonNumber" min="0.0" max="64.0" step="0.001" value="0.001"><br>
+                <label for="sameWord">Points for same word (sameWord):</label>
+                <input type="number" class="dmsNumber" id="sameWord" name="sameWord" min="0.0" max="64.0" step="0.001" value="0.001"><br>
+                <label for="closenessWeight">Weight on total points (closenessWeight):</label>
+                <input type="number" class="dmsNumber" id="closenessWeight" name="closenessWeight" min="0.0" max="1.0" step="0.00001" value="0.3"><br>
+                <label for="numberDistanceWeight">Weight on distance of gematria values (numberDistanceWeight):</label>
+                <input type="number" class="dmsNumber" id="numberDistanceWeight" name="numberDistanceWeight" min="0.0" max="1.0" step="0.00001" value="0.3"><br>
+                <label for="rootDistanceWeight">Weight on distance of roots (rootDistanceWeight):</label>
+                <input type="number" class="dmsNumber" id="rootDistanceWeight" name="rootDistanceWeight" min="0.0" max="1.0" step="0.00001" value="0.3"><br>
+                <label for="ndsDistanceWeight">Weight on distance of n-digit sets (ndsDistanceWeight):</label>
+                <input type="number" class="dmsNumber" id="ndsDistanceWeight" name="ndsDistanceWeight" min="0.0" max="1.0" step="0.00001" value="0.3"><br>
+                <label for="maxDistance">Search threshold (maxDistance):</label>
+                <input type="number" class="dmsNumber" id="maxDistance" name="maxDistance" min="0.0" max="1000000.0" step="0.1" value="10.0"><br>
+            </form>
+        </div>
+        <py-script> 
+        from js import setInterval
+
+        dmsParamsButton = document.getElementById("showDMSParams")
+
+        def toggleDMSP(event):
+            dmspDiv = document.getElementById("dmsSettings")
+            if not dmspDiv.style.display == "block":
+                dmspDiv.style.display = "block"
+                return
+            else:
+                dmspDiv.style.display = "none"
+            return
+
+        dmsParamsButton.addEventListener("click", create_proxy(toggleDMSP))
+
+        if not localStorage.getItem("teddy_pointBias"):
+            localStorage.setItem("teddy_pointBias", 0.001)
+        document.getElementById("pointBias").value=localStorage.getItem("teddy_pointBias")
+
+        if not localStorage.getItem("teddy_distanceBias"):
+            localStorage.setItem("teddy_distanceBias", 1.0)
+        document.getElementById("distanceBias").value=localStorage.getItem("teddy_distanceBias")
+         
+        if not localStorage.getItem("teddy_commonNds"):
+            localStorage.setItem("teddy_commonNds", 0.0)
+        document.getElementById("commonNds").value=localStorage.getItem("teddy_commonNds")
+
+        if not localStorage.getItem("teddy_commonRoot"):
+            localStorage.setItem("teddy_commonRoot", 1.0)
+        document.getElementById("commonRoot").value=localStorage.getItem("teddy_commonRoot")
+         
+        if not localStorage.getItem("teddy_commonRoute"):
+            localStorage.setItem("teddy_commonRoute", 1.0)
+        document.getElementById("commonRoute").value=localStorage.getItem("teddy_commonRoute")
+
+        if not localStorage.getItem("teddy_commonNumber"):
+            localStorage.setItem("teddy_commonNumber", 0.0)
+        document.getElementById("commonNumber").value=localStorage.getItem("teddy_commonNumber")
+ 
+        if not localStorage.getItem("teddy_sameWord"):
+            localStorage.setItem("teddy_sameWord", 0.0)
+        document.getElementById("sameWord").value=localStorage.getItem("teddy_sameWord")
+  
+        if not localStorage.getItem("teddy_closenessWeight"):
+            localStorage.setItem("teddy_closenessWeight", 1.0)
+        document.getElementById("closenessWeight").value=localStorage.getItem("teddy_closenessWeight")
+ 
+        if not localStorage.getItem("teddy_numberDistanceWeight"):
+            localStorage.setItem("teddy_numberDistanceWeight", 0.0001)
+        document.getElementById("numberDistanceWeight").value=localStorage.getItem("teddy_numberDistanceWeight")
+
+        if not localStorage.getItem("teddy_rootDistanceWeight"):
+            localStorage.setItem("teddy_rootDistanceWeight", 0.0)
+        document.getElementById("rootDistanceWeight").value=localStorage.getItem("teddy_rootDistanceWeight")
+
+        if not localStorage.getItem("teddy_ndsDistanceWeight"):
+            localStorage.setItem("teddy_ndsDistanceWeight", 0.0)
+        document.getElementById("ndsDistanceWeight").value=localStorage.getItem("teddy_ndsDistanceWeight")
+
+        if not localStorage.getItem("teddy_maxDistance"):
+            localStorage.setItem("teddy_maxDistance", 10.0)
+        document.getElementById("maxDistance").value=localStorage.getItem("teddy_maxDistance")         
+
+        def changeDMSParameter(evt):
+            inputId = evt.currentTarget.inputId
+            localStorage.setItem("teddy_"+inputId, document.getElementById(inputId).valueAsNumber)
+            console.log(inputId+" "+str(document.getElementById(inputId).valueAsNumber))
+            return
+
+        changeDMSParameter_proxy = create_proxy(changeDMSParameter)
+
+        slider = document.getElementById("pointBias")
+        slider.addEventListener("change", changeDMSParameter_proxy)
+        slider.inputId = "pointBias"
+
+        slider = document.getElementById("distanceBias")
+        slider.addEventListener("change", changeDMSParameter_proxy)
+        slider.inputId = "distanceBias"
+
+        slider = document.getElementById("commonNds")
+        slider.addEventListener("change", changeDMSParameter_proxy)
+        slider.inputId = "commonNds"
+
+        slider = document.getElementById("commonRoot")
+        slider.addEventListener("change", changeDMSParameter_proxy)
+        slider.inputId = "commonRoot"
+
+        slider = document.getElementById("commonRoute")
+        slider.addEventListener("change", changeDMSParameter_proxy)
+        slider.inputId = "commonRoute"
+
+        slider = document.getElementById("commonNumber")
+        slider.addEventListener("change", changeDMSParameter_proxy)
+        slider.inputId = "commonNumber"
+
+        slider = document.getElementById("sameWord")
+        slider.addEventListener("change", changeDMSParameter_proxy)
+        slider.inputId = "sameWord"
+
+        slider = document.getElementById("closenessWeight")
+        slider.addEventListener("change", changeDMSParameter_proxy)
+        slider.inputId = "closenessWeight"
+
+        slider = document.getElementById("numberDistanceWeight")
+        slider.addEventListener("change", changeDMSParameter_proxy)
+        slider.inputId = "numberDistanceWeight"
+
+        slider = document.getElementById("rootDistanceWeight")
+        slider.addEventListener("change", changeDMSParameter_proxy)
+        slider.inputId = "rootDistanceWeight"
+
+        slider = document.getElementById("ndsDistanceWeight")
+        slider.addEventListener("change", changeDMSParameter_proxy)
+        slider.inputId = "ndsDistanceWeight"
+
+        slider = document.getElementById("maxDistance")
+        slider.addEventListener("change", changeDMSParameter_proxy)
+        slider.inputId = "maxDistance"
+
+        def rgbCallBack01():
+            red=randint(0,255)
+            green=randint(0,255)
+            blue=randint(0,255)
+            document.getElementById("messageout").style.color = f"rgb({red}, {green}, {blue})"
+            return
+
+        setInterval(create_proxy(rgbCallBack01), 333)
+
+        #set up loadinginfo (to be implemented)
+        
+        htdbDOC = document.getElementById('howToLoadLocalDB').contentWindow.document
+
+        htdb_isOpen=False
+        def openHowToDB(evt):
+            global htdb_isOpen
+            if not htdb_isOpen:
+                document.getElementById("howToLoadLocalDB").style.display="block"
+                htdb_isOpen=True
+            else:
+                document.getElementById("howToLoadLocalDB").style.display="none"
+                htdb_isOpen=False
+            return
+    
+        document.getElementById("howtoDB").addEventListener("click", create_proxy(openHowToDB))
+        
+        async def openDBFile(evt):
+            
+            data=""
+
+            file=None
+            fileHandle=None
+
+            try:
+                fileHandle = await window.showOpenFilePicker()
+            except Exception as e:
+                #console.log(str(e))
+                #console.log("Shit Happened, No Local DB now...")
+                return
+
+            try:
+                file = await fileHandle[0].getFile()
+            except Exception as e:
+                #console.log(str(e)+"\n Shit Happened... dunno what but no Local DB.")
+                return
+
+            try:
+                data = await file.text()
+            except Exception as e:
+                #console.log(str(e)+"\n Shit happened. No Local DB.")
+                return
+
+            data = data.split()
+
+            #console.log("Local DB data array split: ")
+            #console.log(str(data))
+
+            dataLoweredAndSpecialCharsRemoved=[]
+            for word in data:
+                word=word.lower()  
+
+                for i in word: 
+                    if not i.isalpha():
+                        word=word.replace(i,"")
+
+                dataLoweredAndSpecialCharsRemoved+=[word]
+
+            data = list(dict.fromkeys(dataLoweredAndSpecialCharsRemoved))
+
+            #console.log("Local DB data, duplicate words, numbers and special characters removed and text lower-cased: ")
+            #console.log(str(data))
+
+            dataStr=""
+            for i in data:
+                dataStr+=i+" "
+
+            #console.log("Local DB, final string representation: ")
+            #console.log(dataStr)
+
+            localStorage.setItem("wizardsHelper", dataStr)            
+            htdbDOC.getElementById("dataDiv").innerHTML=localStorage.getItem("wizardsHelper")
+
+            return
+
+
+        htdbDOC.getElementById("dataDiv").innerHTML=localStorage.getItem("wizardsHelper")
+        
+        document.getElementById("uploadDB").addEventListener('click', create_proxy(openDBFile), False)
+
+        def delWordsFromInputBox(mE):
+            document.getElementById("wordsHere").value=""
+            updateGemValMsgNotMouse()
+            return
+
+        def addWordsWithEnter(kP):
+            if kP.key=="Enter":
+                smAddWordWithEnter()
+            return
+
+        document.getElementById("wordsHere").addEventListener("click", create_proxy(delWordsFromInputBox))
+        document.getElementById("wordsHere").addEventListener("keypress", create_proxy(addWordsWithEnter))
+
+        smviewDOC=document.getElementById('smview').contentWindow.document
+
+        def initFS():
+            sentenceFormula=localStorage.getItem("sentenceFormula").split()
+            newFsIdxStr=""
+            for i in sentenceFormula:
+                newFsIdxStr+="0 "
+
+            localStorage.setItem("finalSentenceIdx", newFsIdxStr)
+            return
+
+        def getWordValuePairsOuter():
+            data=localStorage.getItem("words").split()
+            outdata=[]
+            for i in data:
+                word = i
+                number = getGematria(i, localStorage.getItem("cipher")) 
+                outdata+= [(word, number)]
+            return outdata
+        
+
+        def printWizardsComments(mE):
+            pressedNumber=int(mE.currentTarget.datum)
+            pl = getParentList(pressedNumber)
+            wvpairsFromDeepMemFormattedPL=""
+
+            for i in pl:
+            
+                wvpairsFromDeepMem = searchDeepMemByNumberArray(i, localStorage.getItem("cipher"))
+                wvpairsFromDeepMemFormatted=""
+
+                for j in wvpairsFromDeepMem:
+
+                    hyperWord = nds.makeWCHyperWord(j[0]) #in an external python function because inline doesn not work
+                    #console.log(hyperWord)
+                    wvpairsFromDeepMemFormatted+=hyperWord+" "+str(j[1])+"\n"
+
+                wvpairsFromDeepMemFormattedPL+=wvpairsFromDeepMemFormatted
+
+            ldb_outputStr=""
+            ldb_printed=[] 
+            currentCipher=localStorage.getItem("cipher")
+
+            if localStorage.getItem("wizardsHelper"):
+                wizardsHelperData=localStorage.getItem("wizardsHelper").split()
+
+                for i in wizardsHelperData:
+                    if getGematria(i, currentCipher)==pressedNumber:
+                        if not i in ldb_printed:
+                            ldb_outputStr+=nds.makeLocDBHyperWord(i)+str(getGematria(i, currentCipher))
+                            ldb_printed+=[i]
+
+            smviewDOC.getElementById("WizardsComments").innerHTML="Wizard Meditation on Route "+str(pl)+"\n(Wizard\'s DeepMem-database from\nkotus-sanalista_v1,\nWordNet 3.1,\nGothenburg uni. Saldo 2.3\nand Väestötietojärjestelmän Etunimitilasto)\n\n"+wvpairsFromDeepMemFormattedPL
+            smviewDOC.getElementById("WizardsHelper").innerHTML="Local DB:\n"+ldb_outputStr
+            smviewDOC.location = "./sessionmemory.html#WChdr"
+
+            for i in pl:
+            
+                wvpairsFromDeepMem = searchDeepMemByNumberArray(i, currentCipher)
+                for j in wvpairsFromDeepMem:
+                    makeWCListener(j[0])
+
+            if ldb_printed:
+                for i in ldb_printed:
+                    makeLocDBListener(i)
+
+            return
+
+        proxyFunc=create_proxy(printWizardsComments)
+
+        def moveWordFromDMtoSW(mE):
+            #console.log(mE)
+            pressedWord=mE.currentTarget.sana
+            #console.log("moveWordFromDMtoSW: "+pressedWord)
+
+            nds.clearRAM()
+            words = localStorage.getItem("words")
+            new_words=words+" "+pressedWord+" "
+
+            oldWordArray=words.split()
+            if not pressedWord in oldWordArray:
+                localStorage.setItem("words", new_words)  
+            
+            outputWords()     
+            makeSWListeners()
+            upDateSentenceFormulaNoChange()
+            #console.log("updated udsfnc in mwfdw2sw")
+            smviewDOC.location = "./sessionmemory.html#number"+str(getGematria(pressedWord, localStorage.getItem("cipher")))
+            return
+
+        wcProxyFunc=create_proxy(moveWordFromDMtoSW)
+
+        hwMenuControl={}
+        def hwMenuReveal(mE):
+            global hwMenuControl
+            #console.log(str(hwMenuControl))            
+            datum=mE.currentTarget.datum
+            #console.log("hwMenuReveal:"+str(datum))
+            element=smviewDOC.getElementById("hwmc_"+datum)
+            
+            if not hwMenuControl["hwmenu_"+datum]:
+                element.style.display="block"
+                hwMenuControl["hwmenu_"+datum]=True
+            else:
+                element.style.display="none"
+                hwMenuControl["hwmenu_"+datum]=False
+            return
+
+        def hwNumberMenuReveal(mE):
+            global hwMenuControl 
+            #console.log(str(hwMenuControl))           
+            datum=mE.currentTarget.datum
+            #console.log("hwNumberMenuReveal:"+str(datum))
+            element=smviewDOC.getElementById("hwmc_"+datum)
+            
+            if not hwMenuControl["hwmenu_"+datum]:
+                element.style.display="block"
+                hwMenuControl["hwmenu_"+datum]=True
+            else:
+                element.style.display="none"
+                hwMenuControl["hwmenu_"+datum]=False
+            return
+
+    
+        def hwSearchWM(mE):
+            #console.log("hwSearchWM:"+str(mE.currentTarget.datum))
+            printWizardsComments(mE)
+            return
+
+        hwSearchProxy = create_proxy(hwSearchWM)
+
+        def hwAddToSF(mE):            
+            #console.log("hwAddToSF:"+str(mE.currentTarget.datum))
+            upDateSentenceFormula(mE)
+            return
+
+        hwAddToSFProxy = create_proxy(hwAddToSF)
+        
+        def clearWizard():
+            smviewDOC.getElementById("WizardsComments").innerHTML=""
+            smviewDOC.getElementById("WizardsHelper").innerHTML=""
+            smviewDOC.getElementById("dmSearchOutput").innerHTML=""
+
+            if not smviewDOC.getElementById("dmSearchPlot").src == "":
+                dmsDOC=smviewDOC.getElementById("dmSearchPlot").contentWindow.document
+                #console.log("found dmsDOC")
+                dmsDOC.getElementById("dmsLegendDiv").innerHTML=""
+                #console.log("found dmsLegend")
+                dmsDOC.getElementById("dmsDiv").innerHTML=""
+                #console.log("found dmsDiv")
+            
+            return
+
+        def deleteFromSM(mE):
+            #console.log("deleteFromSM:"+str(mE.currentTarget.datum))
+            oldWords=localStorage.getItem("words").split()
+            word = mE.currentTarget.datum
+            newWordStr=""
+            
+            if word in oldWords:
+                oldWords.remove(word)
+            
+            for i in oldWords:
+                newWordStr+=i+" "
+
+            localStorage.setItem("words", newWordStr)
+
+            delWordGematria=str(getGematria(word, localStorage.getItem("cipher")))
+
+            fsIdxStr=localStorage.getItem("finalSentenceIdx")
+            fsIdxStrArray = fsIdxStr.split()
+            newFsIdxStr=""
+
+            sfArray = localStorage.getItem("sentenceFormula").split()
+            newSFStr=""
+
+            newWordArray=newWordStr.split()
+            currentCipher = localStorage.getItem("cipher")
+            twoDWordArray = nds.make2DWordArray(newWordArray, currentCipher)
+            gemValueArray=[]
+            for i in twoDWordArray:
+                gemValueArray+=[getGematria(i[0], currentCipher)]
+            
+            gemValueArray = list(dict.fromkeys(gemValueArray)) #remove duplicates
+
+            for i in range(len(sfArray)):
+                for j in gemValueArray:
+                    if str(j) == sfArray[i]:                
+                        newSFStr+=sfArray[i]+" "
+                        newFsIdxStr+="0 "
+
+            localStorage.setItem("sentenceFormula", newSFStr)
+            localStorage.setItem("finalSentenceIdx", newFsIdxStr)
+
+            sfOutput = smviewDOC.getElementById("sentenceFormulaLair")
+
+            outputWords()
+            makeSWListeners()
+            sfOutput.innerHTML=nds.makeHyperFormula(newSFStr, newWordStr, currentCipher)
+            makeFinalSentenceListeners()
+            printFinalSentence() 
+            return
+
+        deleteFromSMProxy = create_proxy(deleteFromSM)   
+        hwMenuProxy=create_proxy(hwMenuReveal)
+        hwNumberMenuProxy=create_proxy(hwNumberMenuReveal)
+
+        def makeSWListeners():
+            #console.log("makeSWListeners()")
+            wvpairs=getWordValuePairsOuter()
+            global hwMenuControl, hwMenuProxy, hwNumberMenuProxy
+            hwMenuControl={}
+
+
+            for i in wvpairs:
+                currentNumber=i[1]
+                if currentNumber!=0:
+
+                    hwNumberButton = smviewDOC.getElementById("hwb_"+str(currentNumber))
+                    hwMenuControl["hwmenu_"+str(currentNumber)]=False
+
+                    hwNumberButton.datum=str(currentNumber)
+                    hwNumberButton.addEventListener("click", hwNumberMenuProxy)
+
+                    hwnbMenuElement1 = smviewDOC.getElementById("hwWCSearch_"+str(currentNumber))
+                    
+                    hwnbMenuElement1.datum=str(currentNumber)
+                    hwnbMenuElement1.addEventListener("click", hwSearchProxy)
+                    
+                    hwnbMenuElement2 = smviewDOC.getElementById("hwSF_"+str(currentNumber))
+
+                    hwnbMenuElement2.datum=currentNumber
+                    hwnbMenuElement2.addEventListener("click", hwAddToSFProxy)
+                    
+        
+                    #word buttons
+                    for word in localStorage.getItem("words").split():
+                        # check if words are on the same route to root
+                        if getParentList(getGematria(word, localStorage.getItem("cipher")))[1:]\
+                        ==getParentList(int(currentNumber))[1:]:
+                            
+                            hwWordButton1 = smviewDOC.getElementById("hwb_"+word)
+                            hwMenuControl["hwmenu_"+str(word)]=False
+
+                            hwWordButton1.addEventListener("click", hwNumberMenuProxy)
+                            hwWordButton1.datum=word
+                                                    
+                            hwwbMenuElement1 = smviewDOC.getElementById("hwDel_"+word)
+
+                            hwwbMenuElement1.datum = word
+
+                            hwwbMenuElement1.addEventListener("click", deleteFromSMProxy)
+
+                            hwwbMenuElement2 = smviewDOC.getElementById("hwDiMe_"+word)
+                            hwwbMenuElement2.datum = word
+                            hwwbMenuElement2.addEventListener("click", dmprx)
+
+            #console.log(str(hwMenuControl))
+            return  
+            
+        def distanceMeasureSearch(mE):
+            teddy = DistanceTeddyBear(getDeepMem())
+            
+            if localStorage.getItem("teddy_pointBias"):
+                teddy.pointBias=float(localStorage.getItem("teddy_pointBias"))
+
+            if localStorage.getItem("teddy_distanceBias"):
+                teddy.distanceBias=float(localStorage.getItem("teddy_distanceBias"))
+
+            if localStorage.getItem("teddy_commonNds"):
+                teddy.commonNds=float(localStorage.getItem("teddy_commonNds"))
+
+            if localStorage.getItem("teddy_commonRoot"):
+                teddy.commonRoot=float(localStorage.getItem("teddy_commonRoot"))
+
+            if localStorage.getItem("teddy_commonRoute"):
+                teddy.commonRoute=float(localStorage.getItem("teddy_commonRoute"))
+            
+            if localStorage.getItem("teddy_commonNumber"):
+                teddy.commonNumber=float(localStorage.getItem("teddy_commonNumber"))
+
+            if localStorage.getItem("teddy_sameWord"):
+                teddy.sameWord=float(localStorage.getItem("teddy_sameWord"))
+
+            if localStorage.getItem("teddy_closenessWeight"):
+                teddy.closenessWeight=float(localStorage.getItem("teddy_closenessWeight"))
+
+            if localStorage.getItem("teddy_numberDistanceWeight"):
+                teddy.numberDistanceWeight=float(localStorage.getItem("teddy_numberDistanceWeight"))
+
+            if localStorage.getItem("teddy_rootDistanceWeight"):
+                teddy.rootDistanceWeight=float(localStorage.getItem("teddy_rootDistanceWeight"))
+
+            if localStorage.getItem("teddy_ndsDistanceWeight"):
+                teddy.ndsDistanceWeight=float(localStorage.getItem("teddy_ndsDistanceWeight"))
+
+            if localStorage.getItem("teddy_maxDistance"):
+                teddy.maxDistance=float(localStorage.getItem("teddy_maxDistance"))
+            
+            searchResults = teddy.getRestrictedWordSet_wdxy(mE.currentTarget.datum, localStorage.getItem("cipher"))
+
+            searchResults = sorted(searchResults, key = lambda x: x[2])
+
+            searchedGemVal = getGematria(mE.currentTarget.datum, localStorage.getItem("cipher"))
+
+            srString=nds.makeDMSHyperRepre(searchResults, searchedGemVal, localStorage.getItem("cipher"))
+            
+            smviewDOC.getElementById("dmSearchOutput").innerHTML=srString
+
+            for i in searchResults:
+                makeDMSListener(i[0])
+
+            localStorage.setItem("dataForPlot_SW", mE.currentTarget.datum)
+
+            dmsPlot = smviewDOC.getElementById("dmSearchPlot")
+            dmsPlot.src="./testPlot.html"
+            return
+
+        dmprx = create_proxy(distanceMeasureSearch)
+
+        def makeFinalSentenceListeners():
+            #console.log("makeFinalSentenceListeners()")
+            wordArray = nds.make2DWordArrayFromString(localStorage.getItem("words"), localStorage.getItem("cipher"))
+            sentenceFormulaArray = localStorage.getItem("sentenceFormula").split()
+            for i in sentenceFormulaArray:
+                for j in wordArray:
+                    if int(i)==getGematria(j[0], localStorage.getItem("cipher")):                       
+                        for k in range(len(j)):
+                            #console.log("word is: "+j[k])
+                            sfWordButton=smviewDOC.getElementById("SF"+j[k])
+                            sfWordButton.index=k
+                            sfWordButton.gemVal=getGematria(j[0], localStorage.getItem("cipher"))
+                            sfWordButton.word=j[k]
+                            sfWordButton.addEventListener('click', finalSentence_proxy)
+
+            return
+
+        def makeWCListener(word):
+            #console.log("makeWCListener: "+word)
+            wordButton=smviewDOC.getElementById("WC"+word)
+            wordButton.sana=word
+            wordButton.addEventListener("click", wcProxyFunc)
+            return
+    
+        def makeLocDBListener(word):
+            #console.log("makeLocDBListener: "+word)
+            wordButton=smviewDOC.getElementById("LDB"+word)
+            wordButton.sana=word
+            wordButton.addEventListener("click", wcProxyFunc)
+            return
+
+        def makeDMSListener(word):
+            #console.log("makeDMSListener: "+word)
+            wordButton=smviewDOC.getElementById("dmsButton"+word)
+            wordButton.sana=word
+            wordButton.addEventListener("click", wcProxyFunc)
+            return
+       
+
+        def outputWords():
+            #wvpairs=getWordValuePairsOuter()
+
+            #for i in wvpairs:
+            #    nds.addWord(i[0], localStorage.getItem("cipher"))
+
+            nds.clearRAM()
+            nds.addWordArray(localStorage.getItem("words").split(), localStorage.getItem("cipher"))
+
+            gtRepre=nds.printAll(localStorage.getItem("cipher"))
+            #console.log("From outputWords: gtRepre\n"+gtRepre)
+            #console.log("nds.roots[n].getWords():")
+            
+            smviewDOC.getElementById("smview_output").innerHTML=gtRepre
+            return
+
+        def getInputStringGemValue(inputString):
+            inputString=inputString.lower()  
+            inputArray=inputString.split()
+            outputString=""
+            for i in inputArray:
+                for j in i:
+                    if j.isalpha():
+                        outputString+=j
+            return getGematria(outputString, localStorage.getItem("cipher"))
+        
+        def smAddWordWithEnter():
+            nds.clearRAM()
+            new_words = document.getElementById("wordsHere").value.split()
+
+            for word in new_words:
+                oldWordsStr=localStorage.getItem("words")
+                word=word.lower()  
+
+                for i in word: 
+                    if not i.isalpha():
+                        word=word.replace(i,"")
+
+                oldWords=oldWordsStr.split()
+                tuplasana=False
+                for i in oldWords:
+                    if i == word:
+                        tuplasana = True
+                if not tuplasana:
+                    localStorage.setItem("words", oldWordsStr+" "+word+" ")  
+            
+            
+            outputWords()     
+            makeSWListeners()
+            upDateSentenceFormulaNoChange()
+            
+            return
+
+        def smAddWord(mE):
+            nds.clearRAM()
+            new_words = document.getElementById("wordsHere").value.split()
+
+            for word in new_words:
+                oldWordsStr=localStorage.getItem("words")
+                word=word.lower()  
+
+                for i in word: 
+                    if not i.isalpha():
+                        word=word.replace(i,"")
+
+                oldWords=oldWordsStr.split()
+                tuplasana=False
+                for i in oldWords:
+                    if i == word:
+                        tuplasana = True
+                if not tuplasana:
+                    localStorage.setItem("words", oldWordsStr+" "+word+" ")  
+            
+            
+            outputWords()     
+            makeSWListeners()
+            upDateSentenceFormulaNoChange()
+            
+            return
+
+
+        def smNoAddWordNoMouseNoChange():
+            nds.clearRAM()
+            new_words = localStorage.getItem("words").split()
+            for word in new_words:
+                oldWordsStr=localStorage.getItem("words")
+                word=word.lower()  
+
+                for i in word: 
+                    if not i.isalpha():
+                        word=word.replace(i,"")
+
+                oldWords=oldWordsStr.split()
+                tuplasana=False
+                for i in oldWords:
+                    if i == word:
+                        tuplasana = True
+                if not tuplasana:
+                    localStorage.setItem("words", oldWordsStr+" "+word+" ")  
+            
+            
+            outputWords()     
+            makeSWListeners()
+            upDateSentenceFormulaNoChange()
+            
+            return
+
+        def clearSessionMemory(mE):
+            localStorage.setItem("words", "0 ")
+            localStorage.setItem("sentenceFormula", "0 ")
+            initFS()
+            nds.clearRAM()
+            nds.addWord("0", localStorage.getItem("cipher"))
+            clearWizard()
+            outputWords()
+            makeSWListeners()
+            upDateSentenceFormulaNoChange()
+            
+            return
+
+        def clearSessionMemoryNoMouse():
+            localStorage.setItem("words", "0 ")
+            localStorage.setItem("sentenceFormula", "0 ")
+            initFS()
+            nds.clearRAM()
+            nds.addWord("0", localStorage.getItem("cipher"))
+            clearWizard()
+            outputWords()
+            makeSWListeners()
+            upDateSentenceFormulaNoChange()
+            
+            return
+
+        def updateGemValMsg(iE):
+            inputString=document.getElementById("wordsHere").value
+            output=document.getElementById("messageout")
+
+            output.innerHTML=getInputStringGemValue(inputString)
+            
+            return
+
+        def updateGemValMsgNotMouse():
+            inputString=document.getElementById("wordsHere").value
+            output=document.getElementById("messageout")
+
+            output.innerHTML=getInputStringGemValue(inputString)
+            
+            return
+  
+        def upDateSentenceFormula(mE):
+            output = smviewDOC.getElementById("sentenceFormulaLair")
+            fsOutput = smviewDOC.getElementById("finalSentenceLair")
+
+            formula=localStorage.getItem("sentenceFormula")
+            newFormula=formula
+
+            afe_gem=mE.currentTarget.datum
+
+            #no duplicates in sf:
+            if str(afe_gem) in formula.split():
+                return
+
+            if len(formula)>0:
+                newFormula+=" "+str(afe_gem)
+            else:
+                newFormula+=str(afe_gem)
+
+            localStorage.setItem("sentenceFormula", newFormula)
+            #console.log("IMPORTANT!! udSF/newFormula: '"+str(newFormula)+"'")
+            sfOutputStr=nds.makeHyperFormula(newFormula, localStorage.getItem("words"), localStorage.getItem("cipher"))
+            
+            #initFS()
+            updateFsIdx()
+
+            output.innerHTML = sfOutputStr
+            makeFinalSentenceListeners()
+            printFinalSentence()
+            smviewDOC.location = "./sessionmemory.html#sentenceFormulaLair"
+
+            return
+
+        def delFromSentenceFormula(gemVal):
+        
+            formula=localStorage.getItem("sentenceFormula").split()
+            newFormula=formula
+            newFormula.remove(str(gemVal))
+            newFString=""
+            for i in newFormula:
+                newFString+=i+" "
+            
+            localStorage.setItem("sentenceFormula", newFString)
+            #console.log("new Formula String: '"+newFString+"'")
+ 
+            return
+
+     
+        def upDateSentenceFormulaNoChange():
+            oldWordsStr=localStorage.getItem("words")
+
+            output = smviewDOC.getElementById("sentenceFormulaLair")
+            formula=localStorage.getItem("sentenceFormula")
+            
+            output.innerHTML=nds.makeHyperFormula(formula, oldWordsStr, localStorage.getItem("cipher"))
+
+            #initFS()
+            updateFsIdx()
+
+            #console.log("upDateSentenceFormulaNoChange: html change in sentenceFormulaLair.")
+            makeFinalSentenceListeners()
+            printFinalSentence()
+            return
+ 
+        def clearSentenceFormula(mE):
+            localStorage.setItem("sentenceFormula", "0 ")
+            initFS()
+            upDateSentenceFormulaNoChange()
+            return
+
+        def clearSentenceFormulaNoMouse():
+            localStorage.setItem("sentenceFormula", "0 ")
+            initFS()
+            upDateSentenceFormulaNoChange()
+            return
+
+        def updateFsIdx():
+            fsIdxStr=localStorage.getItem("finalSentenceIdx")
+            fsIdxStr+=" 0 "
+            localStorage.setItem("finalSentenceIdx", fsIdxStr)
+            return
+
+        def saveNewFinalSentenceIndex(changedWord, gemVal, index):
+            fsFormulaArray=localStorage.getItem("sentenceFormula").split()
+            fsIdxArray=localStorage.getItem("finalSentenceIdx").split()
+            #console.log("snfsi/fsI:"+str(fsIdxArray))
+
+            newFsIdxStr=""
+
+            fwc=0
+            for i in fsFormulaArray:
+                if gemVal == int(i):                    
+                    newFsIdxStr+=str(index)+" "
+                else:
+                    newFsIdxStr+=fsIdxArray[fwc]+" "
+                fwc+=1
+           
+            localStorage.setItem("finalSentenceIdx", newFsIdxStr)
+            return
+        
+        def upDateFinalSentence(mE):
+            output=smviewDOC.getElementById("finalSentenceLair")
+            saveNewFinalSentenceIndex(mE.currentTarget.word, mE.currentTarget.gemVal, mE.currentTarget.index)
+            printFinalSentence()
+            return
+
+        def makeFinalSentence():
+           
+            wordArray=nds.make2DWordArrayFromString(localStorage.getItem("words"), localStorage.getItem("cipher"))
+            
+            fsFormulaStr=localStorage.getItem("sentenceFormula")
+            #console.log("fsFormulaStr: '"+fsFormulaStr+"'")
+            fsFormulaArray=fsFormulaStr.split()
+            
+            fsIdxStr=localStorage.getItem("finalSentenceIdx")
+            #console.log("fsIdx: '"+fsIdxStr+"'")
+            fsIdxArray=fsIdxStr.split()
+
+            outputString=""     
+            
+            fwc=0
+            for i in fsFormulaArray:
+                for j in wordArray:
+                    if getGematria(j[0], localStorage.getItem("cipher"))==int(i):
+                        outputString+=j[int(fsIdxArray[fwc])]+" "
+                        #console.log("mfs: outputString:"+outputString)
+                        fwc+=1
+
+            return outputString
+
+        def printFinalSentence():
+            output=smviewDOC.getElementById("finalSentenceLair")
+            output.innerHTML=makeFinalSentence()
+            return
+
+        finalSentence_proxy = create_proxy(upDateFinalSentence)
+
+        #sentenceFormula_proxy = create_proxy(upDateSentenceFormula)
+
+        smaw_proxy = create_proxy(smAddWord)
+        document.getElementById("addWordToSM").addEventListener("click", smaw_proxy)
+        
+        csm_proxy = create_proxy(clearSessionMemory)
+        document.getElementById("clearSM").addEventListener("click", csm_proxy)
+
+        gemValMsg_proxy = create_proxy(updateGemValMsg)
+        document.getElementById("wordsHere").addEventListener("input", gemValMsg_proxy)
+
+        clearSF_proxy = create_proxy(clearSentenceFormula)
+        document.getElementById("clearSF").addEventListener("click", clearSF_proxy)
+
+        #start DBG:
+        #localStorage.removeItem("words")
+        #localStorage.removeItem("sentenceFormula")
+        #localStorage.removeItem("finalSentenceIdx")
+        #localStorage.removeItem("cipher")
+        #end DBG
+
+        
+        #INIT PAGE
+        if not localStorage.getItem("cipher"):
+            localStorage.setItem("cipher", "ScaExt")
+
+        document.getElementById('cipherButton').innerHTML="Cipher In Use: "+localStorage.getItem("cipher")
+
+        if not localStorage.getItem("words"):
+            localStorage.setItem("words", "0 ")
+
+        if not localStorage.getItem("sentenceFormula"):
+            localStorage.setItem("sentenceFormula", "0 ")
+
+        if not localStorage.getItem("finalSentenceIdx"):
+            initFS()
+
+        
+        outputWords()
+        makeSWListeners()
+        upDateSentenceFormulaNoChange()
+        updateGemValMsgNotMouse()
+
+        #NRT_INIT
+        #NineRootedTree stuff
+        #setting up the scene form NineRootedTree instance creation
+ 
+        syllableTokenizer = SyllableTokenizer()
+
+        def extractSyllables(wordList):
+            outArray = []
+            for i in wordList:
+                outArray += [syllableTokenizer.tokenize(i)]
+            return outArray
+
+        deepMemWordTree=None
+        deepMemSyllableTree=None
+        sessionMemoryWordTree=None
+        sessionMemorySyllableTree=None
+
+
+        def initTrees():
+            global deepMemWordTree, deepMemSyllableTree, sessionMemoryWordTree, sessionMemorySyllableTree
+
+            console.log("initTrees()")
+
+            dmTreeWordList = getDeepMem()
+            console.log("deepMem words fetched.")
+            dmTreeSyllableList1D = getDeepMemSyllables()
+            console.log("deepMem syllables fetched.")
+
+            smTreeWordList = localStorage.getItem("words").split()
+            smTreeSyllableList2D = extractSyllables(smTreeWordList)
+            smTreeSyllableList1D = []
+
+            for i in smTreeSyllableList2D:
+                for j in i:
+                    smTreeSyllableList1D += [j]
+
+            console.log("smwt init:")
+            sessionMemoryWordTree = nrt.NineRootedTree(smTreeWordList, localStorage.getItem("cipher"))
+            console.log("smwt initialized.")
+
+            console.log("smst init:")
+            sessionMemorySyllableTree = nrt.NineRootedTree(smTreeSyllableList1D, localStorage.getItem("cipher"))
+            console.log("smst initialized.")
+            
+            console.log("dmwt init:")
+            deepMemWordTree = nrt.NineRootedTree(dmTreeWordList, localStorage.getItem("cipher"))
+            console.log("dmwt initialized.")
+
+            console.log("dmst init:")
+            deepMemSyllableTree = nrt.NineRootedTree(dmTreeSyllableList1D, localStorage.getItem("cipher"))
+            console.log("dmst initialized.")
+
+            return
+
+        initTrees()
+
+
+        #Two transform callbacks for the text input field
+        def randomSentence(mE):
+            console.log("randomSentence/syllabletransform")
+
+            sentenceToTransform = document.getElementById("wordsHere").value
+
+            sentenceToTransform=sentenceToTransform.lower()  
+
+            for i in sentenceToTransform: 
+                if not i.isalpha():
+                    if not i.isspace():
+                        sentenceToTransform=sentenceToTransform.replace(i,"")
+
+            inputWordArray = sentenceToTransform.split()
+            inputSyllables2D = extractSyllables(inputWordArray)
+
+            for i in range(len(inputSyllables2D)):
+                for j in range(len(inputSyllables2D[i])):
+                    dmSyls = deepMemSyllableTree.findWords(getGematria(inputSyllables2D[i][j], localStorage.getItem("cipher")))
+                    if dmSyls not in [[], [""], None]:
+                        inputSyllables2D[i][j] = random.choice(dmSyls)
+
+            outputSentence = ""
+
+            for i in inputSyllables2D:
+                for j in i:
+                    outputSentence+=j
+                outputSentence+=" "
+
+            outputSentence = outputSentence[0:-1] #remove the last space
+
+            document.getElementById("wordsHere").value = outputSentence
+
+            return
+            
+        randomSentence_proxy=create_proxy(randomSentence)
+        RSButton = document.getElementById("RSButton")
+        RSButton.addEventListener("click", randomSentence_proxy)
+
+        def randomSentence2(mE):
+            console.log("randomSentence/wordtransform")
+
+            sentenceToTransform = document.getElementById("wordsHere").value
+
+            sentenceToTransform=sentenceToTransform.lower()  
+
+            for i in sentenceToTransform: 
+                if not i.isalpha():
+                    if not i.isspace():
+                        sentenceToTransform=sentenceToTransform.replace(i,"")
+
+            inputWordArray = sentenceToTransform.split()
+            outputWordString = ""
+            for i in range(len(inputWordArray)):
+                dmWords = deepMemWordTree.findWords(getGematria(inputWordArray[i], localStorage.getItem("cipher")))
+                if not dmWords in [[], [""], None]:
+                    outputWordString+=random.choice(dmWords)+" "
+                else:
+                    outputWordString+=inputWordArray[i]+" "
+
+            outputWordString=outputWordString[0:-1]
+            document.getElementById("wordsHere").value=outputWordString
+
+            return
+
+        randomSentence2_proxy=create_proxy(randomSentence2)
+        RSButton2 = document.getElementById("RSButton2")
+        RSButton2.addEventListener("click", randomSentence2_proxy)
+
+        </py-script>
+
+        <!--py-repl></py-repl-->
+        <iframe height="600" width="1100" src="sessionmemory.html" id="smview"></iframe>
+	    <div id="payPalMe" class="money"><a href="https://paypal.me/taivossuora" target="_blank" class="moneyLink" >Send Money To The Author Via PayPal</a></div>
+	    <div id="emailMe" class="contactMe"><a href="mailto:iipekaj@gmail.com" class="emailLink">Contact The Author</a></div>
+        <div id="credits" class="creditStaili">GemaTreeAC 2=0 is made with <a href="https://pyscript.net" target="_blank">PyScript</a> and <a href="https://python.org" target="_blank">Python</a></div>
+        <div id="tutorialLinkDiv" class="tutStaili"><a href="./GemaTreeAC 2=0 Tutorial.pdf" target="_blank">Tutorial</a></div>
+        <div id="mathematicalFormulation" class="mFStyle"><a href="./gematreeac_tutorial.pdf">Mathematics behind GemaTreeAC 2=0</a></div>
+        <div id="gitHubLink" class="creditStaili">The code for GemaTreeAC 2=0 is public and can be found at <a href="https://github.com/jaakkopee/gematreeac" target="_blank">GitHub</a></div>
+        <!-- TODO
+            move DMSearch button to number menu in smv?
+            remove parameter sameWord from dms
+
+        -->
+    </body>
+</html>

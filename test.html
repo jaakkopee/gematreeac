@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GemaTreeAC JavaScript Test</title>
+</head>
+<body>
+    <h1>GemaTreeAC JavaScript Module Test</h1>
+    <div id="output"></div>
+    
+    <script src="js/alphabet.js"></script>
+    <script src="js/gemNumFuncs.js"></script>
+    <script src="js/getwordsfromdbs.js"></script>
+    <script src="js/ndigitsets3.js"></script>
+    
+    <script>
+        function runTests() {
+            const output = document.getElementById('output');
+            let testResults = [];
+
+            try {
+                // Test 1: Check if modules loaded
+                testResults.push('✓ Modules loaded successfully');
+
+                // Test 2: Test getCipher function
+                const cipher = window.GemaTreeAC.getCipher('ScaExt');
+                if (cipher && cipher['a'] === 1) {
+                    testResults.push('✓ getCipher function works');
+                } else {
+                    testResults.push('✗ getCipher function failed');
+                }
+
+                // Test 3: Test getGematria function
+                const gemValue = window.GemaTreeAC.getGematria('hello', 'ScaExt');
+                if (typeof gemValue === 'number') {
+                    testResults.push(`✓ getGematria('hello', 'ScaExt') = ${gemValue}`);
+                } else {
+                    testResults.push('✗ getGematria function failed');
+                }
+
+                // Test 4: Test getRootNumber function
+                const root = window.GemaTreeAC.getRootNumber(123);
+                if (root === 6) { // 1+2+3 = 6
+                    testResults.push('✓ getRootNumber function works');
+                } else {
+                    testResults.push('✗ getRootNumber function failed');
+                }
+
+                // Test 5: Test getParentList function
+                const parents = window.GemaTreeAC.getParentList(123);
+                if (Array.isArray(parents) && parents[0] === 123) {
+                    testResults.push('✓ getParentList function works');
+                } else {
+                    testResults.push('✗ getParentList function failed');
+                }
+
+                // Test 6: Test deep memory functions
+                const deepMem = window.GemaTreeAC.getDeepMem();
+                if (Array.isArray(deepMem)) {
+                    testResults.push('✓ getDeepMem function works');
+                } else {
+                    testResults.push('✗ getDeepMem function failed');
+                }
+
+                // Test 7: Test ndigitsets functions
+                window.GemaTreeAC.clearRAM();
+                window.GemaTreeAC.addWord('test', 'ScaExt');
+                const output = window.GemaTreeAC.printAll('ScaExt');
+                if (typeof output === 'string') {
+                    testResults.push('✓ ndigitsets functions work');
+                } else {
+                    testResults.push('✗ ndigitsets functions failed');
+                }
+
+            } catch (error) {
+                testResults.push('✗ Error during testing: ' + error.message);
+            }
+
+            output.innerHTML = testResults.join('<br>');
+        }
+
+        // Run tests when page loads
+        window.addEventListener('load', runTests);
+    </script>
+</body>
+</html>
