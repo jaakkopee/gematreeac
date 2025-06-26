@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>GemaTreeAC 2=0 Gematria Calculator</title> 
+        <meta charset="utf-8">
+        <meta name="description" content="Gematria and Numerology Based Word Classification Algorithm">
+        
+        <style>
+            .opformat{
+                font-size: 45px;
+                white-space: pre;
+                color: red;
+                background-color: aquamarine;
+            }
+            .myBody{
+                font-size: 20px;
+                color: red;
+                background-color: #0000aa;
+                text-align: center;
+                display: block;
+            }
+
+            .sv_style{
+                font-size: 30px;
+                color: black;
+                background-color: blueviolet;
+            }
+            .creditStaili{
+                position: relative;
+                left:40%;
+                color:aqua;
+                background-color: black;
+                width:20%;
+            }
+            .tutStaili{
+                position: relative;
+                left:40%;
+                color:blueviolet;
+                background-color:#3f0e3a;
+                width:20%;
+            }
+            .mFStyle{
+                position: relative;
+                left:40%;
+                color:rgb(60, 22, 95);
+                background-color:#8b7cc3;
+                width:20%;
+            }
+            .money{
+                position:relative;
+                left:40%;
+                color:black;
+                background-color:white;
+                width:20%;
+            }
+            .contactMe{
+                position:relative;
+                left:40%;
+                color:white;
+                background-color:indigo;
+                width:20%;
+            }
+            .moneyLink{
+                color:indigo;
+            }
+            .emailLink{
+                color:white;
+            }
+
+            /* Dropdown Button */
+            .dropbtn {
+                background-color: #084800;
+                color: rgb(255, 79, 223);
+                padding: 16px;
+                font-size: 16px;
+                border: none;
+                transition: background-color 0.5s ease;
+            }
+
+            /* The container <div> - needed to position the dropdown content */
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            /* Dropdown Content (Hidden by Default) */
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #012700;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+
+            /* Links inside the dropdown */
+            .dropdown-content a {
+                color: #73ff00;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                transition: color 0.5s ease;
+            }
+
+            /* Change color of dropdown links on hover */
+            .dropdown-content a:hover {
+                background-color: rgb(101, 217, 221);
+                transition: background-color 1.2s ease;
+                color:#005644
+            }
+
+            /* Change the background color of the dropdown button when hovering */
+            .dropdown:hover .dropbtn {
+                background-color: #21ff03;
+                color:#a80146;        
+            }
+
+            .credits{
+                color:rgb(0, 255, 179);
+                background-color: #1b1b3d;
+                text-align: center;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            .credits h1:hover{
+                color:rgb(61, 8, 8);
+                background-color: rgb(196, 196, 228);
+                transition: background-color 2.0s ease;
+                transition: color 2.0s ease;
+            }
+
+            h1{
+                font-size: 16px;
+            }
+
+            .howtoDBButton{
+                border-width: 10px;
+                border: green;
+                background-color: black;
+                color: yellowgreen;
+            }
+            .howToDB_iframe{
+                display: none;
+                position: absolute;
+                left:200px;
+            }
+
+            .gemValMsg_div{
+                height:60px;
+                font-size:38px;
+                position: relative;
+                left: 40%;
+                width: 20%;
+                transition: color 0.376s ease;
+            }
+
+            .dmsSettingsStyle{
+                display: none;
+                position: relative;
+                left: 20%;
+                width: 60%;
+                color: #487226;
+                background-color: #151535;
+            }
+
+            .dmsNumber{
+                color:#1eff00;
+                background-color: black;
+            }
+
+            .WC_style{
+                color: #238b06;
+                background-color: #1b3e80;
+                border: none;
+                font-family: 'Courier New', Courier, monospace;
+                margin: 2px;
+                padding: 4px;
+                cursor: pointer;
+            }
+
+            .LocDB_style{
+                color:#00aaff;
+                background-color: #0d2a12;
+                border: none;
+                font-family: 'Courier New', Courier, monospace;
+                margin: 2px;
+                padding: 4px;
+                cursor: pointer;
+            }
+
+            .dmsButton{
+                color: rgb(255, 255, 0);
+                background-color: rgb(128, 0, 128);
+                border: none;
+                font-family: 'Courier New', Courier, monospace;
+                margin: 2px;
+                padding: 4px;
+                cursor: pointer;
+            }
+        </style>
+        
+        <!-- Load JavaScript modules -->
+        <script src="js/alphabet.js"></script>
+        <script src="js/gemNumFuncs.js"></script>
+        <script src="js/utils.js"></script>
+    </head>   
+
+    <body class="myBody" id="mainBody">
+        
+        <div class="credits"><h1>GemaTreeAC 2=0 Gematria Calculator, Numerological Classification Algorithm and Database. Copyleft 2022, Jake Pii Taivossuora, Do What Thou Wilt.</h1></div>
+
+        <img src="./GemaTreeAC_logo02.jpeg" width="1100" height="200"><br />
+
+        <div class="dropdown">
+            <button class="dropbtn" id="cipherButton">Cipher in use</button>
+            <div class="dropdown-content" id="ddc">
+                <a href="#cipherButton" id="ccscaext">English/Scandinavian Extended</a>
+                <a href="#cipherButton" id="ccengextrev">Reverse English Extended</a>
+                <a href="#cipherButton" id="ccord">Ordinal</a>
+                <a href="#cipherButton" id="ccordrev">Reverse Ordinal</a>
+                <a href="#cipherButton" id="ccfr">Full Reduction</a>
+                <a href="#cipherButton" id="ccfrrev">Reverse Full Reduction</a>
+                <a href="#cipherButton" id="ccsr">Single Reduction</a>
+                <a href="#cipherButton" id="ccsrrev">Reverse Single Reduction</a>
+                <a href="#cipherButton" id="ccfibo">Fibonacci</a>
+                <a href="#cipherButton" id="ccfiborev">Reverse Fibonacci</a>
+            </div>
+        </div><br />
+
+        <input id="wordsHere" value="text here"></input>
+        <button type="button" id="addWordToSM">Add Word(s) To Session Memory</button>
+        <button type="button" id="clearSM">Clear SM</button>
+        <button type="button" id="clearSF">Clear Sentence Formula</button><br />
+        <button type="button" id="uploadDB">Upload Local DB</button>
+        <button class="howtoDBButton" id="howtoDB">About DB Format</button>
+        <button type="button" id="showDMSParams">Show DMS Parameters</button>
+        <button type="button" id="RSButton">Random Syllables</button>
+        <button type="button" id="RSButton2">Random Words</button>
+        <br>
+
+        <iframe class="howToDB_iframe" id="howToLoadLocalDB" src="db_howto.html" width="360" height="240"></iframe>
+
+        <div class="gemValMsg_div" id="messageout"></div>
+
+        <div class="dmsSettingsStyle" id="dmsSettings">
+            <h1>Distance Measure Search Parameters:</h1>
+            <form id="distanceTeddyBearParameters">
+                <label for="pointBias">Point bias (pointBias):</label>
+                <input type="number" class="dmsNumber" id="pointBias" name="pointBias" min="0.001" max="1.0" step="0.001" value="0.001"><br>
+                <label for="distanceBias">Distance bias (distanceBias):</label>
+                <input type="number" class="dmsNumber" id="distanceBias" name="distanceBias" min="0.0" max="1.0" step="0.001" value="0.001"><br>
+                <label for="commonNds">Points for common n-digit set (commonNds):</label>
+                <input type="number" class="dmsNumber" id="commonNds" name="commonNds" min="0.0" max="64.0" step="0.001" value="0.001"><br>
+                <label for="commonRoot">Points for common root (commonRoot):</label>
+                <input type="number" class="dmsNumber" id="commonRoot" name="commonRoot" min="0.0" max="64.0" step="0.001" value="0.3"><br>
+                <label for="commonRoute">Points for common route (commonRoute):</label>
+                <input type="number" class="dmsNumber" id="commonRoute" name="commonRoute" min="0.0" max="64.0" step="0.001" value="0.001"><br>
+                <label for="commonNumber">Points for common number (commonNumber):</label>
+                <input type="number" class="dmsNumber" id="commonNumber" name="commonNumber" min="0.0" max="64.0" step="0.001" value="0.001"><br>
+                <label for="sameWord">Points for same word (sameWord):</label>
+                <input type="number" class="dmsNumber" id="sameWord" name="sameWord" min="0.0" max="64.0" step="0.001" value="0.001"><br>
+                <label for="closenessWeight">Weight on total points (closenessWeight):</label>
+                <input type="number" class="dmsNumber" id="closenessWeight" name="closenessWeight" min="0.0" max="1.0" step="0.00001" value="0.3"><br>
+                <label for="numberDistanceWeight">Weight on distance of gematria values (numberDistanceWeight):</label>
+                <input type="number" class="dmsNumber" id="numberDistanceWeight" name="numberDistanceWeight" min="0.0" max="1.0" step="0.00001" value="0.3"><br>
+                <label for="rootDistanceWeight">Weight on distance of roots (rootDistanceWeight):</label>
+                <input type="number" class="dmsNumber" id="rootDistanceWeight" name="rootDistanceWeight" min="0.0" max="1.0" step="0.00001" value="0.3"><br>
+                <label for="ndsDistanceWeight">Weight on distance of n-digit sets (ndsDistanceWeight):</label>
+                <input type="number" class="dmsNumber" id="ndsDistanceWeight" name="ndsDistanceWeight" min="0.0" max="1.0" step="0.00001" value="0.3"><br>
+                <label for="maxDistance">Search threshold (maxDistance):</label>
+                <input type="number" class="dmsNumber" id="maxDistance" name="maxDistance" min="0.0" max="1000000.0" step="0.1" value="10.0"><br>
+            </form>
+        </div>
+
+        <div id="sessionMemoryView" style="background-color: #340f3a; font-family: 'Courier New', Courier, monospace; min-height: 400px; padding: 10px; margin: 10px;">
+            <h2 style="color: #c0e957;">Session Memory</h2>
+            <div id="smview_output"></div>
+            <div id="WizardsComments" style="color: #238b06; background-color: #1b3e80; padding: 10px; margin: 10px;"></div>
+            <div id="WizardsHelper" style="color:#00aaff; background-color: #0d2a12; padding: 10px; margin: 10px;"></div>
+            <div id="dmSearchOutput" style="color: yellow; background-color: purple; padding: 10px; margin: 10px;"></div>
+            <div id="sentenceFormulaLair" style="background-color: #071f30; font-family: 'Courier New', Courier, monospace; padding: 10px; margin: 10px;"></div>
+            <div id="finalSentenceLair" style="color: #c0e957; background-color: #4043a4; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 26px; padding: 10px; margin: 10px;"></div>
+        </div>
+
+        <div id="payPalMe" class="money"><a href="https://paypal.me/taivossuora" target="_blank" class="moneyLink">Send Money To The Author Via PayPal</a></div>
+        <div id="emailMe" class="contactMe"><a href="mailto:iipekaj@gmail.com" class="emailLink">Contact The Author</a></div>
+        <div id="credits" class="creditStaili">GemaTreeAC 2=0 is made with JavaScript (ported from <a href="https://pyscript.net" target="_blank">PyScript</a> and <a href="https://python.org" target="_blank">Python</a>)</div>
+        <div id="tutorialLinkDiv" class="tutStaili"><a href="./GemaTreeAC 2=0 Tutorial.pdf" target="_blank">Tutorial</a></div>
+        <div id="mathematicalFormulation" class="mFStyle"><a href="./gematreeac_tutorial.pdf">Mathematics behind GemaTreeAC 2=0</a></div>
+        <div id="gitHubLink" class="creditStaili">The code for GemaTreeAC 2=0 is public and can be found at <a href="https://github.com/jaakkopee/gematreeac" target="_blank">GitHub</a></div>
+
+        <script>
+            // Global variables
+            let loadInfo = false;
+            let menuActive = false;
+            let hwMenuControl = {};
+            let deepMemWordTree = null;
+            let deepMemSyllableTree = null;
+            let sessionMemoryWordTree = null;
+            let sessionMemorySyllableTree = null;
+
+            // Initialize the application
+            function initializeApp() {
+                console.log("Initializing GemaTreeAC JavaScript version...");
+                
+                // Initialize deep memory
+                initializeDeepMemory();
+                
+                // Set default values if not in localStorage
+                if (!localStorage.getItem("cipher")) {
+                    localStorage.setItem("cipher", "ScaExt");
+                }
+                
+                if (!localStorage.getItem("words")) {
+                    localStorage.setItem("words", "0 ");
+                }
+                
+                if (!localStorage.getItem("sentenceFormula")) {
+                    localStorage.setItem("sentenceFormula", "0 ");
+                }
+                
+                if (!localStorage.getItem("finalSentenceIdx")) {
+                    initFS();
+                }
+                
+                // Initialize DMS parameters
+                initializeDMSParameters();
+                
+                // Update UI
+                document.getElementById('cipherButton').innerHTML = "Cipher In Use: " + localStorage.getItem("cipher");
+                
+                // Set up event listeners
+                setupEventListeners();
+                
+                // Initialize trees and display
+                initTrees();
+                outputWords();
+                updateGemValMsgNotMouse();
+                
+                // Start color animation
+                startColorAnimation();
+                
+                console.log("GemaTreeAC initialized successfully!");
+            }
+
+            function changeLoadMode() {
+                console.log("changeLoadMode");
+                if (!loadInfo) {
+                    loadInfo = true;
+                    document.getElementById("messageout").innerHTML = "Loading... please wait.";
+                    return;
+                }
+                loadInfo = false;
+                const value = getInputStringGemValue(document.getElementById("wordsHere").value);
+                document.getElementById("messageout").innerHTML = value;
+            }
+
+            function changeCipher(event) {
+                const cipherID = event.currentTarget.cipherID;
+                localStorage.setItem("cipher", cipherID);
+                document.getElementById('cipherButton').innerHTML = "Cipher In Use: " + localStorage.getItem("cipher");
+                
+                initTrees();
+                clearWizard();
+                clearSentenceFormulaNoMouse();
+                smNoAddWordNoMouseNoChange();
+                updateGemValMsgNotMouse();
+            }
+
+            function toggleMenu(event) {
+                if (!menuActive) {
+                    document.getElementById("ddc").style.display = "block";
+                    menuActive = true;
+                } else {
+                    document.getElementById("ddc").style.display = "none";
+                    menuActive = false;
+                }
+            }
+
+            function toggleDMSP(event) {
+                const dmspDiv = document.getElementById("dmsSettings");
+                if (dmspDiv.style.display !== "block") {
+                    dmspDiv.style.display = "block";
+                } else {
+                    dmspDiv.style.display = "none";
+                }
+            }
+
+            function initializeDMSParameters() {
+                const dmsParams = [
+                    "pointBias", "distanceBias", "commonNds", "commonRoot", 
+                    "commonRoute", "commonNumber", "sameWord", "closenessWeight",
+                    "numberDistanceWeight", "rootDistanceWeight", "ndsDistanceWeight", "maxDistance"
+                ];
+                
+                const defaults = {
+                    "pointBias": 0.001,
+                    "distanceBias": 1.0,
+                    "commonNds": 0.0,
+                    "commonRoot": 1.0,
+                    "commonRoute": 1.0,
+                    "commonNumber": 0.0,
+                    "sameWord": 0.0,
+                    "closenessWeight": 1.0,
+                    "numberDistanceWeight": 0.0001,
+                    "rootDistanceWeight": 0.0,
+                    "ndsDistanceWeight": 0.0,
+                    "maxDistance": 10.0
+                };
+
+                for (const param of dmsParams) {
+                    if (!localStorage.getItem("teddy_" + param)) {
+                        localStorage.setItem("teddy_" + param, defaults[param]);
+                    }
+                    document.getElementById(param).value = localStorage.getItem("teddy_" + param);
+                }
+            }
+
+            function changeDMSParameter(event) {
+                const inputId = event.currentTarget.inputId;
+                localStorage.setItem("teddy_" + inputId, document.getElementById(inputId).valueAsNumber);
+                console.log(inputId + " " + document.getElementById(inputId).valueAsNumber);
+            }
+
+            function setupEventListeners() {
+                // Dropdown menu
+                document.getElementById("cipherButton").addEventListener("click", toggleMenu);
+                
+                // Cipher buttons
+                const cipherButtons = [
+                    {id: "ccscaext", cipherID: "ScaExt"},
+                    {id: "ccengextrev", cipherID: "EngExtRev"},
+                    {id: "ccord", cipherID: "Ord"},
+                    {id: "ccordrev", cipherID: "OrdRev"},
+                    {id: "ccfr", cipherID: "FullR"},
+                    {id: "ccfrrev", cipherID: "FullRRev"},
+                    {id: "ccsr", cipherID: "SingRed"},
+                    {id: "ccsrrev", cipherID: "SingRedRev"},
+                    {id: "ccfibo", cipherID: "Fibonacci"},
+                    {id: "ccfiborev", cipherID: "FibonacciRev"}
+                ];
+                
+                for (const button of cipherButtons) {
+                    const element = document.getElementById(button.id);
+                    element.cipherID = button.cipherID;
+                    element.addEventListener("click", changeCipher);
+                }
+                
+                // Input field
+                document.getElementById("wordsHere").addEventListener("input", updateGemValMsg);
+                document.getElementById("wordsHere").addEventListener("click", delWordsFromInputBox);
+                document.getElementById("wordsHere").addEventListener("keypress", addWordsWithEnter);
+                
+                // Buttons
+                document.getElementById("addWordToSM").addEventListener("click", smAddWord);
+                document.getElementById("clearSM").addEventListener("click", clearSessionMemory);
+                document.getElementById("clearSF").addEventListener("click", clearSentenceFormula);
+                document.getElementById("showDMSParams").addEventListener("click", toggleDMSP);
+                document.getElementById("RSButton").addEventListener("click", randomSentence);
+                document.getElementById("RSButton2").addEventListener("click", randomSentence2);
+                document.getElementById("uploadDB").addEventListener("click", openDBFile);
+                document.getElementById("howtoDB").addEventListener("click", openHowToDB);
+                
+                // DMS parameter sliders
+                const dmsParams = [
+                    "pointBias", "distanceBias", "commonNds", "commonRoot", 
+                    "commonRoute", "commonNumber", "sameWord", "closenessWeight",
+                    "numberDistanceWeight", "rootDistanceWeight", "ndsDistanceWeight", "maxDistance"
+                ];
+                
+                for (const param of dmsParams) {
+                    const slider = document.getElementById(param);
+                    slider.addEventListener("change", changeDMSParameter);
+                    slider.inputId = param;
+                }
+            }
+
+            function getInputStringGemValue(inputString) {
+                inputString = inputString.toLowerCase();
+                const inputArray = inputString.split(/\s+/);
+                let outputString = "";
+                
+                for (const word of inputArray) {
+                    for (const char of word) {
+                        if (/[a-zA-Z]/.test(char)) {
+                            outputString += char;
+                        }
+                    }
+                }
+                
+                return getGematria(outputString, localStorage.getItem("cipher"));
+            }
+
+            function updateGemValMsg(event) {
+                const inputString = document.getElementById("wordsHere").value;
+                const output = document.getElementById("messageout");
+                output.innerHTML = getInputStringGemValue(inputString);
+            }
+
+            function updateGemValMsgNotMouse() {
+                const inputString = document.getElementById("wordsHere").value;
+                const output = document.getElementById("messageout");
+                output.innerHTML = getInputStringGemValue(inputString);
+            }
+
+            function delWordsFromInputBox(event) {
+                document.getElementById("wordsHere").value = "";
+                updateGemValMsgNotMouse();
+            }
+
+            function addWordsWithEnter(event) {
+                if (event.key === "Enter") {
+                    smAddWordWithEnter();
+                }
+            }
+
+            function smAddWord(event) {
+                const newWords = document.getElementById("wordsHere").value.split(/\s+/);
+                
+                for (const word of newWords) {
+                    if (word.length === 0) continue;
+                    
+                    const oldWordsStr = localStorage.getItem("words");
+                    let cleanWord = word.toLowerCase().replace(/[^a-zA-Z]/g, "");
+                    
+                    const oldWords = oldWordsStr.split(/\s+/);
+                    if (!oldWords.includes(cleanWord) && cleanWord.length > 0) {
+                        localStorage.setItem("words", oldWordsStr + " " + cleanWord + " ");
+                    }
+                }
+                
+                outputWords();
+                upDateSentenceFormulaNoChange();
+            }
+
+            function smAddWordWithEnter() {
+                smAddWord(null);
+            }
+
+            function smNoAddWordNoMouseNoChange() {
+                outputWords();
+                upDateSentenceFormulaNoChange();
+            }
+
+            function clearSessionMemory(event) {
+                localStorage.setItem("words", "0 ");
+                localStorage.setItem("sentenceFormula", "0 ");
+                initFS();
+                clearWizard();
+                outputWords();
+                upDateSentenceFormulaNoChange();
+            }
+
+            function clearSentenceFormula(event) {
+                localStorage.setItem("sentenceFormula", "0 ");
+                initFS();
+                upDateSentenceFormulaNoChange();
+            }
+
+            function clearSentenceFormulaNoMouse() {
+                localStorage.setItem("sentenceFormula", "0 ");
+                initFS();
+                upDateSentenceFormulaNoChange();
+            }
+
+            function clearWizard() {
+                document.getElementById("WizardsComments").innerHTML = "";
+                document.getElementById("WizardsHelper").innerHTML = "";
+                document.getElementById("dmSearchOutput").innerHTML = "";
+            }
+
+            function initFS() {
+                const sentenceFormula = localStorage.getItem("sentenceFormula").split(/\s+/);
+                let newFsIdxStr = "";
+                for (const item of sentenceFormula) {
+                    newFsIdxStr += "0 ";
+                }
+                localStorage.setItem("finalSentenceIdx", newFsIdxStr);
+            }
+
+            function getWordValuePairsOuter() {
+                const data = localStorage.getItem("words").split(/\s+/).filter(w => w.length > 0);
+                const outdata = [];
+                
+                for (const word of data) {
+                    const number = getGematria(word, localStorage.getItem("cipher"));
+                    outdata.push([word, number]);
+                }
+                
+                return outdata;
+            }
+
+            function outputWords() {
+                const words = localStorage.getItem("words").split(/\s+/).filter(w => w.length > 0);
+                const currentCipher = localStorage.getItem("cipher");
+                let gtRepre = "";
+                
+                // Group words by root
+                const roots = {};
+                for (const word of words) {
+                    const gemVal = getGematria(word, currentCipher);
+                    const root = getRootNumber(gemVal);
+                    const route = getParentList(gemVal).slice(1);
+                    
+                    if (!roots[root]) {
+                        roots[root] = {};
+                    }
+                    
+                    const routeKey = JSON.stringify(route);
+                    if (!roots[root][routeKey]) {
+                        roots[root][routeKey] = [];
+                    }
+                    
+                    if (!roots[root][routeKey].some(item => item.word === word)) {
+                        roots[root][routeKey].push({word: word, gemVal: gemVal, route: route});
+                    }
+                }
+                
+                // Generate HTML
+                for (const rootNum of Object.keys(roots).sort()) {
+                    gtRepre += `<div class='Root' id='Root_${rootNum}'>`;
+                    gtRepre += `<p class='rootClass'>Root ${rootNum}</p>`;
+                    
+                    for (const routeKey of Object.keys(roots[rootNum])) {
+                        const route = JSON.parse(routeKey);
+                        gtRepre += `<a href='#' class='routeClass'>[${route.join(', ')}]</a>`;
+                        
+                        // Group by gematria value
+                        const gemGroups = {};
+                        for (const item of roots[rootNum][routeKey]) {
+                            if (!gemGroups[item.gemVal]) {
+                                gemGroups[item.gemVal] = [];
+                            }
+                            gemGroups[item.gemVal].push(item.word);
+                        }
+                        
+                        for (const gemVal of Object.keys(gemGroups).sort((a, b) => parseInt(a) - parseInt(b))) {
+                            if (parseInt(gemVal) !== 0) {
+                                gtRepre += `<div class='hyperWordDiv' id='hwd_${gemVal}'>`;
+                                gtRepre += `<button class='hyperNumberButton' id='hwb_${gemVal}'>${gemVal}</button>`;
+                                gtRepre += `<div class='hyperWordMenuContent' id='hwmc_${gemVal}' style='display: none;'>`;
+                                gtRepre += `<a href='#' id='hwWCSearch_${gemVal}'>Wizard:${gemVal}</a>`;
+                                gtRepre += `<a href='#' id='hwSF_${gemVal}'>SentForm:${gemVal}</a>`;
+                                gtRepre += `</div>`;
+                                gtRepre += `</div>`;
+                                
+                                for (const word of gemGroups[gemVal]) {
+                                    gtRepre += `<div class='hyperWordDiv' id='hwd_${word}'>`;
+                                    gtRepre += `<button class='hyperWordButton' id='hwb_${word}'>${word}</button>`;
+                                    gtRepre += `<div class='hyperWordMenuContent' id='hwmc_${word}' style='display: none;'>`;
+                                    gtRepre += `<a href='#' id='hwDel_${word}'>delete</a>`;
+                                    gtRepre += `<a href='#' id='hwDiMe_${word}'>distance measure</a>`;
+                                    gtRepre += `</div>`;
+                                    gtRepre += `</div>`;
+                                }
+                            }
+                        }
+                    }
+                    
+                    gtRepre += `</div>`;
+                }
+                
+                document.getElementById("smview_output").innerHTML = gtRepre;
+                makeSWListeners();
+            }
+
+            function makeSWListeners() {
+                console.log("makeSWListeners()");
+                const wvpairs = getWordValuePairsOuter();
+                hwMenuControl = {};
+                
+                for (const pair of wvpairs) {
+                    const currentNumber = pair[1];
+                    if (currentNumber !== 0) {
+                        // Number button
+                        const hwNumberButton = document.getElementById("hwb_" + currentNumber);
+                        if (hwNumberButton) {
+                            hwMenuControl["hwmenu_" + currentNumber] = false;
+                            hwNumberButton.datum = currentNumber.toString();
+                            hwNumberButton.addEventListener("click", hwNumberMenuReveal);
+                        }
+                        
+                        // Search button
+                        const searchButton = document.getElementById("hwWCSearch_" + currentNumber);
+                        if (searchButton) {
+                            searchButton.datum = currentNumber.toString();
+                            searchButton.addEventListener("click", printWizardsComments);
+                        }
+                        
+                        // Sentence formula button
+                        const sfButton = document.getElementById("hwSF_" + currentNumber);
+                        if (sfButton) {
+                            sfButton.datum = currentNumber;
+                            sfButton.addEventListener("click", upDateSentenceFormula);
+                        }
+                        
+                        // Word buttons
+                        for (const word of localStorage.getItem("words").split(/\s+/)) {
+                            if (word.length === 0) continue;
+                            
+                            const wordGem = getGematria(word, localStorage.getItem("cipher"));
+                            if (JSON.stringify(getParentList(wordGem).slice(1)) === 
+                                JSON.stringify(getParentList(currentNumber).slice(1))) {
+                                
+                                const hwWordButton = document.getElementById("hwb_" + word);
+                                if (hwWordButton) {
+                                    hwMenuControl["hwmenu_" + word] = false;
+                                    hwWordButton.addEventListener("click", hwNumberMenuReveal);
+                                    hwWordButton.datum = word;
+                                    
+                                    const delButton = document.getElementById("hwDel_" + word);
+                                    if (delButton) {
+                                        delButton.datum = word;
+                                        delButton.addEventListener("click", deleteFromSM);
+                                    }
+                                    
+                                    const dmsButton = document.getElementById("hwDiMe_" + word);
+                                    if (dmsButton) {
+                                        dmsButton.datum = word;
+                                        dmsButton.addEventListener("click", distanceMeasureSearch);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            function hwNumberMenuReveal(event) {
+                const datum = event.currentTarget.datum;
+                const element = document.getElementById("hwmc_" + datum);
+                
+                if (!element) return;
+                
+                if (!hwMenuControl["hwmenu_" + datum]) {
+                    element.style.display = "block";
+                    hwMenuControl["hwmenu_" + datum] = true;
+                } else {
+                    element.style.display = "none";
+                    hwMenuControl["hwmenu_" + datum] = false;
+                }
+            }
+
+            function printWizardsComments(event) {
+                const pressedNumber = parseInt(event.currentTarget.datum);
+                const pl = getParentList(pressedNumber);
+                let wvpairsFromDeepMemFormattedPL = "";
+                
+                for (const num of pl) {
+                    const wvpairsFromDeepMem = searchDeepMemByNumberArray(num, localStorage.getItem("cipher"));
+                    let wvpairsFromDeepMemFormatted = "";
+                    
+                    for (const pair of wvpairsFromDeepMem) {
+                        const hyperWord = makeWCHyperWord(pair[0]);
+                        wvpairsFromDeepMemFormatted += hyperWord + " " + pair[1] + "\n";
+                    }
+                    
+                    wvpairsFromDeepMemFormattedPL += wvpairsFromDeepMemFormatted;
+                }
+                
+                let ldb_outputStr = "";
+                const ldb_printed = [];
+                const currentCipher = localStorage.getItem("cipher");
+                
+                if (localStorage.getItem("wizardsHelper")) {
+                    const wizardsHelperData = localStorage.getItem("wizardsHelper").split(/\s+/);
+                    
+                    for (const word of wizardsHelperData) {
+                        if (getGematria(word, currentCipher) === pressedNumber) {
+                            if (!ldb_printed.includes(word)) {
+                                ldb_outputStr += makeLocDBHyperWord(word) + getGematria(word, currentCipher) + "\n";
+                                ldb_printed.push(word);
+                            }
+                        }
+                    }
+                }
+                
+                document.getElementById("WizardsComments").innerHTML = 
+                    "Wizard Meditation on Route " + JSON.stringify(pl) + 
+                    "\n(Wizard's DeepMem-database from basic English words)\n\n" + 
+                    wvpairsFromDeepMemFormattedPL.replace(/\n/g, '<br>');
+                    
+                document.getElementById("WizardsHelper").innerHTML = "Local DB:\n" + ldb_outputStr.replace(/\n/g, '<br>');
+                
+                // Set up listeners for wizard comments
+                for (const pair of searchDeepMemByNumberArray(pressedNumber, currentCipher)) {
+                    makeWCListener(pair[0]);
+                }
+                
+                if (ldb_printed.length > 0) {
+                    for (const word of ldb_printed) {
+                        makeLocDBListener(word);
+                    }
+                }
+            }
+
+            function makeWCListener(word) {
+                const wordButton = document.getElementById("WC" + word);
+                if (wordButton) {
+                    wordButton.addEventListener("click", function(event) {
+                        moveWordFromDMtoSW(word);
+                    });
+                }
+            }
+
+            function makeLocDBListener(word) {
+                const wordButton = document.getElementById("LDB" + word);
+                if (wordButton) {
+                    wordButton.addEventListener("click", function(event) {
+                        moveWordFromDMtoSW(word);
+                    });
+                }
+            }
+
+            function moveWordFromDMtoSW(pressedWord) {
+                const words = localStorage.getItem("words");
+                const newWords = words + " " + pressedWord + " ";
+                
+                const oldWordArray = words.split(/\s+/);
+                if (!oldWordArray.includes(pressedWord)) {
+                    localStorage.setItem("words", newWords);
+                }
+                
+                outputWords();
+                upDateSentenceFormulaNoChange();
+            }
+
+            function deleteFromSM(event) {
+                const word = event.currentTarget.datum;
+                const oldWords = localStorage.getItem("words").split(/\s+/);
+                let newWordStr = "";
+                
+                const filteredWords = oldWords.filter(w => w !== word && w.length > 0);
+                for (const w of filteredWords) {
+                    newWordStr += w + " ";
+                }
+                
+                localStorage.setItem("words", newWordStr);
+                
+                // Update sentence formula
+                const currentCipher = localStorage.getItem("cipher");
+                const newWordArray = newWordStr.split(/\s+/).filter(w => w.length > 0);
+                const gemValueArray = [...new Set(newWordArray.map(w => getGematria(w, currentCipher)))];
+                
+                const sfArray = localStorage.getItem("sentenceFormula").split(/\s+/);
+                let newSFStr = "";
+                let newFsIdxStr = "";
+                
+                for (const sf of sfArray) {
+                    if (gemValueArray.includes(parseInt(sf))) {
+                        newSFStr += sf + " ";
+                        newFsIdxStr += "0 ";
+                    }
+                }
+                
+                localStorage.setItem("sentenceFormula", newSFStr);
+                localStorage.setItem("finalSentenceIdx", newFsIdxStr);
+                
+                outputWords();
+                upDateSentenceFormulaNoChange();
+            }
+
+            function upDateSentenceFormula(event) {
+                const formula = localStorage.getItem("sentenceFormula");
+                const afe_gem = event.currentTarget.datum;
+                
+                // No duplicates in sentence formula
+                if (formula.split(/\s+/).includes(afe_gem.toString())) {
+                    return;
+                }
+                
+                let newFormula = formula.trim();
+                if (newFormula.length > 0 && newFormula !== "0") {
+                    newFormula += " " + afe_gem;
+                } else {
+                    newFormula = afe_gem.toString();
+                }
+                
+                localStorage.setItem("sentenceFormula", newFormula);
+                updateFsIdx();
+                upDateSentenceFormulaNoChange();
+            }
+
+            function upDateSentenceFormulaNoChange() {
+                const formula = localStorage.getItem("sentenceFormula");
+                const words = localStorage.getItem("words");
+                const currentCipher = localStorage.getItem("cipher");
+                
+                let output = makeHyperFormula(formula, words, currentCipher);
+                document.getElementById("sentenceFormulaLair").innerHTML = output;
+                
+                updateFsIdx();
+                printFinalSentence();
+            }
+
+            function makeHyperFormula(formula, wordsStr, currentCipher) {
+                const formulaArray = formula.split(/\s+/).filter(f => f.length > 0);
+                const wordArray = make2DWordArrayFromString(wordsStr, currentCipher);
+                let output = "<h3>Sentence Formula:</h3>";
+                
+                for (const gemValStr of formulaArray) {
+                    const gemVal = parseInt(gemValStr);
+                    if (gemVal === 0) continue;
+                    
+                    output += `<strong>${gemVal}:</strong> `;
+                    
+                    for (const wordGroup of wordArray) {
+                        if (wordGroup.length > 0) {
+                            const groupGemVal = getGematria(wordGroup[0], currentCipher);
+                            if (groupGemVal === gemVal) {
+                                for (let i = 0; i < wordGroup.length; i++) {
+                                    output += `<button id="SF${wordGroup[i]}" class="sentenceFormulaWord">${wordGroup[i]}</button> `;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    output += "<br>";
+                }
+                
+                return output;
+            }
+
+            function updateFsIdx() {
+                let fsIdxStr = localStorage.getItem("finalSentenceIdx");
+                fsIdxStr += " 0 ";
+                localStorage.setItem("finalSentenceIdx", fsIdxStr);
+            }
+
+            function printFinalSentence() {
+                const output = makeFinalSentence();
+                document.getElementById("finalSentenceLair").innerHTML = "<h3>Final Sentence:</h3>" + output;
+            }
+
+            function makeFinalSentence() {
+                const wordArray = make2DWordArrayFromString(localStorage.getItem("words"), localStorage.getItem("cipher"));
+                const fsFormulaStr = localStorage.getItem("sentenceFormula");
+                const fsFormulaArray = fsFormulaStr.split(/\s+/).filter(f => f.length > 0);
+                const fsIdxStr = localStorage.getItem("finalSentenceIdx");
+                const fsIdxArray = fsIdxStr.split(/\s+/).filter(f => f.length > 0);
+                
+                let outputString = "";
+                let fwc = 0;
+                
+                for (const gemValStr of fsFormulaArray) {
+                    const gemVal = parseInt(gemValStr);
+                    if (gemVal === 0) continue;
+                    
+                    for (const wordGroup of wordArray) {
+                        if (wordGroup.length > 0) {
+                            const groupGemVal = getGematria(wordGroup[0], localStorage.getItem("cipher"));
+                            if (groupGemVal === gemVal) {
+                                const idx = parseInt(fsIdxArray[fwc] || "0");
+                                if (idx < wordGroup.length) {
+                                    outputString += wordGroup[idx] + " ";
+                                }
+                                fwc++;
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+                return outputString;
+            }
+
+            function distanceMeasureSearch(event) {
+                const teddy = new DistanceTeddyBear(getDeepMem());
+                
+                // Load parameters from localStorage
+                const params = [
+                    "pointBias", "distanceBias", "commonNds", "commonRoot", 
+                    "commonRoute", "commonNumber", "sameWord", "closenessWeight",
+                    "numberDistanceWeight", "rootDistanceWeight", "ndsDistanceWeight", "maxDistance"
+                ];
+                
+                for (const param of params) {
+                    const value = localStorage.getItem("teddy_" + param);
+                    if (value) {
+                        teddy[param] = parseFloat(value);
+                    }
+                }
+                
+                const searchResults = teddy.getRestrictedWordSet_wdxy(event.currentTarget.datum, localStorage.getItem("cipher"));
+                searchResults.sort((a, b) => a[2] - b[2]);
+                
+                const searchedGemVal = getGematria(event.currentTarget.datum, localStorage.getItem("cipher"));
+                const srString = makeDMSHyperRepre(searchResults, searchedGemVal, localStorage.getItem("cipher"));
+                
+                document.getElementById("dmSearchOutput").innerHTML = srString;
+                
+                for (const result of searchResults) {
+                    makeDMSListener(result[0]);
+                }
+            }
+
+            function makeDMSListener(word) {
+                const wordButton = document.getElementById("dmsButton" + word);
+                if (wordButton) {
+                    wordButton.addEventListener("click", function(event) {
+                        moveWordFromDMtoSW(word);
+                    });
+                }
+            }
+
+            function initTrees() {
+                console.log("initTrees()");
+                
+                const dmTreeWordList = getDeepMem();
+                console.log("deepMem words fetched.");
+                
+                const dmTreeSyllableList1D = getDeepMemSyllables();
+                console.log("deepMem syllables fetched.");
+                
+                const smTreeWordList = localStorage.getItem("words").split(/\s+/).filter(w => w.length > 0);
+                const smTreeSyllableList2D = extractSyllables(smTreeWordList);
+                const smTreeSyllableList1D = smTreeSyllableList2D.flat();
+                
+                sessionMemoryWordTree = new NineRootedTree(smTreeWordList, localStorage.getItem("cipher"));
+                sessionMemorySyllableTree = new NineRootedTree(smTreeSyllableList1D, localStorage.getItem("cipher"));
+                deepMemWordTree = new NineRootedTree(dmTreeWordList, localStorage.getItem("cipher"));
+                deepMemSyllableTree = new NineRootedTree(dmTreeSyllableList1D, localStorage.getItem("cipher"));
+                
+                console.log("All trees initialized.");
+            }
+
+            function randomSentence(event) {
+                console.log("randomSentence/syllabletransform");
+                
+                let sentenceToTransform = document.getElementById("wordsHere").value.toLowerCase();
+                sentenceToTransform = sentenceToTransform.replace(/[^a-zA-Z\s]/g, "");
+                
+                const inputWordArray = sentenceToTransform.split(/\s+/).filter(w => w.length > 0);
+                const inputSyllables2D = extractSyllables(inputWordArray);
+                
+                for (let i = 0; i < inputSyllables2D.length; i++) {
+                    for (let j = 0; j < inputSyllables2D[i].length; j++) {
+                        const dmSyls = deepMemSyllableTree.findWords(getGematria(inputSyllables2D[i][j], localStorage.getItem("cipher")));
+                        if (dmSyls && dmSyls.length > 0) {
+                            inputSyllables2D[i][j] = randomChoice(dmSyls);
+                        }
+                    }
+                }
+                
+                let outputSentence = "";
+                for (const syllableGroup of inputSyllables2D) {
+                    for (const syllable of syllableGroup) {
+                        outputSentence += syllable;
+                    }
+                    outputSentence += " ";
+                }
+                
+                outputSentence = outputSentence.trim();
+                document.getElementById("wordsHere").value = outputSentence;
+            }
+
+            function randomSentence2(event) {
+                console.log("randomSentence/wordtransform");
+                
+                let sentenceToTransform = document.getElementById("wordsHere").value.toLowerCase();
+                sentenceToTransform = sentenceToTransform.replace(/[^a-zA-Z\s]/g, "");
+                
+                const inputWordArray = sentenceToTransform.split(/\s+/).filter(w => w.length > 0);
+                let outputWordString = "";
+                
+                for (const word of inputWordArray) {
+                    const dmWords = deepMemWordTree.findWords(getGematria(word, localStorage.getItem("cipher")));
+                    if (dmWords && dmWords.length > 0) {
+                        outputWordString += randomChoice(dmWords) + " ";
+                    } else {
+                        outputWordString += word + " ";
+                    }
+                }
+                
+                document.getElementById("wordsHere").value = outputWordString.trim();
+            }
+
+            async function openDBFile(event) {
+                try {
+                    const fileHandle = await window.showOpenFilePicker();
+                    const file = await fileHandle[0].getFile();
+                    const data = await file.text();
+                    
+                    const words = data.split(/\s+/);
+                    const cleanWords = [];
+                    
+                    for (const word of words) {
+                        const cleanWord = word.toLowerCase().replace(/[^a-zA-Z]/g, "");
+                        if (cleanWord.length > 0 && !cleanWords.includes(cleanWord)) {
+                            cleanWords.push(cleanWord);
+                        }
+                    }
+                    
+                    const dataStr = cleanWords.join(" ");
+                    localStorage.setItem("wizardsHelper", dataStr);
+                    
+                    console.log("Local database loaded with " + cleanWords.length + " words");
+                } catch (e) {
+                    console.log("File picker cancelled or error occurred");
+                }
+            }
+
+            let htdb_isOpen = false;
+            function openHowToDB(event) {
+                if (!htdb_isOpen) {
+                    document.getElementById("howToLoadLocalDB").style.display = "block";
+                    htdb_isOpen = true;
+                } else {
+                    document.getElementById("howToLoadLocalDB").style.display = "none";
+                    htdb_isOpen = false;
+                }
+            }
+
+            function startColorAnimation() {
+                setInterval(function() {
+                    const red = randomInt(0, 255);
+                    const green = randomInt(0, 255);
+                    const blue = randomInt(0, 255);
+                    document.getElementById("messageout").style.color = `rgb(${red}, ${green}, ${blue})`;
+                }, 333);
+            }
+
+            // Initialize the app when the page loads
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        </script>
+    </body>
+</html>
