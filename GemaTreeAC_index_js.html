@@ -284,12 +284,29 @@
 
         <div id="payPalMe" class="money"><a href="https://paypal.me/taivossuora" target="_blank" class="moneyLink">Send Money To The Author Via PayPal</a></div>
         <div id="emailMe" class="contactMe"><a href="mailto:iipekaj@gmail.com" class="emailLink">Contact The Author</a></div>
-        <div id="credits" class="creditStaili">GemaTreeAC 2=0 is made with JavaScript (ported from <a href="https://pyscript.net" target="_blank">PyScript</a> and <a href="https://python.org" target="_blank">Python</a>)</div>
+        <div id="credits" class="creditStaili">GemaTreeAC 2=0 JavaScript Port - Originally made with <a href="https://pyscript.net" target="_blank">PyScript</a> and <a href="https://python.org" target="_blank">Python</a>, now ported to native JavaScript</div>
         <div id="tutorialLinkDiv" class="tutStaili"><a href="./GemaTreeAC 2=0 Tutorial.pdf" target="_blank">Tutorial</a></div>
         <div id="mathematicalFormulation" class="mFStyle"><a href="./gematreeac_tutorial.pdf">Mathematics behind GemaTreeAC 2=0</a></div>
         <div id="gitHubLink" class="creditStaili">The code for GemaTreeAC 2=0 is public and can be found at <a href="https://github.com/jaakkopee/gematreeac" target="_blank">GitHub</a></div>
 
         <script>
+            /**
+             * GemaTreeAC 2=0 - JavaScript Port
+             * 
+             * This is a JavaScript port of the original PyScript implementation.
+             * Maintains all functionality while using native JavaScript for better performance.
+             * 
+             * Key features:
+             * - Multiple gematria cipher support
+             * - Numerological classification and distance measurement
+             * - Session memory management
+             * - Word search and similarity analysis
+             * - Dynamic sentence formula creation
+             * 
+             * Original PyScript version by Jake Pii Taivossuora
+             * JavaScript port maintains the same API and functionality
+             */
+            
             // Global variables
             let loadInfo = false;
             let menuActive = false;

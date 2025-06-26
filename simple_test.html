@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple GemaTreeAC Test</title>
+    <script src="js/alphabet.js"></script>
+    <script src="js/gemNumFuncs.js"></script>
+    <script src="js/utils.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        #output {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-line;
+        }
+        .cipher-select {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GemaTreeAC JavaScript Port - Simple Test</h1>
+        
+        <div>
+            <label for="cipherSelect">Choose Cipher:</label>
+            <select id="cipherSelect" class="cipher-select">
+                <option value="Ord">Ordinal</option>
+                <option value="OrdRev">Reverse Ordinal</option>
+                <option value="FullR">Full Reduction</option>
+                <option value="FullRRev">Reverse Full Reduction</option>
+                <option value="SingRed">Single Reduction</option>
+                <option value="SingRedRev">Reverse Single Reduction</option>
+                <option value="Fibonacci">Fibonacci</option>
+                <option value="FibonacciRev">Reverse Fibonacci</option>
+                <option value="ScaExt">Scandinavian Extended</option>
+                <option value="EngExtRev">Reverse English Extended</option>
+            </select>
+        </div>
+        
+        <div>
+            <input type="text" id="wordInput" placeholder="Enter a word or phrase..." value="love">
+            <button onclick="calculateGematria()">Calculate Gematria</button>
+            <button onclick="findSimilarWords()">Find Similar Words</button>
+            <button onclick="showParentList()">Show Parent List</button>
+        </div>
+        
+        <div id="output">Enter a word and click calculate to see the gematria value...</div>
+        
+        <h3>Test Results:</h3>
+        <div id="testResults"></div>
+    </div>
+
+    <script>
+        // Initialize deep memory when page loads
+        initializeDeepMemory();
+        
+        function calculateGematria() {
+            const word = document.getElementById('wordInput').value.toLowerCase();
+            const cipher = document.getElementById('cipherSelect').value;
+            
+            if (!word) {
+                document.getElementById('output').textContent = 'Please enter a word.';
+                return;
+            }
+            
+            const gemValue = getGematria(word, cipher);
+            const rootNum = getRootNumber(gemValue);
+            const parentList = getParentList(gemValue);
+            
+            let output = `Word: "${word}"\n`;
+            output += `Cipher: ${cipher}\n`;
+            output += `Gematria Value: ${gemValue}\n`;
+            output += `Root Number: ${rootNum}\n`;
+            output += `Parent List: [${parentList.join(', ')}]\n`;
+            output += `N-Digit Set: ${gemValue.toString().length} digits\n`;
+            
+            document.getElementById('output').textContent = output;
+        }
+        
+        function findSimilarWords() {
+            const word = document.getElementById('wordInput').value.toLowerCase();
+            const cipher = document.getElementById('cipherSelect').value;
+            
+            if (!word) {
+                document.getElementById('output').textContent = 'Please enter a word.';
+                return;
+            }
+            
+            const teddy = new DistanceTeddyBear(getDeepMem());
+            teddy.maxDistance = 50; // Increase threshold for demo
+            
+            const similar = teddy.getRestrictedWordSet_wdxy(word, cipher);
+            
+            let output = `Similar words to "${word}" (distance < 50):\n\n`;
+            
+            if (similar.length === 0) {
+                output += 'No similar words found in the database.';
+            } else {
+                for (const [simWord, gemVal, distance] of similar.slice(0, 10)) {
+                    output += `${simWord} (${gemVal}) - distance: ${distance.toFixed(3)}\n`;
+                }
+                
+                if (similar.length > 10) {
+                    output += `\n... and ${similar.length - 10} more words.`;
+                }
+            }
+            
+            document.getElementById('output').textContent = output;
+        }
+        
+        function showParentList() {
+            const word = document.getElementById('wordInput').value.toLowerCase();
+            const cipher = document.getElementById('cipherSelect').value;
+            
+            if (!word) {
+                document.getElementById('output').textContent = 'Please enter a word.';
+                return;
+            }
+            
+            const gemValue = getGematria(word, cipher);
+            const parentList = getParentList(gemValue);
+            
+            let output = `Parent reduction sequence for "${word}" (${gemValue}):\n\n`;
+            
+            for (let i = 0; i < parentList.length; i++) {
+                const num = parentList[i];
+                const isLast = i === parentList.length - 1;
+                
+                if (i === 0) {
+                    output += `${num} (original gematria value)\n`;
+                } else {
+                    const digitSum = num.toString().split('').map(d => parseInt(d)).join(' + ');
+                    output += `${parentList[i-1]} → ${digitSum} = ${num}`;
+                    if (isLast) {
+                        output += ' (root number)';
+                    }
+                    output += '\n';
+                }
+            }
+            
+            document.getElementById('output').textContent = output;
+        }
+        
+        // Run some basic tests
+        function runTests() {
+            let results = '';
+            
+            // Test 1: Basic gematria calculation
+            const testWord = 'love';
+            const testCipher = 'Ord';
+            const expected = 12 + 15 + 22 + 5; // l=12, o=15, v=22, e=5
+            const actual = getGematria(testWord, testCipher);
+            results += `Test 1 - getGematria("${testWord}", "${testCipher}"): ${actual} (expected: ${expected}) `;
+            results += actual === expected ? '✅\n' : '❌\n';
+            
+            // Test 2: Root number calculation
+            const testNum = 123;
+            const expectedRoot = 6; // 1+2+3=6
+            const actualRoot = getRootNumber(testNum);
+            results += `Test 2 - getRootNumber(${testNum}): ${actualRoot} (expected: ${expectedRoot}) `;
+            results += actualRoot === expectedRoot ? '✅\n' : '❌\n';
+            
+            // Test 3: Cipher access
+            const ordCipher = getCipher('Ord');
+            const aValue = ordCipher['a'];
+            results += `Test 3 - getCipher('Ord')['a']: ${aValue} (expected: 1) `;
+            results += aValue === 1 ? '✅\n' : '❌\n';
+            
+            // Test 4: Deep memory initialization
+            const deepMem = getDeepMem();
+            results += `Test 4 - Deep memory contains ${deepMem.length} words `;
+            results += deepMem.length > 0 ? '✅\n' : '❌\n';
+            
+            // Test 5: Distance calculation
+            const teddy = new DistanceTeddyBear(['love', 'hate']);
+            const distance = teddy.getDistance('love', 'hate', 'Ord');
+            results += `Test 5 - Distance calculation works: ${distance.toFixed(3)} `;
+            results += distance > 0 ? '✅\n' : '❌\n';
+            
+            document.getElementById('testResults').innerHTML = '<pre>' + results + '</pre>';
+        }
+        
+        // Run tests when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            runTests();
+            calculateGematria(); // Calculate for default word
+        });
+        
+        // Update calculation when cipher changes
+        document.getElementById('cipherSelect').addEventListener('change', calculateGematria);
+    </script>
+</body>
+</html>
